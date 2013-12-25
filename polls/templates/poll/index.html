@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% for rec in data %}
+        <div class="data">
+        {{ rec.question }}
+        </div>
+    {% endfor %}
+{% endblock content %}

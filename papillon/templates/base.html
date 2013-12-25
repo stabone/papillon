@@ -1,0 +1,40 @@
+
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Papillon {learn something}</title>
+    <!--
+        <link rel="stylesheet" href="{% static "css/main.css" %}" type="text/css" />
+    -->
+    <meta charset="utf-8" />
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="/">Sākums</a></li>
+                <li><a href="/poll/">Aptauja</a>
+                    <ul>
+                        <li><a href="/poll/add/">+</a>
+                    </ul>
+                </li>
+                <li><a href="/course/">Kategorija</a>
+                    <ul>
+                        <li><a href="/course/add/course/">+</a></li>
+                    </ul>
+                </li>
+                <li><a href="/course/">tut</a>
+                    <ul>
+                        <li><a href="/course/add/tut/">+</a></li>
+                    </ul>  
+                </li>
+            </ul>
+        </nav>
+        <div id="container">
+            {% block content %}
+                Sakuma lapa
+            {% endblock content %}
+        </div>
+    </body>
+</html>
