@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if data == None %}
+        Pagaidām šai kategorijai nekas nav pievienots
+    {% endif %}
+
+    {% for rec in data %}
+        <div>
+            {{ rec.title }}</br>
+            {{ rec.description }}
+        </div>
+    {% endfor %}
+{% endblock content %}

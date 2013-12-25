@@ -42,11 +42,11 @@ def edit_tut(request, tut_id):
 
 def show_categorie(request):
     data = Tut.objects.filter(tut_id)
-    return
+    return render(request, 'course/show_categorie.html', {'data': data})
 
 def show_tut(request, tut_id):
-    data = Tut.objects.filter(tut_id)
-    return
+    data = Tut.objects.filter(categorie_id=tut_id)
+    return render(request, 'course/show_tut.html', {'data': data})
 
 def delete_categorie(request, categorie_id):
     record = Categorie.objects.filter(id=categorie_id)

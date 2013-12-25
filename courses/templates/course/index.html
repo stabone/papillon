@@ -4,8 +4,8 @@
 {% block content %}
     {% for rec in data %}
         <div class="data">
-        {{ rec.course }}
-        <a href="/course/delete/{{ rec.id }}/course/">-</a>
+            <a href="/course/show/{{ rec.id }}/tut/">{{ rec.course }}</a>
+            <a href="/course/delete/{{ rec.id }}/course/">-</a>
         </div>
     {% endfor %}
 {% endblock content %}
