@@ -10,7 +10,7 @@ class Poll(models.Model):
         return self.question
 
 class Choise(models.Model):
-    poll_id = models.ForeignKey(Poll)
+    poll_id = models.ForeignKey(Poll, db_index=True)
     option  = models.CharField(max_length=255)
     choise_type = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

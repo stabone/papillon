@@ -8,7 +8,8 @@
 
     {% for rec in data %}
         <div>
-            {{ rec.title }}</br>
+            {{ rec.title }}<a href="/course/delete/{{ rec.id }}/tut/">-</a>
+            </br>
             {{ rec.description }}
         </div>
     {% endfor %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if form == None %}
+        <p>Ieraksts netiak atrasts</p>
+    {% endif %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <input type="submit" value="Saglabāt" />
+    </form>
+{% endblock content %}
