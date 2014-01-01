@@ -84,3 +84,5 @@ def delete_tut(request, tut_id):
 # customized 404 error
 def handler404(request):
     return render(request, '404.html')
+
+
