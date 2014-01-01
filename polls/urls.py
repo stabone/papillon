@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^edit/(\d+)/poll/$', 'polls.views.edit_poll'),
     url(r'^edit/(\d+)/choise/$', 'polls.views.edit_choise'),
     url(r'^take/(\d+)/poll/$', 'polls.views.take_poll'),
+    url(r'^delete/(\d+)/poll/$', 'polls.views.delete_poll'),
 )

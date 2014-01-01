@@ -44,14 +44,21 @@ def edit_poll(request, poll_id):
             form.save()
             return HttpResponseRedirect('/poll/')
     elif(request.method == "GET"):
-        record = Poll.objects.get(id=poll_id)
-        form = CategorieForm(instance=data)
+        data = Poll.objects.get(id=poll_id)
+        form = PollForm(instance=data)
 
-    return render(request, 'course/edit_poll.html', {'form': form})
+    return render(request, 'poll/edit_poll.html', {'form': form})
 
 
 def take_poll(request, poll_id):
     data = Choise.objects.filter(poll_id=poll_id)
+
     return render(request, 'poll/take.html', {'data': data})
 
 
+def delete_poll(request, poll_id):
+    record = Poll.objects.get(id=poll_id)
+    if(record.delete()):
+        return HttpResponseRedirect('/poll/')
+
+    return HttpResponseRedirect('/poll/')
