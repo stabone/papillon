@@ -2,6 +2,10 @@
 
 
 {% block content %}
+    {# šos būtu jāparāda tikai autoriem #}
+    <a href="/course/add/{{ course }}/tut/">[Pievienot]</a>
+    {# šos būtu jāparāda tikai autoriem #}
+
     {% if data == None %}
         Pagaidām šai kategorijai nekas nav pievienots
     {% endif %}

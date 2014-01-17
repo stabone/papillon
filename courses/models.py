@@ -12,10 +12,18 @@ class Categorie(models.Model):
 
 
 class Tut(models.Model):
+    BEGINNER = '1'
+    MEDIUM   = '2'
+    ADVANCED = '3'
+    LEVELS = (
+        BEGINNER, 'Iesācējs'),
+        (MEDIUM,   'Vidējs'),
+        (ADVANCED, 'Grūts'),
+    )
     categorie_id = models.ForeignKey(Categorie, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    level = models.IntegerField(default=0)
+    level = models.CharField(max_length=1, choises=LEVELS, default=BEGINNER)
     rating = models.IntegerField()
     tags = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)

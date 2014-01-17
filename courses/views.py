@@ -23,7 +23,7 @@ def add_categorie(request):
     return render(request, 'course/add.html', {'form': form})
 
 
-def add_tut(request):
+def add_tut(request, tut_id):
     form = TutForm()
     if(request.method == "POST"):
         form = TutForm(request.POST)
@@ -31,7 +31,9 @@ def add_tut(request):
             form.save()
             return HttpResponseRedirect('/course/')
     else:
-        form = TutForm()
+        categorie = Categorie.objects.get(id=tut_id)
+        tut = Tut(categorie_id=categorie)
+        form = TutForm(instance=tut)
 
     return render(request, 'course/add.html', {'form': form})
 
@@ -62,7 +64,7 @@ def show_categorie(request):
 
 def show_tut(request, tut_id):
     data = Tut.objects.filter(categorie_id=tut_id)
-    return render(request, 'course/show_tut.html', {'data': data})
+    return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
 
 def delete_categorie(request, categorie_id):
