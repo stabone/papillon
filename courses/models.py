@@ -23,16 +23,16 @@ class Tut(models.Model):
     categorie_id = models.ForeignKey(Categorie, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    # level = models.CharField(max_length=1, choises=LEVELS, default=BEGINNER)
-    level = models.CharField(max_length=1)
+    level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
+    # level = models.CharField(max_length=1)
     rating = models.IntegerField()
     tags = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    post = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
-
 
 """
 class Material(models.Model):
@@ -41,4 +41,5 @@ class Material(models.Model):
     description = models.TextField()
     video = models.FileField(upload_to='video/', max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
+    post = models.BooleanField(default=False)
 """
