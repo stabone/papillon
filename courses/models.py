@@ -16,14 +16,15 @@ class Tut(models.Model):
     MEDIUM   = '2'
     ADVANCED = '3'
     LEVELS = (
-        BEGINNER, 'Iesācējs'),
-        (MEDIUM,   'Vidējs'),
-        (ADVANCED, 'Grūts'),
+        (BEGINNER, 'Iesacejs'),
+        (MEDIUM,   'Videjs'),
+        (ADVANCED, 'Gruts'),
     )
     categorie_id = models.ForeignKey(Categorie, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    level = models.CharField(max_length=1, choises=LEVELS, default=BEGINNER)
+    # level = models.CharField(max_length=1, choises=LEVELS, default=BEGINNER)
+    level = models.CharField(max_length=1)
     rating = models.IntegerField()
     tags = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
