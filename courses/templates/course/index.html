@@ -5,8 +5,12 @@
     {% for rec in data %}
         <div class="data">
             <a href="/course/show/{{ rec.id }}/tut/">{{ rec.course }}</a>
-            <a href="/course/delete/{{ rec.id }}/course/">-</a>
-            <a href="/course/edit/{{ rec.id }}/course/">Labot</a>
+            <a href="/course/delete/{{ rec.id }}/course/">
+            	<i class="trash icon"></i>
+            </a>
+            <a href="/course/edit/{{ rec.id }}/course/">
+            	<i class="edit icon"></i>
+            </a>
         </div>
     {% endfor %}
 {% endblock content %}

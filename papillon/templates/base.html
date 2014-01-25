@@ -9,32 +9,58 @@
     <meta charset="utf-8" />
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="/">Sākums</a></li>
-                <li><a href="/poll/">Aptauja</a>
-                    <ul>
-                        <li><a href="/poll/add/poll/">+</a>
-                    </ul>
-                </li>
-                <li><a href="/course/">Kategorija</a>
-                    <ul>
-                        <li><a href="/course/add/course">+</a></li>
-                    </ul>
-                </li>
-                <li><a href="/course/">tut</a>
-                    <ul>
-                        <li><a href="/course/add/tut/">+</a></li>
-                    </ul>  
-                </li>
-            </ul>
-        </nav>
+        <div class="ui tiered menu">
+            <div class="menu">
+                <a href="/" class="active item">Sākums</a>
+                <div class="ui dropdown item">
+                    Aptauja <i class="icon dropdown"> </i>
+                    <div class="menu">
+                        <a class="item" href="/poll/add/poll">Pievienot</a>
+                    </div>
+                </div>
+
+                <div class="ui dropdown item">
+                    Kategorija <i class="icon dropdown"> </i>
+                    <div class="menu">
+                        <a class="item" href="/course/add/course">Pievienot</a>
+                    </div>
+                </div>
+
+                <div class="ui dropdown item">
+                    Tutorial <i class="icon dropdown"> </i>
+                    <div class="menu">
+                        <a class="item" href="/course/add/tut">Pievienot</a>
+                    </div>
+                </div>
+
+                <div class="ui dropdown item">
+                    Bibleotēka <i class="icon dropdown"> </i>
+                    <div class="menu">
+                        <a class="item" href="">P</a>
+                    </div>
+                </div>
+
+                <div class="right menu">
+                    <div class="item">
+                        <div class="ui icon input">
+                            <input type="text" placeholder="Meklēt...">
+                            <i class="search link icon"></i>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <a class="ui teal button">Reģistrēties</a>
+                    </div>
+                </div>
+           </div>
+        </div>
         <div id="container">
             {% block content %}
                 Sakuma lapa
             {% endblock content %}
         </div>
 
+        <script type="text/javascript" src="{% static "javascript/jquery.min.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/semantic.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "javascript/interactive.js" %}"></script>
     </body>
 </html>

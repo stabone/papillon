@@ -11,10 +11,12 @@
     {% endif %}
 
     {% for rec in data %}
-        <div>
-            {{ rec.title }}<a href="/course/delete/{{ rec.id }}/tut/">-</a>
-            </br>
-            {{ rec.description }}
-        </div>
+        <h2 class="ui header">
+            {{ rec.title }}
+            <a href="/course/delete/{{ rec.id }}/tut/">
+                <i class="trash icon"></i>
+            </a>
+            <div class="sub header">{{ rec.description }}</div>
+        </h2>
     {% endfor %}
 {% endblock content %}
