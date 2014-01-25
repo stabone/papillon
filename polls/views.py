@@ -25,13 +25,14 @@ def add_poll(request):
 
 
 def add_choise(request, poll_id):
+    data = Poll.objects.get(id=poll_id)
     if(request.method == "POST"):
-        form = ChoiseForm(request.POST)
+        form = ChoiseForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
-    else:
-        form = ChoiseForm()
+    elif(request.method == "GET"):
+        form = ChoiseForm(instance=data)
 
     return render(request, 'poll/add_choise.html', {'form': form})
 

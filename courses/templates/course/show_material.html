@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    {% if request.session.last_url %}
+        <a href="{{ request.session.last_url }}">atgriezties</a>
+    {% endif %}
+
+    {% for rec in data %}
+        <div class="ui tertiary segment">
+            <div class="ui inverted purple block header">
+                {{ rec.title }}
+                <a class="ui red" href="/course/delete/{{ rec.id }}/material"><i class="trash icon"></i></a>
+            </div>
+
+            <img src="{{ rec.video.url }}" alt="{{ rec.video.name }}" title="{{ rec.video.name }}"/>
+        </div>
+    {% endfor %}
+{% endblock content %}

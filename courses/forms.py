@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from courses.models import Categorie, Tut
+from courses.models import Categorie, Tut, Material
 
 
 class CategorieForm(ModelForm):
@@ -12,3 +12,6 @@ class TutForm(ModelForm):
     class Meta:
         model = Tut
 
+class MaterialForm(ModelForm):
+    class Meta:
+        model = Material

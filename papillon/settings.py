@@ -91,4 +91,9 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_PATH, 'static'),
 )
 
-MEDIA_URL = '/media/'
+# more like hack becouse media_url isn't in loaded dir
+# MEDIA_URL = '/media'
+MEDIA_URL = '/static/media/'
+# MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
+MEDIA_ROOT = os.path.join(PROJECT_PATH, 'static/media')
+

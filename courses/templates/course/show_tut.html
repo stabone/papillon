@@ -2,21 +2,28 @@
 
 
 {% block content %}
-    {# šos būtu jāparāda tikai autoriem #}
-    <a href="/course/add/{{ course }}/tut/">[Pievienot]</a>
-    {# šos būtu jāparāda tikai autoriem #}
-
-    {% if data == None %}
-        Pagaidām šai kategorijai nekas nav pievienots
-    {% endif %}
+    <div>
+        Tutorialu saraksts
+    </div>
 
     {% for rec in data %}
         <h2 class="ui header">
-            {{ rec.title }}
-            <a href="/course/delete/{{ rec.id }}/tut/">
+            <a href="/course/show/{{ rec.id }}/material/">{{ rec.title }}</a>
+
+            <a href="/course/add/{{ rec.id }}/material/" alt="Pievienot materiālu" title="Pievienot materiālu">
+                <i class="add icon"></i>
+            </a>
+            <a href="/course/edit/{{ rec.id }}/tut/" alt="Labot" title="Labot">
+                <i class="edit icon"></i>
+            </a>
+            <a href="/course/delete/{{ rec.id }}/tut/" alt="Dzēst" title="Dzēst">
                 <i class="trash icon"></i>
             </a>
+
             <div class="sub header">{{ rec.description }}</div>
         </h2>
+        <div class="ui horizontal icon divider">
+            <i class="circular book icon"></i>
+        </div>
     {% endfor %}
 {% endblock content %}

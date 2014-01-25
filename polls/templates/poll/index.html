@@ -5,7 +5,7 @@
     {% for rec in data %}
         <div class="data">
             <a href="/poll/take/{{ rec.id }}/poll/">{{ rec.question }}</a>
-            <a href="/poll/add/poll/" alt="Pievienot" title="Pievienot">
+            <a href="/poll/add/{{ rec.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
             	<i class="add icon"></i>
             </a>
             <a href="/poll/edit/{{ rec.id }}/poll/">
