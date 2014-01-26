@@ -6,6 +6,12 @@
         <a href="{{ request.session.last_url }}">atgriezties</a>
     {% endif %}
 
+    {% if not data %}
+        <div>
+            Pagaidām tutorialu vēl nav!!!
+        </div>
+    {% endif %}
+
     {% for rec in data %}
         <div class="ui tertiary segment">
             <div class="ui inverted purple block header">

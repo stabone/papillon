@@ -118,6 +118,13 @@ def delete_tut(request, tut_id):
 
 def delete_material(request, material_id):
     record = Material.objects.filter(id=material_id)
+
+    # try:
+    #     .delete(record.video.url)
+    # except NotImplementedError:
+    #     back_url = "/course/show/{}/material/".forma(material_id)
+    #     return HttpResponseRedirect() 
+
     if(record.delete()):
         return HttpResponseRedirect('/course/')
 

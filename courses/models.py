@@ -1,4 +1,5 @@
 from django.db import models
+from time import time
 
 
 # Create your models here.
@@ -36,11 +37,17 @@ class Tut(models.Model):
         return self.title
 
 
+def handle_file_upload(instance, filename):
+    filename = "{0}_{1}".format(int(time()), filename)
+    # instance.file.save(save=True)
+
+
 class Material(models.Model):
     tut_id = models.ForeignKey(Tut, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    video = models.FileField(upload_to='video/', max_length=255)
+    video = models.FileField(upload_to=handle_file_upload, max_length=255)
+    # video = models.FileField(upload_to='video/', max_length=255)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
