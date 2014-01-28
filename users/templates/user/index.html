@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div>
+        Lietotāju saraksts
+    </div>
+    {% for user in users %}
+        <div class="data">
+            <div>{{ user.username }} || {{ user.password }}</div>
+            <ul>
+            {#% for group in user.groups %}
+            <li>{{ user.groups.name }}</li>
+            {#% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock content %}
