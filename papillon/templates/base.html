@@ -48,7 +48,11 @@
                         </div>
                     </div>
                     <div class="item">
-                        <a class="ui teal button" href="/user/create/">Reģistrēties</a>
+                        {% if not user.is_authenticated %}
+                            <a class="ui purple label" href="#">{{ user.name }}</a>
+                        {% else %}
+                            <a class="ui teal button" href="/user/create/">Reģistrēties</a>
+                        {% endif %}
                     </div>
                 </div>
            </div>
