@@ -25,14 +25,15 @@ def add_poll(request):
 
 
 def add_choise(request, poll_id):
-    data = Poll.objects.get(id=poll_id)
     if(request.method == "POST"):
-        form = ChoiseForm(request.POST, instance=data)
+        form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
     elif(request.method == "GET"):
-        form = ChoiseForm(instance=data)
+        data = Poll.objects.get(id=poll_id)
+        choise = Choise(poll_id=data)
+        form = ChoiseForm(instance=choise)
 
     return render(request, 'poll/add_choise.html', {'form': form})
 
@@ -51,6 +52,20 @@ def edit_poll(request, poll_id):
     return render(request, 'poll/edit_poll.html', {'form': form})
 
 
+def edit_choise(request, choise_id):
+    if(request.method == "POST"):
+        form = ChoiseForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            return HttpResponseRedirect('/poll/')
+    else:
+        data = Choise.objects.get(id=choise_id)
+        form = ChoiseForm(instance=data)
+
+    return render(request, 'poll/edit_choise.html', {'form': form})
+    return render(request, 'poll/edit_choise.html', {'form': form})
+
+
 def take_poll(request, poll_id):
     data = Choise.objects.filter(poll_id=poll_id)
 
@@ -59,6 +74,14 @@ def take_poll(request, poll_id):
 
 def delete_poll(request, poll_id):
     record = Poll.objects.get(id=poll_id)
+    if(record.delete()):
+        return HttpResponseRedirect('/poll/')
+
+    return HttpResponseRedirect('/poll/')
+
+
+def delete_choise(request, choise_id):
+    record = Choise.objects.get(id=choise_id)
     if(record.delete()):
         return HttpResponseRedirect('/poll/')
 
