@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="item">
-                        {% if not user.is_authenticated %}
+                        {% if user.is_authenticated %}
                             <a class="ui purple label" href="#">{{ user.name }}</a>
                         {% else %}
                             <a class="ui teal button" href="/user/create/">Reģistrēties</a>

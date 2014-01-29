@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
 
 # my code
 from polls.models import Poll, Choise
@@ -12,6 +13,7 @@ def index(request):
     return render(request, 'poll/index.html', {'data': data})
 
 
+@csrf_protect
 def add_poll(request):
     if(request.method == "POST"):
         form = PollForm(request.POST)
@@ -24,13 +26,14 @@ def add_poll(request):
     return render(request, 'poll/add.html', {'form': form})
 
 
+@csrf_protect
 def add_choise(request, poll_id):
     if(request.method == "POST"):
         form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
-    elif(request.method == "GET"):
+    else:
         data = Poll.objects.get(id=poll_id)
         choise = Choise(poll_id=data)
         form = ChoiseForm(instance=choise)
@@ -38,6 +41,7 @@ def add_choise(request, poll_id):
     return render(request, 'poll/add_choise.html', {'form': form})
 
 
+@csrf_protect
 def edit_poll(request, poll_id):
     record = Poll.objects.get(id=poll_id)
     if(request.method == "POST"):
@@ -45,7 +49,7 @@ def edit_poll(request, poll_id):
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
-    elif(request.method == "GET"):
+    else:
         data = Poll.objects.get(id=poll_id)
         form = PollForm(instance=data)
 
@@ -62,7 +66,6 @@ def edit_choise(request, choise_id):
         data = Choise.objects.get(id=choise_id)
         form = ChoiseForm(instance=data)
 
-    return render(request, 'poll/edit_choise.html', {'form': form})
     return render(request, 'poll/edit_choise.html', {'form': form})
 
 

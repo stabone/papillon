@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from djang.views.decorators.csrf import csrf_protect
 
 from courses.models import Categorie, Tut, Material
 from courses.forms import CategorieForm, TutForm, MaterialForm
@@ -10,6 +11,7 @@ def index(request):
     return render(request, 'course/index.html', {'data': data})
 
 
+@csrf_protect
 def add_categorie(request):
     form = CategorieForm()
     if(request.method == "POST"):
@@ -23,6 +25,7 @@ def add_categorie(request):
     return render(request, 'course/add.html', {'form': form})
 
 
+@csrf_protect
 def add_tut(request, categorie_id):
     form = TutForm()
     if(request.method == "POST"):
@@ -38,6 +41,7 @@ def add_tut(request, categorie_id):
     return render(request, 'course/add.html', {'form': form})
 
 
+@csrf_protect
 def add_material(request, tut_id):
     form = MaterialForm()
     if(request.method == "POST"):
@@ -53,6 +57,7 @@ def add_material(request, tut_id):
     return render(request, 'course/add_material.html', {'form': form})
 
 
+@csrf_protect
 def edit_categorie(request, categorie_id):
     data = Categorie.objects.get(id=categorie_id)
     if(request.method == "POST"):
@@ -67,6 +72,7 @@ def edit_categorie(request, categorie_id):
     return render(request, 'course/edit_categorie.html', {'form': form})
 
 
+@csrf_protect
 def edit_tut(request, tut_id):
     data = Tut.objects.get(id=tut_id)
     if(request.method == "POST"):
@@ -79,6 +85,7 @@ def edit_tut(request, tut_id):
     return render(request, 'course/edit_tut.html', {'form': form})
 
 
+@csrf_protect
 def edit_material(request):
     return render(request, 'course/edit_material.html', {'form': None})
 
@@ -123,7 +130,7 @@ def delete_material(request, material_id):
     #     .delete(record.video.url)
     # except NotImplementedError:
     #     back_url = "/course/show/{}/material/".forma(material_id)
-    #     return HttpResponseRedirect() 
+    #     return HttpResponseRedirect()
 
     if(record.delete()):
         return HttpResponseRedirect('/course/')
