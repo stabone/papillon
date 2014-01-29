@@ -65,8 +65,7 @@ def edit_categorie(request, categorie_id):
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/course/')
-    elif(request.method == "GET"):
-        data = Categorie.objects.get(id=categorie_id)
+    else:
         form = CategorieForm(instance=data)
 
     return render(request, 'course/edit_categorie.html', {'form': form})
@@ -80,8 +79,9 @@ def edit_tut(request, tut_id):
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/course/')
-    elif(request.method == "GET"):
+    else:
         form = TutForm(instance=data)
+
     return render(request, 'course/edit_tut.html', {'form': form})
 
 

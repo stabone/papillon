@@ -3,7 +3,14 @@
 {% block content %}
     <ul>
     {% for record in data %}
-        <li>{{ record.option }}</li> 
+        <div>{{ record.option }}
+            <a href="/poll/edit/{{ record.id }}/choise/">
+            	<i class="edit icon"></i>
+            </a>
+            <a href="/poll/delete/{{ record.id }}/choise/">
+            	<i class="trash icon"></i>
+            </a>
+        </div>
     {% endfor %}
     </ul>
 {% endblock content %}

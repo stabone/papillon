@@ -55,7 +55,7 @@ def edit_poll(request, poll_id):
 
     return render(request, 'poll/edit_poll.html', {'form': form})
 
-
+@csrf_protect
 def edit_choise(request, choise_id):
     if(request.method == "POST"):
         form = ChoiseForm(request.POST)
