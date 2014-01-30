@@ -47,7 +47,6 @@ class Material(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     video = models.FileField(upload_to=handle_file_upload, max_length=255)
-    # video = models.FileField(upload_to='video/', max_length=255)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
