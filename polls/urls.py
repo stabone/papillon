@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
-    url(r'^$', 'polls.views.index'),
+    url(r'^/(\d*)/$', 'polls.views.index'),
     url(r'^add/poll/$', 'polls.views.add_poll'),
     url(r'^add/(\d+)/choise/$', 'polls.views.add_choise'),
     url(r'^edit/(\d+)/poll/$', 'polls.views.edit_poll'),
