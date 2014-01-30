@@ -2,25 +2,25 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from djang.views.decorators.csrf import csrf_protect
 
-from courses.models import Categorie, Tut, Material
-from courses.forms import CategorieForm, TutForm, MaterialForm
+from courses.models import Categories, Tuts, Materials
+from courses.forms import CategoryForm, TutForm, MaterialForm
 
 
 def index(request):
-    data = Categorie.objects.all()
+    data = Categories.objects.all()
     return render(request, 'course/index.html', {'data': data})
 
 
 @csrf_protect
 def add_categorie(request):
-    form = CategorieForm()
+    form = CategoryForm()
     if(request.method == "POST"):
-        form = CategorieForm(request.POST)
+        form = CategoryForm(request.POST)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/course/')
     else:
-        form = CategorieForm()
+        form = CategoryForm()
 
     return render(request, 'course/add.html', {'form': form})
 
@@ -34,8 +34,8 @@ def add_tut(request, categorie_id):
             form.save()
             return HttpResponseRedirect('/course/')
     else:
-        categorie = Categorie.objects.get(id=categorie_id)
-        tut = Tut(categorie_id=categorie)
+        categorie = Categories.objects.get(id=categorie_id)
+        tut = Tuts(categorie_id=categorie)
         form = TutForm(instance=tut)
 
     return render(request, 'course/add.html', {'form': form})
@@ -50,8 +50,8 @@ def add_material(request, tut_id):
             form.save()
             return HttpResponseRedirect('/course/')
     else:
-        tut = Tut.objects.get(id=tut_id)
-        data = Material(tut_id=tut)
+        tut = Tuts.objects.get(id=tut_id)
+        data = Materials(tut_id=tut)
         form = MaterialForm(instance=data)
 
     return render(request, 'course/add_material.html', {'form': form})
@@ -59,21 +59,21 @@ def add_material(request, tut_id):
 
 @csrf_protect
 def edit_categorie(request, categorie_id):
-    data = Categorie.objects.get(id=categorie_id)
+    data = Categories.objects.get(id=categorie_id)
     if(request.method == "POST"):
-        form = CategorieForm(request.POST, instance=data)
+        form = CategoryForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/course/')
     else:
-        form = CategorieForm(instance=data)
+        form = CategoryForm(instance=data)
 
     return render(request, 'course/edit_categorie.html', {'form': form})
 
 
 @csrf_protect
 def edit_tut(request, tut_id):
-    data = Tut.objects.get(id=tut_id)
+    data = Tuts.objects.get(id=tut_id)
     if(request.method == "POST"):
         form = TutForm(request.POST, instance=data)
         if(form.is_valid()):
@@ -91,24 +91,24 @@ def edit_material(request):
 
 
 def show_categorie(request):
-    data = Categorie.objects.all()
+    data = Categories.objects.all()
     return render(request, 'course/show_categorie.html', {'data': data})
 
 
 def show_tut(request, tut_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
-    data = Tut.objects.filter(categorie_id=tut_id)
+    data = Tuts.objects.filter(categorie_id=tut_id)
     return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
 
 def show_material(request, tut_id):
-    data = Material.objects.filter(tut_id=tut_id)
+    data = Materials.objects.filter(tut_id=tut_id)
     return render(request, 'course/show_material.html', {'data': data})
 
 
 def delete_categorie(request, categorie_id):
-    record = Categorie.objects.filter(id=categorie_id)
+    record = Categories.objects.filter(id=categorie_id)
     if(record.delete()):
         return HttpResponseRedirect('/course/')
 
@@ -116,7 +116,7 @@ def delete_categorie(request, categorie_id):
 
 
 def delete_tut(request, tut_id):
-    record = Tut.objects.filter(id=tut_id)
+    record = Tuts.objects.filter(id=tut_id)
     if(record.delete()):
         return HttpResponseRedirect('/course/')
 
@@ -124,7 +124,7 @@ def delete_tut(request, tut_id):
 
 
 def delete_material(request, material_id):
-    record = Material.objects.filter(id=material_id)
+    record = Materials.objects.filter(id=material_id)
 
     # try:
     #     .delete(record.video.url)

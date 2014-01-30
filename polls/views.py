@@ -4,13 +4,13 @@ from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # my imports
-from polls.models import Poll, Choise
+from polls.models import Polls, Choises
 from polls.forms  import PollForm, ChoiseForm
 
 
 # Create your views here.
 def index(request, page_numb):
-    poll_list = Poll.objects.all()
+    poll_list = Polls.objects.all()
     paginator = Paginator(poll_list, 2)
     
     try:
@@ -44,8 +44,8 @@ def add_choise(request, poll_id):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        data = Poll.objects.get(id=poll_id)
-        choise = Choise(poll_id=data)
+        data = Polls.objects.get(id=poll_id)
+        choise = Choises(poll_id=data)
         form = ChoiseForm(instance=choise)
 
     return render(request, 'poll/add_choise.html', {'form': form})
@@ -53,14 +53,14 @@ def add_choise(request, poll_id):
 
 @csrf_protect
 def edit_poll(request, poll_id):
-    record = Poll.objects.get(id=poll_id)
+    record = Polls.objects.get(id=poll_id)
     if(request.method == "POST"):
         form = PollForm(request.POST, instance=record)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        data = Poll.objects.get(id=poll_id)
+        data = Polls.objects.get(id=poll_id)
         form = PollForm(instance=data)
 
     return render(request, 'poll/edit_poll.html', {'form': form})
@@ -73,20 +73,20 @@ def edit_choise(request, choise_id):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        data = Choise.objects.get(id=choise_id)
+        data = Choises.objects.get(id=choise_id)
         form = ChoiseForm(instance=data)
 
     return render(request, 'poll/edit_choise.html', {'form': form})
 
 
 def take_poll(request, poll_id):
-    data = Choise.objects.filter(poll_id=poll_id)
+    data = Choises.objects.filter(poll_id=poll_id)
 
     return render(request, 'poll/take.html', {'data': data})
 
 
 def delete_poll(request, poll_id):
-    record = Poll.objects.get(id=poll_id)
+    record = Polls.objects.get(id=poll_id)
     if(record.delete()):
         return HttpResponseRedirect('/poll/')
 
@@ -94,7 +94,7 @@ def delete_poll(request, poll_id):
 
 
 def delete_choise(request, choise_id):
-    record = Choise.objects.get(id=choise_id)
+    record = Choises.objects.get(id=choise_id)
     if(record.delete()):
         return HttpResponseRedirect('/poll/')
 

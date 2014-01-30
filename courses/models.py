@@ -3,7 +3,7 @@ from time import time
 
 
 # Create your models here.
-class Categorie(models.Model):
+class Categories(models.Model):
     course = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -12,7 +12,7 @@ class Categorie(models.Model):
         return self.course
 
 
-class Tut(models.Model):
+class Tuts(models.Model):
     BEGINNER = '1'
     MEDIUM   = '2'
     ADVANCED = '3'
@@ -21,7 +21,7 @@ class Tut(models.Model):
         (MEDIUM,   'Videjs'),
         (ADVANCED, 'Gruts'),
     )
-    categorie_id = models.ForeignKey(Categorie, db_index=True)
+    categorie_id = models.ForeignKey(Categories, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
@@ -42,8 +42,8 @@ def handle_file_upload(instance, filename):
     # instance.file.save(save=True)
 
 
-class Material(models.Model):
-    tut_id = models.ForeignKey(Tut, db_index=True)
+class Materials(models.Model):
+    tut_id = models.ForeignKey(Tuts, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     video = models.FileField(upload_to=handle_file_upload, max_length=255)

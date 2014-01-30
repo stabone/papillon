@@ -4,9 +4,9 @@ from polls.models import Poll, Choise
 
 class PollForm(ModelForm):
     class Meta:
-        model = Poll
+        model = Polls
 
 
 class ChoiseForm(ModelForm):
     class Meta:
-        model = Choise
+        model = Choises

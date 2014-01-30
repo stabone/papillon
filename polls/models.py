@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Poll(models.Model):
+class Polls(models.Model):
     question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -9,8 +9,8 @@ class Poll(models.Model):
     def __unicode__(self):
         return self.question
 
-class Choise(models.Model):
-    poll_id = models.ForeignKey(Poll, db_index=True)
+class Choises(models.Model):
+    poll_id = models.ForeignKey(Polls, db_index=True)
     option  = models.CharField(max_length=255)
     choise_type = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
