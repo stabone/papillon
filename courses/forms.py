@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from courses.models import Categorie, Tut, Material
+from courses.models import Categories, Tuts, Materials
 
 
 class CategoryForm(ModelForm):

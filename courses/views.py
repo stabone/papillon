@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from djang.views.decorators.csrf import csrf_protect
+from django.views.decorators.csrf import csrf_protect
 
 from courses.models import Categories, Tuts, Materials
 from courses.forms import CategoryForm, TutForm, MaterialForm

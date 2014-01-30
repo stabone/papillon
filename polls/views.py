@@ -9,12 +9,12 @@ from polls.forms  import PollForm, ChoiseForm
 
 
 # Create your views here.
-def index(request, page_numb):
+def index(request, page_numb=None):
     poll_list = Polls.objects.all()
     paginator = Paginator(poll_list, 2)
     
     try:
-        poll_slice = paginator(page_numb)
+        poll_slice = paginator.page(page_numb)
     except PageNotAnInteger:
         poll_slice = paginator.page(1)
     except EmptyPage:
