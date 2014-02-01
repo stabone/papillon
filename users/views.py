@@ -2,11 +2,12 @@ from django.shortcuts import render #, redirect
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
+from django.core.mail import send_mail
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrig.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout
 
 
 # Create your views here.
@@ -51,6 +52,18 @@ def edit_profile(request, user_id):
     # all goodies in form
     return render(request, 'user/profile.html', {'form': form})
 
+def send_notification(request):
+    subject = 'like a cat'
+    message ='got milk?'
+    from_email = 'cookie@epasts.lv'
+    to_list = ['stabone@inbox.lv', 'ivars883@inbox.lv']
+    try:
+        send_mail(subject, message, from_email, to_list, fail_silently)
+    except SMTPException:
+        return HttpResponseRedirect('/')
+
+    return HttpResponseRedirect('/user/')
+
 
 @csrf_protect
 def login_user(request):
@@ -63,8 +76,10 @@ def login_user(request):
             # redirect to a success page
         else:
             # return a 'disabled login' error message
+            pass
     else:
         # return an 'invalid login' error message
+        pass
 
 
 @login_required
