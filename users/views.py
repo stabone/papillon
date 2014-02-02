@@ -57,10 +57,11 @@ def send_notification(request):
     message ='got milk?'
     from_email = 'cookie@epasts.lv'
     to_list = ['stabone@inbox.lv', 'ivars883@inbox.lv']
-    try:
-        send_mail(subject, message, from_email, to_list, fail_silently)
-    except SMTPException:
-        return HttpResponseRedirect('/')
+
+    # try:
+    send_mail(subject, message, from_email, to_list, fail_silently=False)
+    # except SMTPException:
+        # return HttpResponseRedirect('/')
 
     return HttpResponseRedirect('/user/')
 

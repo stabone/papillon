@@ -98,3 +98,15 @@ MEDIA_URL = '/static/media/'
 # MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
 MEDIA_ROOT = os.path.join(PROJECT_PATH, 'static/media')
 
+
+# Email settings
+# for now [python -m smtpd -n -c DebuggingServer localhost:1025]
+EMAIL_HOST = 'localhost'
+EMAIL_POST = 1025
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+
+
+
+
