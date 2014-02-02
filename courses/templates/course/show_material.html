@@ -12,14 +12,28 @@
         </div>
     {% endif %}
 
+    <div class="ui label purple">
+        Skaits: {{ data.all.count }}
+    </div>
+
     {% for rec in data %}
         <div class="ui tertiary segment">
             <div class="ui inverted purple block header">
                 {{ rec.title }}
-                <a class="ui red" href="/course/delete/{{ rec.id }}/material"><i class="trash icon"></i></a>
+                <a class="ui red" href="/course/delete/{{ rec.id }}/material">
+                    <i class="trash icon"></i>
+                </a>
             </div>
-
-            <img src="{{ rec.video.url }}" alt="{{ rec.video.name }}" title="{{ rec.video.name }}"/>
+            <b>{{ rec.video.name }}</b>
+            <video controls width="320" height="240">
+                <source src="{{ rec.video.url }}" type="video/mp4">
+                <source src="{{ rec.video.url }}" type="video/webm">
+                Your browser is s.h.i.t ;)
+            </video>
+        </div>
+    {% empty %}
+        <div class="ui warning message">
+            <p>S.H.I.T got real. Nothing to do here</p>
         </div>
     {% endfor %}
 {% endblock content %}
