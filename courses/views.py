@@ -7,7 +7,7 @@ from courses.forms import CategoryForm, TutForm, MaterialForm
 
 
 def index(request):
-    data = Categories.objects.all()
+    data = Categories.objects.all().order_by('course')
     return render(request, 'course/index.html', {'data': data})
 
 

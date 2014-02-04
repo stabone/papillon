@@ -18,5 +18,7 @@
             	<i class="trash icon"></i>
             </a>
         </div>
+    {% empty %}
+        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
 {% endblock content %}
