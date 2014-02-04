@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from time import time
 
@@ -28,7 +30,6 @@ class Tuts(models.Model):
     rating = models.PositiveSmallIntegerField(default=1)
     times_rated = models.PositiveIntegerField(default=0)
     tags = models.CharField(max_length=255)
-    updated_at = models.DateTimeField(auto_now=True)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

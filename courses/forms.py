@@ -1,17 +1,35 @@
-from django.forms import ModelForm
+# from django.forms import ModelForm
+from django import forms
 
 from courses.models import Categories, Tuts, Materials
 
 
-class CategoryForm(ModelForm):
+class CategoryForm(forms.ModelForm):
     class Meta:
         model = Categories
-        #TODO: attrs={'class':'ui form'} // there should be manualy created form
+        labels = {
+            'course': 'Nosaukums',
+        }
+        widgets = {
+            'course': forms.TextInput(attrs={'class': 'cat'}),
+        }
 
-class TutForm(ModelForm):
+class TutForm(forms.ModelForm):
     class Meta:
         model = Tuts
+        labels = {
+                'categorie_id': 'Kategorija',
+                'title': 'Nosaukums',
+                'description': 'Apraksts',
+                'level': 'Limenis',
+                'rating': 'Vertejums',
+                'times_rated': 'Vertets',
+                'tags': 'Birkas',
+                'post': 'Publicet',
+        }
+        widgets = {
+        }
 
-class MaterialForm(ModelForm):
+class MaterialForm(forms.ModelForm):
     class Meta:
         model = Materials
