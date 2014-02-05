@@ -2,25 +2,28 @@
 
 
 {% block content %}
+    <div class="ui divided list">
     {% for rec in data %}
-        <div class="data">
-            <a href="/poll/take/{{ rec.id }}/poll/">{{ rec.question }}</a>
-            <a href="/poll/add/{{ rec.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
-            	<i class="add icon"></i>
-            </a>
-            <a href="/poll/edit/{{ rec.id }}/poll/">
-            	<i class="edit icon"></i>
-            </a>
-            <a href="/poll/delete/{{ rec.id }}/poll/">
-            	<i class="trash icon"></i>
-            </a>
+        <div class="item">
+            <div class="content">
+                <div class="header">
+                    <a href="/poll/take/{{ rec.id }}/poll/">{{ rec.question }}</a>
+                    <a href="/poll/add/{{ rec.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
+                        <i class="add icon"></i>
+                    </a>
+                    <a href="/poll/edit/{{ rec.id }}/poll/"><i class="edit icon"></i></a>
+                    <a href="/poll/delete/{{ rec.id }}/poll/"><i class="trash icon"></i></a>
+                </div>
+                <div class="description">
+                    {{ rec.description }}
+                </div>
+            </div>
         </div>
+    {% empty %}
+        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
+    </div>
 
-    <!--
-    <a class="item"> no </a>
-    <a class="item" href="/poll/{{ data.paginator.num_pages }}">{{ data.paginator.num_pages }}
-    -->
     <div class="ui pagination menu">
         {% if data.has_previous %}
             <a class="item" href="/poll/{{ data.previous_page_number }}">
