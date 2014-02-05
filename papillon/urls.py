@@ -10,4 +10,8 @@ urlpatterns = patterns('',
     url(r'^user/',   include('users.urls')),
 )
 
-handler404 = 'courses.views.handler404'
+handler400 = 'helper.views.handler400'
+handler403 = 'helper.views.handler403'
+handler404 = 'helper.views.handler404'
+handler500 = 'helper.views.handler500'
+
