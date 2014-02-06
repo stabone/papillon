@@ -13,11 +13,11 @@ class Polls(models.Model):
 
 
 class Questions(models.Model):
-    poll_id = models.ForeignKey(Poll, db_index=True)
-    question = models.CharField(max_lenght=255)
+    poll_id = models.ForeignKey(Polls, db_index=True)
+    question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    
+
     def __unicode__(self):
         return self.question
 
