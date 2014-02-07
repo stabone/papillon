@@ -23,8 +23,8 @@ class Questions(models.Model):
 
 
 class Choises(models.Model):
-    poll_id = models.ForeignKey(Questions, db_index=True)
-    option  = models.CharField(max_length=255)
+    question_id = models.ForeignKey(Questions, db_index=True)
+    option = models.CharField(max_length=255)
     choise_type = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

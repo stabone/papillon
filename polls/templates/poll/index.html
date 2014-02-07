@@ -7,12 +7,15 @@
         <div class="item">
             <div class="content">
                 <div class="header">
-                    <a href="/poll/take/{{ rec.id }}/poll/">{{ rec.poll }}</a>
-                    <a href="/poll/add/{{ rec.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
+                    <a href="/poll/take/{{ rec.id }}/question/">{{ rec.poll }}</a>
+                    <a href="/poll/add/{{ rec.id }}/question/" alt="Pievienot variantu" title="Pievienot">
                         <i class="add icon"></i>
                     </a>
                     <a href="/poll/edit/{{ rec.id }}/poll/"><i class="edit icon"></i></a>
                     <a href="/poll/delete/{{ rec.id }}/poll/"><i class="trash icon"></i></a>
+                    <div>
+                        {{ rec.created_at|date:"Y.m.d H:i:s" }}
+                    </div>
                 </div>
                 <div class="description">
                     {{ rec.description }}

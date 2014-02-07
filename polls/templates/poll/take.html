@@ -3,11 +3,14 @@
 {% block content %}
     <ul>
     {% for record in data %}
-        <div>{{ record.option }}
-            <a href="/poll/edit/{{ record.id }}/choise/">
+        <div>{{ record.question }}
+            <a href="/poll/add/{{ record.id }}/{{ record.poll_id.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
+                <i class="add icon"></i>
+            </a>
+            <a href="/poll/edit/{{ record.id }}/question/">
             	<i class="edit icon"></i>
             </a>
-            <a href="/poll/delete/{{ record.id }}/choise/">
+            <a href="/poll/delete/{{ record.id }}/question/">
             	<i class="trash icon"></i>
             </a>
         </div>

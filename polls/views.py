@@ -38,22 +38,9 @@ def add_poll(request):
 
 
 @csrf_protect
-def add_question(request):
+def add_question(request, poll_id):
     if(request.method == "POST"):
         form = QuestionForm(request.POST)
-        if(form.is_valid()):
-            form.save()
-            return HttpResponseRedirect('/poll/')
-    else:
-        form = QuestionForm()
-
-    return render(request, 'poll/add.html', {'form': form})
-
-
-@csrf_protect
-def add_choise(request, poll_id):
-    if(request.method == "POST"):
-        form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
@@ -63,8 +50,30 @@ def add_choise(request, poll_id):
         except ObjectDoesNotExist:
             pass
 
-        choise = Choises(poll_id=data)
-        form = ChoiseForm(instance=choise)
+        question = Questions(poll_id=data)
+        form = QuestionForm(instance=question)
+
+    return render(request, 'poll/add.html', {'form': form})
+
+
+@csrf_protect
+def add_choise(request, question_id, poll_id):
+    if(request.method == "POST"):
+        form = ChoiseForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            return HttpResponseRedirect('/poll/')
+    else:
+        try:
+            # data = Polls.objects.get(id=poll_id)
+            data = Questions.objects.filter(poll_id=poll_id)
+        except ObjectDoesNotExist:
+            pass
+
+        # choise = Choises(poll_id=data)
+        # choise = Choises(question_id=data)
+        # form = ChoiseForm(instance=choise)
+        form = ChoiseForm()
 
     return render(request, 'poll/add_choise.html', {'form': form})
 
@@ -132,6 +141,13 @@ def take_poll(request, poll_id):
 
     return render(request, 'poll/take.html', {'data': data})
 
+def take_question(request, poll_id):
+    try:
+        data = Questions.objects.filter(poll_id=poll_id)
+    except ObjectDoesNotExist:
+        pass
+
+    return render(request, 'poll/take.html', {'data': data})
 
 # here should be right check
 def delete_poll(request, poll_id):
