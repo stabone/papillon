@@ -62,20 +62,17 @@ def add_choise(request, question_id, poll_id):
         form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/')
+            return HttpResponseRedirect('/poll/take/{0}/question/'.format(poll_id))
     else:
         try:
-            # data = Polls.objects.get(id=poll_id)
-            data = Questions.objects.filter(poll_id=poll_id)
+            data = Questions.objects.get(id=question_id)
         except ObjectDoesNotExist:
             pass
 
-        # choise = Choises(poll_id=data)
-        # choise = Choises(question_id=data)
-        # form = ChoiseForm(instance=choise)
-        form = ChoiseForm()
+        choise = Choises(question_id=data)
+        form = ChoiseForm(instance=choise)
 
-    return render(request, 'poll/add_choise.html', {'form': form})
+    return render(request, 'poll/add_choise.html', {'form': form, 'poll': data.poll_id})
 
 
 @csrf_protect
@@ -141,13 +138,37 @@ def take_poll(request, poll_id):
 
     return render(request, 'poll/take.html', {'data': data})
 
+
+def packQuestions(choises):
+    # magic of television
+    """
+        ansers are stored in dictionary where as key
+        is used answer pk
+
+        returns list with ansers dictionaries
+    """
+    answer_list = []
+    for answer in choises:
+        answer_list.append({answer.id: answer.option})
+
+    return answer_list
+
 def take_question(request, poll_id):
     try:
         data = Questions.objects.filter(poll_id=poll_id)
+        answer_list = []
+        for rec in data:
+            choises = Choises.objects.filter(question_id=rec.id)
+            """
+                answer list is appendet to anser stack
+                for all questions
+            """
+            question_list = packQuestions(choises)
+            answer_list.append({rec.id: question_list})
     except ObjectDoesNotExist:
         pass
 
-    return render(request, 'poll/take.html', {'data': data})
+    return render(request, 'poll/take.html', {'data': data, 'answers': answer_list})
 
 # here should be right check
 def delete_poll(request, poll_id):

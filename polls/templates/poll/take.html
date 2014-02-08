@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <ul>
+
+    {% if data %}
+        {{ data.first.poll_id }}
+    {% endif %}
+
     {% for record in data %}
         <div>{{ record.question }}
             <a href="/poll/add/{{ record.id }}/{{ record.poll_id.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
@@ -13,9 +17,15 @@
             <a href="/poll/delete/{{ record.id }}/question/">
             	<i class="trash icon"></i>
             </a>
+            <div>
+                <ul>
+                {% for answer in answers %}
+                    <li></li>
+                {% endfor %}
+                </ul>
+            </div>
         </div>
     {% empty %}
         <div class="ui warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
-    </ul>
 {% endblock content %}

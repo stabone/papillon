@@ -2,6 +2,7 @@
 
 {% block content %}
 
+    {{ poll.poll }}
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_ul }}

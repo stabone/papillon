@@ -15,3 +15,4 @@ class QuestionForm(ModelForm):
 class ChoiseForm(ModelForm):
     class Meta:
         model = Choises
+        exclude = ('choise_type',)
