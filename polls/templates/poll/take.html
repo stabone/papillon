@@ -6,6 +6,7 @@
         {{ data.first.poll_id }}
     {% endif %}
 
+    <form action="" metohod="POST">
     {% for record in data %}
         <div>{{ record.question }}
             <a href="/poll/add/{{ record.id }}/{{ record.poll_id.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
@@ -19,8 +20,17 @@
             </a>
             <div>
                 <ul>
-                {% for answer in answers %}
-                    <li></li>
+                {% for answer_id, answer_list in answers %}
+                    {% ifequal answer_id record.id %}
+                        {% for id, option in answer_list %}
+                            <div class="field">
+                            <div class="ui radio checkbox">
+                                <input type="radio" name="answer_grp_{{ answer_id }}" value="{{ id }}" />
+                                <label>{{ option }}</label>
+                            </div>
+                            </div>
+                        {% endfor %}
+                    {% endifequal %}
                 {% endfor %}
                 </ul>
             </div>
@@ -28,4 +38,6 @@
     {% empty %}
         <div class="ui warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
+        <input type="submit" value="Saglabāt" class="ui button green" />
+    </form>
 {% endblock content %}

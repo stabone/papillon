@@ -149,7 +149,7 @@ def packQuestions(choises):
     """
     answer_list = []
     for answer in choises:
-        answer_list.append({answer.id: answer.option})
+        answer_list.append((answer.id, answer.option,))
 
     return answer_list
 
@@ -164,7 +164,7 @@ def take_question(request, poll_id):
                 for all questions
             """
             question_list = packQuestions(choises)
-            answer_list.append({rec.id: question_list})
+            answer_list.append((rec.id, question_list,))
     except ObjectDoesNotExist:
         pass
 
