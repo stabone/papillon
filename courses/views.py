@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect
 
 from courses.models import Categories, Tuts, Materials
@@ -136,6 +136,18 @@ def delete_material(request, material_id):
         return HttpResponseRedirect('/course/')
 
     return HttpResponseRedirect('/course/')
+
+
+def rate_tut(request):
+    tut_id = request.POST.get('tut_id')
+    print(tut_id)
+
+    tut = get_object_or_404(Tuts, id=tut_id)
+    tut.rating += 3
+    tut.times_rated += 1
+    tut.save()
+
+    return HttpResponse()
 
 
 # customized 404 error
