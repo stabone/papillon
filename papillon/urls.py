@@ -8,7 +8,8 @@ urlpatterns = patterns('',
     url(r'^admin/',  include(admin.site.urls)),
     url(r'^poll/',   include('polls.urls')),
     url(r'^course/', include('courses.urls')),
-    url(r'^usr/',    include('users.urls')),
+    url(r'^user/',   include('users.urls')),
+    url(r'^comment/',include('comments.urls')),
 )
 
 handler400 = 'helper.views.handler400'

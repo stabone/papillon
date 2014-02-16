@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 from time import time
 
 
@@ -24,6 +25,7 @@ class Tuts(models.Model):
         (ADVANCED, 'Gruts'),
     )
     categorie_id = models.ForeignKey(Categories, db_index=True)
+    author = models.ForeignKey(User)
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
@@ -50,4 +52,8 @@ class Materials(models.Model):
     video = models.FileField(upload_to=handle_file_upload, max_length=255)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def video(self):
+        pass # for video property processing
 
