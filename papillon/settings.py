@@ -102,12 +102,9 @@ MEDIA_ROOT = os.path.join(PROJECT_PATH, 'static/media')
 
 # Email settings
 # for now [python -m smtpd -n -c DebuggingServer localhost:1025]
-EMAIL_HOST = 'localhost'
-EMAIL_POST = 1025
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-
-
-
-
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST_USER = 'ivars883@gmail.com'
+EMAIL_HOST_PASSWORD = 'inbox.lv'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
