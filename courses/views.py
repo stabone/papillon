@@ -38,7 +38,7 @@ def add_tut(request, categorie_id):
         tut = Tuts(categorie_id=categorie)
         form = TutForm(instance=tut)
 
-    return render(request, 'course/add.html', {'form': form})
+    return render(request, 'course/add_tut.html', {'form': form})
 
 
 @csrf_protect
