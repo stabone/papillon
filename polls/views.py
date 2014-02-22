@@ -5,14 +5,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 
 # my imports
-from polls.models import Polls, Questions, Choises
+from polls.models import Polls, Questions, Choises, Results
 from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
 
 # Create your views here.
 def index(request, page_numb=None):
     poll_list = Polls.objects.all()
-    paginator = Paginator(poll_list, 2)
+    paginator = Paginator(poll_list, 5)
 
     try:
         poll_slice = paginator.page(page_numb)
@@ -34,7 +34,7 @@ def add_poll(request):
     else:
         form = PollForm()
 
-    return render(request, 'poll/add.html', {'form': form})
+    return render(request, 'poll/add_poll.html', {'form': form})
 
 
 @csrf_protect
@@ -53,7 +53,7 @@ def add_question(request, poll_id):
         question = Questions(poll_id=data)
         form = QuestionForm(instance=question)
 
-    return render(request, 'poll/add.html', {'form': form})
+    return render(request, 'poll/add_question.html', {'form': form})
 
 
 @csrf_protect
@@ -88,7 +88,6 @@ def edit_poll(request, poll_id):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        data = Polls.objects.get(id=poll_id)
         form = PollForm(instance=data)
 
     return render(request, 'poll/edit_poll.html', {'form': form})
@@ -114,17 +113,17 @@ def edit_question(request, question_id):
 
 @csrf_protect
 def edit_choise(request, choise_id):
+    try:
+        data = Choises.objects.get(id=choise_id)
+    except ObjectDoesNotExist:
+        return HttpResponseRedirect('/poll/')
+
     if(request.method == "POST"):
-        form = ChoiseForm(request.POST)
+        form = ChoiseForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        try:
-            data = Choises.objects.get(id=choise_id)
-        except ObjectDoesNotExist:
-            return HttpResponseRedirect('/poll/')
-
         form = ChoiseForm(instance=data)
 
     return render(request, 'poll/edit_choise.html', {'form': form})
@@ -153,6 +152,7 @@ def packQuestions(choises):
 
     return answer_list
 
+
 def take_question(request, poll_id):
     try:
         data = Questions.objects.filter(poll_id=poll_id)
@@ -169,6 +169,7 @@ def take_question(request, poll_id):
         pass
 
     return render(request, 'poll/take.html', {'data': data, 'answers': answer_list})
+
 
 # here should be right check
 def delete_poll(request, poll_id):
@@ -205,3 +206,26 @@ def delete_choise(request, choise_id):
         return HttpResponseRedirect('/poll/')
 
     return HttpResponseRedirect('/poll/')
+
+
+@csrf_protect
+def save_poll_results(request):
+    if request.method == "POST":
+        # QueryDict converting to python dictionary
+        post_dict = request.POST.dict()
+        #poll = Polls.objects.get(id=1)
+        obj_list = []
+
+        for key, value in post_dict.iteritems():
+            please_int = key[-1]
+            try:
+                questiond = int(please_int,base=10)
+                obj_list.append(Results(poll_id=1,question_id=questiond,answer_id=value))
+            except ValueError:
+                print("Cound't convert '{0}' to integer".format(please_int))
+
+        if obj_list:
+            all_results = Results.objects.bulk_create(obj_list)
+
+    return HttpResponseRedirect('/poll/')
+

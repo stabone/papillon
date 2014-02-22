@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.poll.label }}</label>
+                {{ form.poll }}
+            </div>
+
+            <div class="field">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            </div>
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
+    </form>
+{% endblock content %}

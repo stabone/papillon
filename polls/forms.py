@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 
 from polls.models import Polls, Questions, Choises
 
@@ -7,9 +8,12 @@ class PollForm(ModelForm):
         model = Polls
 
 
-class QuestionForm(ModelForm):
+class QuestionForm(forms.ModelForm):
     class Meta:
         model = Questions
+        widgets = {
+                'question': forms.TextInput(attrs={'class': ''}),
+        }
 
 
 class ChoiseForm(ModelForm):

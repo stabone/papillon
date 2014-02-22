@@ -6,38 +6,45 @@
         {{ data.first.poll_id }}
     {% endif %}
 
-    <form action="" metohod="POST">
-    {% for record in data %}
-        <div>{{ record.question }}
-            <a href="/poll/add/{{ record.id }}/{{ record.poll_id.id }}/choise/" alt="Pievienot variantu" title="Pievienot">
-                <i class="add icon"></i>
-            </a>
-            <a href="/poll/edit/{{ record.id }}/question/">
-            	<i class="edit icon"></i>
-            </a>
-            <a href="/poll/delete/{{ record.id }}/question/">
-            	<i class="trash icon"></i>
-            </a>
-            <div>
-                <ul>
-                {% for answer_id, answer_list in answers %}
-                    {% ifequal answer_id record.id %}
-                        {% for id, option in answer_list %}
-                            <div class="field">
-                            <div class="ui radio checkbox">
-                                <input type="radio" name="answer_grp_{{ answer_id }}" value="{{ id }}" />
-                                <label>{{ option }}</label>
-                            </div>
-                            </div>
-                        {% endfor %}
-                    {% endifequal %}
-                {% endfor %}
-                </ul>
+    <form action="{% url 'save_poll_results' %}" method="POST">
+        {% csrf_token %}
+        {% for rec in data %}
+            <div>{{ rec.question }}
+                <a href="{% url 'add_choise' rec.id rec.poll_id.id %}" alt="Pievienot variantu" title="Pievienot">
+                    <i class="add icon"></i>
+                </a>
+                <a href="{% url 'edit_poll' rec.id %}">
+                    <i class="edit icon"></i>
+                </a>
+                <a href="{% url 'delete_question' rec.id %}">
+                    <i class="trash icon"></i>
+                </a>
+                <div>
+                    <ul>
+                    {% for answer_id, answer_list in answers %}
+                        {% ifequal answer_id rec.id %}
+                            {% for id, option in answer_list %}
+                                <div class="field">
+                                <div class="ui radio checkbox">
+                                    <input type="radio" name="answer_grp_{{ answer_id }}" value="{{ id }}" />
+                                    <label>{{ option }}</label>
+                                    <a href="{% url 'edit_choise' id %}">
+                                        <i class="edit icon"></i>
+                                    </a>
+                                    <a href="{% url 'delete_choise' id %}">
+                                        <i class="trash icon"></i>
+                                    </a>
+                                </div>
+                                </div>
+                            {% endfor %}
+                        {% endifequal %}
+                    {% endfor %}
+                    </ul>
+                </div>
             </div>
-        </div>
-    {% empty %}
-        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
-    {% endfor %}
+        {% empty %}
+            <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+        {% endfor %}
         <input type="submit" value="Saglabāt" class="ui button green" />
     </form>
 {% endblock content %}

@@ -5,8 +5,27 @@
     {{ poll.poll }}
     <form method="POST" action="">
         {% csrf_token %}
-        {{ form.as_ul }}
-        <input type="submit" value="Saglabāt" class="ui green button" />
+
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.question_id.label }}</label>
+                {{ form.question_id }}
+            </div>
+
+            <div class="field">
+                <label>{{ form.option.label }}</label>
+                {{ form.option }}
+            </div>
+
+            <div class="field">
+                <div class="ui checkbox">
+                    <label>{{ form.correct.label }}</label>
+                    {{ form.correct }}
+                </div>
+            </div>
+
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
     </form>
 
 {% endblock content %}

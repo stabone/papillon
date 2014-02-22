@@ -3,6 +3,9 @@ $('.ui.dropdown').dropdown({on: 'hover'});
 
 $('.ui.radio.checkbox').checkbox();
 
+$('.ui.checkbox').checkbox({context: false});
+
+$('.ui.selection.dropdown').dropdown();
 
 function getCookie(name) {
     var cookieValue = null;
