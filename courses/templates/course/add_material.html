@@ -3,7 +3,28 @@
 {% block content %}
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_ul }}
-        <input type="submit" value="Saglabāt" class="ui green button" />
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.tut_id.label }}</label>
+                {{ form.tut_id }}
+            </div>
+            <div class="field">
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="field">
+                <label>{{ form.video.label }}</label>
+                {{ form.video }}
+            </div>
+            <div class="field">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            </div>
+            <div class="field">
+                <label>{{ form.post.label }}</label>
+                {{ form.post }}
+            </div>
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
     </form>
 {% endblock content %}

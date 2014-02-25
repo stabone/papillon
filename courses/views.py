@@ -103,6 +103,9 @@ def show_tut(request, tut_id):
 
 
 def show_material(request, tut_id):
+    if(request.method == "POST"):
+        # comment form
+        request.POST
     data = Materials.objects.filter(tut_id=tut_id)
     return render(request, 'course/show_material.html', {'data': data})
 

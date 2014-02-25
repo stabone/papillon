@@ -24,16 +24,33 @@
                     <i class="trash icon"></i>
                 </a>
             </div>
-            <b>{{ rec.video.name }}</b>
-            <video controls width="320" height="240">
+            <video controls width="320" height="240"
+                        alt="{{ rec.video.name }}" title="{{ rec.video.name }}">
                 <source src="{{ rec.video.url }}" type="video/mp4">
                 <source src="{{ rec.video.url }}" type="video/webm">
-                Your browser is s.h.i.t ;)
+                Please update your browser
             </video>
+            <p>
+                {{ rec.description }}
+            </p>
         </div>
     {% empty %}
         <div class="ui warning message">
-            <p>S.H.I.T got real. Nothing to do here</p>
+            <p>S.H.I.T just got real. Nothing to do here</p>
         </div>
     {% endfor %}
+
+    {% if data %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="ui form">
+                <div class="field">
+                    <label>Komentārs:</label>
+                    <textarea></textarea>
+                </div>
+                <input type="submit" value="Saglabāt" class="ui green button" />
+            </div>
+        </form>
+    {% endif %}
+
 {% endblock content %}

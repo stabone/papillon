@@ -53,7 +53,7 @@ class Materials(models.Model):
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    @property
-    def video(self):
-        pass # for video property processing
+    # @property
+    # def video(self):
+        # pass # for video property processing
 
