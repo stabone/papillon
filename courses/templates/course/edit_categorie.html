@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {% if form == None %}
+    {% if not form %}
         <p>Ieraksts netiak atrasts</p>
     {% endif %}
     <form method="POST" action="">

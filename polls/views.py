@@ -66,7 +66,7 @@ def add_choise(request, question_id, poll_id):
         choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
-    return render(request, 'poll/add_choise.html', {'form': form, 'poll': data.poll_id})
+    return render(request, 'poll/add_choise.html', {'form': form, 'poll': data.poll})
 
 
 @csrf_protect
@@ -136,10 +136,10 @@ def pack_questions(choises):
 
 
 def take_question(request, poll_id):
-    data = get_object_or_404(Questions, poll=poll_id)
+    data = Questions.objects.filter(poll=poll_id)
     answer_list = []
     for rec in data:
-        choises = get_object_or_404(Choises, question=rec.id)
+        choises = Choises.objects.filter(question=rec.id)
         """
             answer list is appendet to anser stack
             for all questions

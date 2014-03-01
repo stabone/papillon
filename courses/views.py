@@ -98,7 +98,7 @@ def show_categorie(request):
 def show_tut(request, tut_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
-    data = Tuts.objects.filter(categorie_id=tut_id)
+    data = Tuts.objects.filter(category=tut_id)
     return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
 

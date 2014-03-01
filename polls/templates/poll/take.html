@@ -10,7 +10,7 @@
         {% csrf_token %}
         {% for rec in data %}
             <div>{{ rec.question }}
-                <a href="{% url 'add_choise' rec.id rec.poll_id.id %}" alt="Pievienot variantu" title="Pievienot">
+                <a href="{% url 'add_choise' rec.id rec.poll.id %}" alt="Pievienot variantu" title="Pievienot">
                     <i class="add icon"></i>
                 </a>
                 <a href="{% url 'edit_poll' rec.id %}">

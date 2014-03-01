@@ -46,3 +46,43 @@ $('a.rate').click(function(){
     // console.log('cookie for ya: ' + tutId);
     return rateTut(tutId);
 });
+
+
+/* for pomodoro timer */
+var timerId;
+var classState = true;
+
+$('#timer').click(function() {
+    startPomodoro();
+});
+
+function startPomodoro() {
+    timerID = setInterval('pomodoro()', 1000);
+}
+
+function pomodoro() {
+    updateDOM();
+}
+
+function updateDOM() {
+    console.log(" it's on going process");
+    var timer = $('#timer');
+    var purple = 'purple time icon';
+    var green = 'green time icon';
+    var timerColor;
+
+    if(classState) {
+        timerColor = purple;
+        classState = false;
+    } else {
+        timerColor = green;
+        classState = true;
+    }
+
+    timer.attr('class', timerColor);
+}
+
+function stopPomodoro() {
+    console.log(" timer END");
+    clearTimeout(timerId);
+}
