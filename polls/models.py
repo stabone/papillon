@@ -14,7 +14,7 @@ class Polls(models.Model):
 
 
 class Questions(models.Model):
-    poll_id = models.ForeignKey(Polls, db_index=True)
+    poll = models.ForeignKey(Polls, db_index=True)
     question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -24,7 +24,7 @@ class Questions(models.Model):
 
 
 class Choises(models.Model):
-    question_id = models.ForeignKey(Questions, db_index=True)
+    question = models.ForeignKey(Questions, db_index=True)
     option = models.CharField(max_length=255)
     choise_type = models.IntegerField(default=0)
     correct = models.BooleanField(default=False)

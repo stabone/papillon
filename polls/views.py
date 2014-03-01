@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -41,16 +41,14 @@ def add_poll(request):
 def add_question(request, poll_id):
     if(request.method == "POST"):
         form = QuestionForm(request.POST)
+        print("cookie")
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        try:
-            data = Polls.objects.get(id=poll_id)
-        except ObjectDoesNotExist:
-            pass
-
-        question = Questions(poll_id=data)
+        print("cookie")
+        data = get_object_or_404(Polls, id=poll_id)
+        question = Questions(poll=data)
         form = QuestionForm(instance=question)
 
     return render(request, 'poll/add_question.html', {'form': form})
@@ -64,12 +62,8 @@ def add_choise(request, question_id, poll_id):
             form.save()
             return HttpResponseRedirect('/poll/take/{0}/question/'.format(poll_id))
     else:
-        try:
-            data = Questions.objects.get(id=question_id)
-        except ObjectDoesNotExist:
-            pass
-
-        choise = Choises(question_id=data)
+        data = get_object_or_404(Questions, id=question_id)
+        choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
     return render(request, 'poll/add_choise.html', {'form': form, 'poll': data.poll_id})
@@ -77,10 +71,7 @@ def add_choise(request, question_id, poll_id):
 
 @csrf_protect
 def edit_poll(request, poll_id):
-    try:
-        record = Polls.objects.get(id=poll_id)
-    except ObjectDoesNotExist:
-        return HttpResponseRedirect('/poll/')
+    record = get_object_or_404(Polls, id=poll_id)
 
     if(request.method == "POST"):
         form = PollForm(request.POST, instance=record)
@@ -95,10 +86,7 @@ def edit_poll(request, poll_id):
 
 @csrf_protect
 def edit_question(request, question_id):
-    try:
-        data = Questions.objects.get(id=question_id)
-    except ObjectDoesNotExist:
-        return HttpResponseRedirect('/poll/')
+    data = get_object_or_404(Questions, id=question_id)
 
     if(request.method == "POST"):
         form = QuestionForm(request.POST, instance=data)
@@ -113,10 +101,7 @@ def edit_question(request, question_id):
 
 @csrf_protect
 def edit_choise(request, choise_id):
-    try:
-        data = Choises.objects.get(id=choise_id)
-    except ObjectDoesNotExist:
-        return HttpResponseRedirect('/poll/')
+    data = get_object_or_404(Choises, id=choise_id)
 
     if(request.method == "POST"):
         form = ChoiseForm(request.POST, instance=data)
@@ -130,15 +115,12 @@ def edit_choise(request, choise_id):
 
 
 def take_poll(request, poll_id):
-    try:
-        data = Choises.objects.filter(poll_id=poll_id)
-    except ObjectDoesNotExist:
-        pass
+    data = get_object_or_404(Choises, poll=poll_id)
 
     return render(request, 'poll/take.html', {'data': data})
 
 
-def packQuestions(choises):
+def pack_questions(choises):
     # magic of television
     """
         ansers are stored in dictionary where as key
@@ -154,29 +136,23 @@ def packQuestions(choises):
 
 
 def take_question(request, poll_id):
-    try:
-        data = Questions.objects.filter(poll_id=poll_id)
-        answer_list = []
-        for rec in data:
-            choises = Choises.objects.filter(question_id=rec.id)
-            """
-                answer list is appendet to anser stack
-                for all questions
-            """
-            question_list = packQuestions(choises)
-            answer_list.append((rec.id, question_list,))
-    except ObjectDoesNotExist:
-        pass
+    data = get_object_or_404(Questions, poll=poll_id)
+    answer_list = []
+    for rec in data:
+        choises = get_object_or_404(Choises, question=rec.id)
+        """
+            answer list is appendet to anser stack
+            for all questions
+        """
+        question_list = pack_questions(choises)
+        answer_list.append((rec.id, question_list,))
 
     return render(request, 'poll/take.html', {'data': data, 'answers': answer_list})
 
 
 # here should be right check
 def delete_poll(request, poll_id):
-    try:
-        record = Polls.objects.get(id=poll_id)
-    except ObjectDoesNotExist:
-        pass
+    record = get_object_or_404(Polls, id=poll_id)
 
     if(record.delete()):
         return HttpResponseRedirect('/poll/')
@@ -185,10 +161,7 @@ def delete_poll(request, poll_id):
 
 
 def delete_question(request, question_id):
-    try:
-        record = Questions.objects.get(id=question_id)
-    except ObjectDoesNotExist:
-        pass
+    record = get_object_or_404(Questions, id=question_id)
 
     if(record.delete()):
         return HttpResponseRedirect('/poll/')
@@ -197,10 +170,7 @@ def delete_question(request, question_id):
 
 
 def delete_choise(request, choise_id):
-    try:
-        record = Choises.objects.get(id=choise_id)
-    except ObjectDoesNotExist:
-        pass
+    record = get_object_or_404(Choises, id=choise_id)
 
     if(record.delete()):
         return HttpResponseRedirect('/poll/')

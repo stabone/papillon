@@ -35,7 +35,7 @@ def add_tut(request, categorie_id):
             return HttpResponseRedirect('/course/')
     else:
         categorie = Categories.objects.get(id=categorie_id)
-        tut = Tuts(categorie_id=categorie)
+        tut = Tuts(category=categorie)
         form = TutForm(instance=tut)
 
     return render(request, 'course/add_tut.html', {'form': form})
@@ -51,7 +51,7 @@ def add_material(request, tut_id):
             return HttpResponseRedirect('/course/')
     else:
         tut = Tuts.objects.get(id=tut_id)
-        data = Materials(tut_id=tut)
+        data = Materials(tut=tut)
         form = MaterialForm(instance=data)
 
     return render(request, 'course/add_material.html', {'form': form})
@@ -106,7 +106,7 @@ def show_material(request, tut_id):
     if(request.method == "POST"):
         # comment form
         request.POST
-    data = Materials.objects.filter(tut_id=tut_id)
+    data = Materials.objects.filter(tut=tut_id)
     return render(request, 'course/show_material.html', {'data': data})
 
 

@@ -24,7 +24,7 @@ class Tuts(models.Model):
         (MEDIUM,   'Videjs'),
         (ADVANCED, 'Gruts'),
     )
-    categorie_id = models.ForeignKey(Categories, db_index=True)
+    category = models.ForeignKey(Categories, db_index=True)
     author = models.ForeignKey(User)
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -46,7 +46,7 @@ def handle_file_upload(instance, filename):
 
 
 class Materials(models.Model):
-    tut_id = models.ForeignKey(Tuts, db_index=True)
+    tut = models.ForeignKey(Tuts, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     video = models.FileField(upload_to=handle_file_upload, max_length=255)
