@@ -17,10 +17,15 @@ def index(request):
 
 
 def create(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+    else:
+        email = ''
+        password = ''
+
     try:
         user = User.objects.create_user(username='jone', password='cookie')
-        # user.username = 'Cookie'
-        # user.password = 'cookie'
         user.email = 'Jone@epasts.lv'
         user.first_name = 'Ivars'
         user.last_name = 'Naglis'
