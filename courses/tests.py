@@ -26,3 +26,5 @@ class CategoriesTest(TestCase):
 	def test_category_creation(self):
 		obj = Categories.objects.get(id=self.pk)
 		self.assertEqual(obj.course, self.random_str)
+
+
