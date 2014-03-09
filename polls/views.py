@@ -34,24 +34,22 @@ def add_poll(request):
     else:
         form = PollForm()
 
-    return render(request, 'poll/add_poll.html', {'form': form})
+    return render(request, 'poll/poll_form.html', {'form': form})
 
 
 @csrf_protect
 def add_question(request, poll_id):
     if(request.method == "POST"):
         form = QuestionForm(request.POST)
-        print("cookie")
         if(form.is_valid()):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        print("cookie")
         data = get_object_or_404(Polls, id=poll_id)
         question = Questions(poll=data)
         form = QuestionForm(instance=question)
 
-    return render(request, 'poll/add_question.html', {'form': form})
+    return render(request, 'poll/question_form.html', {'form': form})
 
 
 @csrf_protect
@@ -66,7 +64,7 @@ def add_choise(request, question_id, poll_id):
         choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
-    return render(request, 'poll/add_choise.html', {'form': form, 'poll': data.poll})
+    return render(request, 'poll/choise_form.html', {'form': form, 'poll': data.poll})
 
 
 @csrf_protect
@@ -79,9 +77,9 @@ def edit_poll(request, poll_id):
             form.save()
             return HttpResponseRedirect('/poll/')
     else:
-        form = PollForm(instance=data)
+        form = PollForm(instance=record)
 
-    return render(request, 'poll/edit_poll.html', {'form': form})
+    return render(request, 'poll/poll_form.html', {'form': form})
 
 
 @csrf_protect
@@ -96,7 +94,7 @@ def edit_question(request, question_id):
     else:
         form = QuestionForm(instance=data)
 
-    return render(request, 'poll/edit_question.html', {'form': form})
+    return render(request, 'poll/question_form.html', {'form': form})
 
 
 @csrf_protect
@@ -111,7 +109,7 @@ def edit_choise(request, choise_id):
     else:
         form = ChoiseForm(instance=data)
 
-    return render(request, 'poll/edit_choise.html', {'form': form})
+    return render(request, 'poll/choise_form.html', {'form': form})
 
 
 def take_poll(request, poll_id):
@@ -121,7 +119,6 @@ def take_poll(request, poll_id):
 
 
 def pack_questions(choises):
-    # magic of television
     """
         ansers are stored in dictionary where as key
         is used answer pk
@@ -172,7 +169,7 @@ def delete_question(request, question_id):
 def delete_choise(request, choise_id):
     record = get_object_or_404(Choises, id=choise_id)
 
-    if(record.delete()):
+    if record.delete():
         return HttpResponseRedirect('/poll/')
 
     return HttpResponseRedirect('/poll/')
@@ -181,7 +178,7 @@ def delete_choise(request, choise_id):
 @csrf_protect
 def save_poll_results(request):
     if request.method == "POST":
-        # QueryDict converting to python dictionary
+        """ QueryDict converting to python dictionary """
         post_dict = request.POST.dict()
         #poll = Polls.objects.get(id=1)
         obj_list = []
@@ -193,9 +190,12 @@ def save_poll_results(request):
                 obj_list.append(Results(poll_id=1,question_id=questiond,answer_id=value))
             except ValueError:
                 print("Cound't convert '{0}' to integer".format(please_int))
+                # return HttpResponseRedirect('404')
 
         if obj_list:
+            """ bulk create will perfor save """
             all_results = Results.objects.bulk_create(obj_list)
 
     return HttpResponseRedirect('/poll/')
+
 

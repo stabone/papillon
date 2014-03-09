@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if form.category.errors %}
+        <div class="ui error message">
+            {{ form.category.label }}
+            <ul class="list">
+                <li>{{ form.category.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.author.errors %}
+        <div class="ui error message">
+            {{ form.author.label }}
+            <ul class="list">
+                <li>{{ form.author.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.title.errors %}
+        <div class="ui error message">
+            {{ form.title.label }}
+            <ul class="list">
+                <li>{{ form.title.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.description.errors %}
+        <div class="ui error message">
+            {{ form.description.label }}
+            <ul class="list">
+                <li>{{ form.description.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.level.errors %}
+        <div class="ui error message">
+            {{ form.level.label }}
+            <ul class="list">
+                <li>{{ form.level.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.rating.errors %}
+        <div class="ui error message">
+            {{ form.rating.label }}
+            <ul class="list">
+                <li>{{ form.rating.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.times_rated.errors %}
+        <div class="ui error message">
+            {{ form.times_rated.label }}
+            <ul class="list">
+                <li>{{ form.times_rated.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.tags.errors %}
+        <div class="ui error message">
+            {{ form.tags.label }}
+            <ul class="list">
+                <li>{{ form.tags.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.post.errors %}
+        <div class="ui error message">
+            {{ form.post.label }}
+            <ul class="list">
+                <li>{{ form.post.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <div class="ui form">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div class="field">
+                <label>{{ form.category.label }}</label>
+                {{ form.category }}
+            </div>
+            <div class="field">
+                <label>{{ form.author.label }}</label>
+                {{ form.author }}
+            </div>
+            <div class="field">
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="field">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            <div>
+            <div class="field">
+                <label>{{ form.level.label }}</label>
+                {{ form.level }}
+            <div>
+            <div class="field">
+                <label>{{ form.rating.label }}</label>
+                {{ form.rating }}
+            </div>
+            <div class="field">
+                <label>{{ form.times_rated.label }}</label>
+                {{ form.times_rated }}
+            </div>
+            <div class="field">
+                <label>{{ form.tags.label }}</label>
+                {{ form.tags }}
+            </div>
+            <div class="field">
+                <label>{{ form.post.label }}</label>
+                {{ form.post }}
+            </div>
+
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </form>
+    </div>
+{% endblock content %}

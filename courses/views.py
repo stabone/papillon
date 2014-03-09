@@ -22,7 +22,7 @@ def add_categorie(request):
     else:
         form = CategoryForm()
 
-    return render(request, 'course/add.html', {'form': form})
+    return render(request, 'course/category_form.html', {'form': form})
 
 
 @csrf_protect
@@ -38,7 +38,7 @@ def add_tut(request, categorie_id):
         tut = Tuts(category=categorie)
         form = TutForm(instance=tut)
 
-    return render(request, 'course/add_tut.html', {'form': form})
+    return render(request, 'course/tut_form.html', {'form': form})
 
 
 @csrf_protect
@@ -54,7 +54,7 @@ def add_material(request, tut_id):
         data = Materials(tut=tut)
         form = MaterialForm(instance=data)
 
-    return render(request, 'course/add_material.html', {'form': form})
+    return render(request, 'course/material_form.html', {'form': form})
 
 
 @csrf_protect
@@ -68,7 +68,7 @@ def edit_categorie(request, categorie_id):
     else:
         form = CategoryForm(instance=data)
 
-    return render(request, 'course/edit_categorie.html', {'form': form})
+    return render(request, 'course/category_form.html', {'form': form})
 
 
 @csrf_protect
@@ -82,12 +82,12 @@ def edit_tut(request, tut_id):
     else:
         form = TutForm(instance=data)
 
-    return render(request, 'course/edit_tut.html', {'form': form})
+    return render(request, 'course/tut_form.html', {'form': form})
 
 
 @csrf_protect
 def edit_material(request):
-    return render(request, 'course/edit_material.html', {'form': None})
+    return render(request, 'course/material_form.html', {'form': None})
 
 
 def show_categorie(request):

@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    {% if form.poll.errors %}
+        <div class="ui error message">
+            {{ form.poll.label }}
+            <ul class="list">
+                <li>{{ form.poll.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.description.errors %}
+        <div class="ui error message">
+            {{ form.description.label }}
+            <ul class="list">
+                <li>{{ form.description.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
     <form method="POST" action="">
         {% csrf_token %}
         <div class="ui form">

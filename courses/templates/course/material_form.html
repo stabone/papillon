@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if form.tut.errors %}
+        <div class="ui error message">
+            {{ form.tut.label }}
+            <ul class="list">
+                <li>{{ form.tut.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.title.errors %}
+        <div class="ui error message">
+            {{ form.title.label }}
+            <ul class="list">
+                <li>{{ form.title.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+   {% if form.video.errors %}
+        <div class="ui error message">
+            {{ form.video.label }}
+            <ul class="list">
+                <li>{{ form.video.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+   {% if form.description.errors %}
+        <div class="ui error message">
+            {{ form.description.label }}
+            <ul class="list">
+                <li>{{ form.description.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+   {% if form.post.errors %}
+        <div class="ui error message">
+            {{ form.post.label }}
+            <ul class="list">
+                <li>{{ form.post.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.tut.label }}</label>
+                {{ form.tut }}
+            </div>
+            <div class="field">
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="field">
+                <label>{{ form.video.label }}</label>
+                {{ form.video }}
+            </div>
+            <div class="field">
+                <label>{{ form.description.label }}</label>
+                {{ form.description }}
+            </div>
+            <div class="field">
+                <label>{{ form.post.label }}</label>
+                {{ form.post }}
+            </div>
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
+    </form>
+{% endblock content %}
