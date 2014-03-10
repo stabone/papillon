@@ -1,6 +1,6 @@
+#-*- coding: utf-8 -*-
 from django.db import models
 
-# Create your models here.
 
 def handle_file_upload(instance, filename):
     filename = "/users/{0}_{1}".format(int(time()), filename)
