@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.utils.translation import ugettext as _
+# from django.utils.translation import ugettext as _
 from django.db import models
 from django.contrib.auth.models import User
 from time import time
@@ -22,9 +22,9 @@ class Tuts(models.Model):
     MEDIUM   = '2'
     ADVANCED = '3'
     LEVELS = (
-        (BEGINNER, _('Iesācejs')),
-        (MEDIUM,   _('Vidējs')),
-        (ADVANCED, _('Grūts')),
+        (BEGINNER, 'Iesācejs'),
+        (MEDIUM,   'Vidējs'),
+        (ADVANCED, 'Grūts'),
     )
     category = models.ForeignKey(Categories, db_index=True)
     author = models.ForeignKey(User)
