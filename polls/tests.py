@@ -13,15 +13,15 @@ def random_string(length=6):
 	return ''.join(random.choice(string.ascii_letters) for i in range(length))
 
 
-class CategoriesTest(TestCase):
+class PollTest(TestCase):
 
 	def setUp(self):
 		length = random_len()
 		self.random_str = random_string(length)
-		obj = Polls.objects.create(question=self.random_str)
+		obj = Polls.objects.create(poll=self.random_str)
 		obj.save()
 		self.pk = obj.id
 
 	def test_poll_creating(self):
 		obj = Polls.objects.get(id=self.pk)
-		self.assertEqual(obj.question, self.random_str)
+		self.assertEqual(obj.poll, self.random_str)
