@@ -21,9 +21,16 @@
             </a>
 
             <div class="sub header">
-                <a class="rate" href="{% url 'rate_tut' %}" id="tut-rate-{{ rec.id }}">
-                    {{ rec.rating }}<i class="star icon"></i>
-                </a>
+                <div id="course-{{ rec.id }}" href="{% url 'rate_tut' %}">
+                    {{ rec.rating }}
+                </div>
+                <div>
+                    {% for i in '12345'|make_list %}
+                        <i class="star icon rating"
+                            data-course="{{ rec.id }}"
+                            data-star="{{ i }}"></i>
+                    {% endfor %}
+                </div>
                 <div class="ui clearing divider"></div>
                 {{ rec.description }}
             </div>

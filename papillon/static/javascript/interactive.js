@@ -1,11 +1,7 @@
 
-$('.ui.dropdown').dropdown({on: 'hover'});
-
-$('.ui.radio.checkbox').checkbox();
-
-$('.ui.checkbox').checkbox({context: false});
-
-$('.ui.selection.dropdown').dropdown();
+/**
+ * Django
+ */
 
 function getCookie(name) {
     var cookieValue = null;
@@ -24,29 +20,43 @@ function getCookie(name) {
 }
 var csrftoken = getCookie('csrftoken');
 
-function rateTut(tutId) {
+function postRating(courseID, starLevel) {
     $.ajax({
         type: 'POST',
+        dataType: 'json',
         url: '/course/tut/rate/',
-        data: {'tut_id': tutId},
+        data: {
+            'tut_id': courseID,
+            'level': starLevel
+        },
         headers: {
             'X-CSRFToken': csrftoken
         },
-        success: function() {
-            // hide rating
-            $('tut-rate-' + tutId).hide();
+        success: function(data) {
+            var ratingStatus;
+            if(typeof data.error !== 'undefined') {
+                ratingStatus =
+                        '<div class="ui error message">'+
+                            '<i class="close icon"></i>'+
+                            '<p>'+ data.error +'</p>'+
+                        '</div>';
+            }
+            if(typeof data.rated !== 'undefined') {
+                ratingStatus = '<div>'+ data.rated +'</div>';
+            }
+            $('#course-' + courseID).html(ratingStatus);
         }
     });
 
     return false;
 }
 
-$('a.rate').click(function(){
-    var tutId = parseInt(this.id.split('-')[2]);
-    // console.log('cookie for ya: ' + tutId);
-    return rateTut(tutId);
-});
+$('.rating').click(function(){
+    var starLevel = $(this).data('star');
+    var courseID = $(this).data('course');
 
+    return postRating(courseID, starLevel);
+});
 
 /* for pomodoro timer */
 var timerId;
@@ -86,3 +96,21 @@ function stopPomodoro() {
     console.log(" timer END");
     clearTimeout(timerId);
 }
+
+
+/**
+ * Semantic UI
+ */
+$('.ui.dropdown').dropdown({on: 'hover'});
+
+$('.ui.radio.checkbox').checkbox();
+
+$('.ui.checkbox').checkbox({context: false});
+
+$('.ui.selection.dropdown').dropdown();
+
+$('.message .close').on('click', function() {
+    $(this).closest('.message').fadeOut();
+});
+
+

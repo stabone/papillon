@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect
@@ -142,16 +144,28 @@ def delete_material(request, material_id):
 
 
 def rate_tut(request):
-    tut_id = request.POST.get('tut_id')
-    print(tut_id)
+    if(request.method == "POST"):
+        response_data = {}
+        try:
+            tut_id = int(request.POST.get('tut_id'))
+            level  = int(request.POST.get('level'))
+        except ValueError:
+            response_data['error'] = 'Illegal values'
+            return HttpResponse(json.dumps(response_data),mimetype='application/json')
 
-    tut = get_object_or_404(Tuts, id=tut_id)
-    tut.rating += 3
-    tut.times_rated += 1
-    tut.save()
-
-    return HttpResponse()
-
+        tut = get_object_or_404(Tuts, id=tut_id)
+        rating = tut.rating + level
+        times_rated = tut.times_rated + 1
+        response_data['level'] = rating / times_rated
+        response_data['rated'] = times_rated
+        tut.rating = rating
+        tut.times_rated = times_rated
+        print(response_data)
+        tut.save()
+        print("all is ok")
+        return HttpResponse(json.dumps(response_data),mimetype='application/json')
+    else:
+        print("this is get request")
 
 # customized 404 error
 def handler404(request):
