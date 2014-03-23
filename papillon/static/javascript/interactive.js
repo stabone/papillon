@@ -20,6 +20,40 @@ function getCookie(name) {
 }
 var csrftoken = getCookie('csrftoken');
 
+$("#comment-form").submit(function(event) {
+    console.log("comment event triggered");
+
+    var commentTag = $('#comment-field');
+    var videoID = commentTag.data('video');
+    var comment = commentTag.val();
+
+    console.log('video ID: ' + videoID);
+    console.log('video comment: ' + comment);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/comment/video/add/comment/',
+        data: {
+            videoID: videoID,
+            comment: comment,
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+            // alert(data.success);
+        },
+        error: function(xhr, ajaxOpt, throwError) {
+            // alert(xhr.responseText);
+        }
+    });
+
+    return false;
+    // event.preventDefault();
+    // event.stopPropagation();
+});
+
 function postRating(courseID, starLevel) {
     $.ajax({
         type: 'POST',
@@ -44,7 +78,7 @@ function postRating(courseID, starLevel) {
             if(typeof data.rated !== 'undefined') {
                 ratingStatus = '<div>'+ data.rated +'</div>';
             }
-            $('#course-' + courseID).html(ratingStatus);
+            $('#course-' + courseID).prepend(ratingStatus);
         }
     });
 
@@ -109,7 +143,10 @@ $('.ui.checkbox').checkbox({context: false});
 
 $('.ui.selection.dropdown').dropdown();
 
-$('.message .close').on('click', function() {
+/**
+ * document for forcing selection
+ */
+$(document).on('click', '.ui.error.message', function() {
     $(this).closest('.message').fadeOut();
 });
 

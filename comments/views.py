@@ -1,5 +1,9 @@
+import json
 from django.shortcuts import render
+from django.http import HttpResponse
 
+from courses.models import Materials
+from polls.models import Polls
 from comments.models import MaterialComments, PollComments
 
 
@@ -9,16 +13,22 @@ def index(request):
 
 def video_comments(request):
     if request.method == "POST":
-        video = request.POST.get('')
-        comment = request.POST.get('')
+        video_id = request.POST.get('videoID')
+        comment = request.POST.get('comment')
 
-        material = Materials.objects.get(id=video)
+        response_data = {}
+        response_data['success'] = 'Comment added!!!'
+
+        material = Materials.objects.get(id=video_id)
         obj = MaterialComments.objects.create(material=material,comment=comment)
+        obj.save()
 
-        if obj.save():
-            pass
+        return HttpResponse(json.dumps(response_data),mimetype='application/json')
 
-    return render(request, '', {})
+
+def show_comments(request):
+    data = MaterialComments.objects.all()
+    return render(request, 'comment/show_comments.html', {'data': data})
 
 
 def poll_comments(request):
@@ -28,10 +38,8 @@ def poll_comments(request):
 
         poll_obj = Polls.objects.get(id=poll)
         obj = PollComments.objecs.create(poll=poll_obj,comment=comment)
+        obj.save()
 
-        if obj.save():
-            pass
-
-    return render(request, '', {})
+        return render(request, '', {})
 
 

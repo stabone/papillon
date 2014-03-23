@@ -34,23 +34,22 @@
                 {{ rec.description }}
             </p>
         </div>
-    {% empty %}
-        <div class="ui warning message">
-            <p>S.H.I.T just got real. Nothing to do here</p>
-        </div>
-    {% endfor %}
 
-    {% if data %}
-        <form method="POST" action="">
+        <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
             {% csrf_token %}
             <div class="ui form">
                 <div class="field">
                     <label>Komentārs:</label>
-                    <textarea>Varbūt labāk izmantot ajax, lai veiktu komentāru saglabāšanu</textarea>
+                    <textarea id="comment-field" data-video="{{ rec.id }}"></textarea>
                 </div>
                 <input type="submit" value="Saglabāt" class="ui green button" />
             </div>
         </form>
-    {% endif %}
+
+    {% empty %}
+        <div class="ui warning message">
+            <p>Pagaidām materiāli nav pievienoti</p>
+        </div>
+    {% endfor %}
 
 {% endblock content %}
