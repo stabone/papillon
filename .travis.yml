@@ -5,12 +5,12 @@ python:
   - "2.7"
 
 env:
-  - DJANGO=1.6.1
-  - DJANGO=1.6.2
+  - DJANGO_VERSION=1.6.1
+  - DJANGO_VERSION=1.6.2
 
 install:
   - pip install -r requirements.txt
-  - pip install -q Django=$DJANGO
+  - pip install -q Django==$DJANGO_VERSION
   - python setup.py -q install
 
 script:
