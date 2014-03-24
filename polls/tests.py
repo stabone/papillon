@@ -20,7 +20,7 @@ class PollTest(TestCase):
 		self.random_str = random_string(length)
 		obj = Polls.objects.create(poll=self.random_str)
 		obj.save()
-		self.pk = obj.id
+		self.pk = 3 #obj.id
 
 	def test_poll_creating(self):
 		obj = Polls.objects.get(id=self.pk)
