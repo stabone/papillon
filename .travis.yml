@@ -9,6 +9,7 @@ env:
   - DJANGO_VERSION=1.6.2
 
 install:
+  - pip install -q Pillow
   - pip install -r requirements.txt
   - pip install -q Django==$DJANGO_VERSION
 
