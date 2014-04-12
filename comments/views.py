@@ -23,7 +23,25 @@ def video_comments(request):
         obj = MaterialComments.objects.create(material=material,comment=comment)
         obj.save()
 
-        return HttpResponse(json.dumps(response_data),mimetype='application/json')
+        return HttpResponse(json.dumps(response_data),content_type='application/json')
+
+
+def get_video_comments(request):
+    response_data = []
+
+    if request.method == 'POST':
+        video_id = request.POST.get('videoID')
+        id = int(video_id) # i nead exception
+        comments = MaterialComments.objects.filter(material=id).order_by('created_at')
+
+        for comment in comments:
+            response_data.append({
+                'commentID': comment.id,
+                'comment': comment.comment,
+                'added': comment.created_at.strftime('%Y %M %H:%m:%s')
+            })
+
+    return HttpResponse(json.dumps(response_data),content_type='application/json')
 
 
 def show_comments(request):

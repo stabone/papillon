@@ -151,7 +151,7 @@ def rate_tut(request):
             level  = int(request.POST.get('level'))
         except ValueError:
             response_data['error'] = 'Illegal values'
-            return HttpResponse(json.dumps(response_data),mimetype='application/json')
+            return HttpResponse(json.dumps(response_data),content_type='application/json')
 
         tut = get_object_or_404(Tuts, id=tut_id)
         rating = tut.rating + level
@@ -163,7 +163,7 @@ def rate_tut(request):
         print(response_data)
         tut.save()
         print("all is ok")
-        return HttpResponse(json.dumps(response_data),mimetype='application/json')
+        return HttpResponse(json.dumps(response_data),content_type='application/json')
     else:
         print("this is get request")
 

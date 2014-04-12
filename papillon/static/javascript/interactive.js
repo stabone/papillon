@@ -3,6 +3,8 @@
  * Django
  */
 
+
+
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
@@ -18,7 +20,52 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
 var csrftoken = getCookie('csrftoken');
+
+
+
+function populateComments(id) {
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/comment/video/get/comment/',
+        data: {
+            videoID: id
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+            var commentList = $('#list-'+ id);
+            var lastCommentID = $('#list-'+ id +' li').first().data("id");
+            if(typeof lastCommentID === 'undefined') {
+                lastCommentID = 0;
+            }
+            console.log(lastCommentID);
+
+            $.each(data, function(index, value){
+                var comment =
+                '<li data-id="'+ value.commentID +'">'+
+                    '<div>'+
+                        value.comment
+                    '</div>'+
+                '</li>';
+                commentList.prepend(comment);
+            });
+        },
+        error: function(xhr, ajaxOpt, throwError) {
+            console.log(xhr.responseText);
+        }
+    });
+}
+
+$('.show-comments').click(function() {
+    var videoID = $(this).data('id');
+    populateComments(videoID);
+});
+
+
 
 $("#comment-form").submit(function(event) {
     console.log("comment event triggered");
@@ -42,7 +89,7 @@ $("#comment-form").submit(function(event) {
             'X-CSRFToken': csrftoken
         },
         success: function(data) {
-            // alert(data.success);
+            populateComments(videoID);
         },
         error: function(xhr, ajaxOpt, throwError) {
             // alert(xhr.responseText);

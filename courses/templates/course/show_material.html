@@ -35,6 +35,11 @@
             </p>
         </div>
 
+        <span class="show-comments" data-id="{{ rec.id }}">Show Comments</span>
+        <ul id="list-{{ rec.id }}" class="comment-list" data-id="{{ rec.id }}">
+
+        </ul>
+
         <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
             {% csrf_token %}
             <div class="ui form">
