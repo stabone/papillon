@@ -52,8 +52,9 @@ def handle_file_upload(instance, filename):
 class Materials(models.Model):
     def verify_format(file):
         extension = file.name.split(".")[-1].lower()
-        if extension not in ["mkv", "jpg"]:
-            raise ValidationError("Not a valid image format. Please use a gif, jpeg or png file instead.")
+        allowed_formats = ['mkv', 'webm', 'mp4']
+        if extension not in allowed_formats:
+            raise ValidationError('Atļautie formāti %s' % ', '.join(allowed_formats))
 
     tut = models.ForeignKey(Tuts, db_index=True)
     title = models.CharField(max_length=255)
@@ -61,8 +62,4 @@ class Materials(models.Model):
     video = models.FileField(upload_to=handle_file_upload, max_length=255, validators=[verify_format])
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-
-    # @property
-    # def video(self):
-        # pass # for video property processing
 
