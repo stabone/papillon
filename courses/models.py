@@ -4,6 +4,8 @@ from __future__ import unicode_literals
 # from django.utils.translation import ugettext as _
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+
 from time import time
 
 
@@ -48,10 +50,15 @@ def handle_file_upload(instance, filename):
 
 
 class Materials(models.Model):
+    def verify_format(file):
+        extension = file.name.split(".")[-1].lower()
+        if extension not in ["mkv", "jpg"]:
+            raise ValidationError("Not a valid image format. Please use a gif, jpeg or png file instead.")
+
     tut = models.ForeignKey(Tuts, db_index=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
-    video = models.FileField(upload_to=handle_file_upload, max_length=255)
+    video = models.FileField(upload_to=handle_file_upload, max_length=255, validators=[verify_format])
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
