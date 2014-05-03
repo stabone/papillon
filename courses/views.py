@@ -106,10 +106,7 @@ def show_tut(request, tut_id):
 
 def show_material(request, tut_id):
     data = Materials.objects.filter(tut=tut_id)
-    comments = MaterialComments.objects.filter(material=tut_id)
-    return render(request,
-            'course/show_material.html',
-            {'data': data, 'comments': comments})
+    return render(request, 'course/show_material.html', {'data': data})
 
 
 def delete_categorie(request, categorie_id):

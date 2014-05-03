@@ -31,8 +31,11 @@ def get_video_comments(request):
 
     if request.method == 'POST':
         video_id = request.POST.get('videoID')
-        id = int(video_id) # i nead exception
-        comments = MaterialComments.objects.filter(material=id).order_by('created_at')
+        try:
+            id = int(video_id)
+            comments = MaterialComments.objects.filter(material=id).order_by('created_at')
+        except ValueError:
+            pass
 
         for comment in comments:
             response_data.append({

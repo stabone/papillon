@@ -44,6 +44,8 @@ function populateComments(id) {
             }
             console.log(lastCommentID);
 
+            commentList.empty();
+
             $.each(data, function(index, value){
                 var comment =
                 '<li data-id="'+ value.commentID +'">'+
@@ -60,9 +62,14 @@ function populateComments(id) {
     });
 }
 
+var loadedVideoComments = new Array();
+
 $('.show-comments').click(function() {
     var videoID = $(this).data('id');
-    populateComments(videoID);
+    if(loadedVideoComments.indexOf(videoID) == -1) {
+        loadedVideoComments.push(videoID);
+        populateComments(videoID);
+    }
 });
 
 
