@@ -1,5 +1,6 @@
 from django.test import TestCase
-from courses.models import Categories
+from django.contrib.auth.models import User
+from courses.models import Categories, Tuts
 
 import string
 import random
