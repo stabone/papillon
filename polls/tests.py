@@ -40,3 +40,7 @@ class QuestionTest(TestCase):
 		obj = Questions.objects.get(id=self.question_id)
 		self.assertEqual(obj.question, self.question)
 
+class Choises(TestCase):
+    pass
+
+
