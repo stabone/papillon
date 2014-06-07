@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^course/', include('courses.urls')),
     url(r'^user/',   include('users.urls')),
     url(r'^comment/',include('comments.urls')),
+    url(r'^login/',  'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}),
 )
 
 handler400 = 'helper.views.handler400'

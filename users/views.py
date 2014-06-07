@@ -52,10 +52,21 @@ def register(request):
 
 @login_required
 @csrf_protect
-def edit_profile(request, user_id):
+def user_profile(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+
+    return render(request, 'user/profile.html', {'user': user})
+
+
+@login_required
+@csrf_protect
+def edit_profile(request):
+    user_id = request.user.id
     # load user data
     # all goodies in form
     return render(request, 'user/profile.html', {'form': form})
+
 
 def send_notification(request):
     subject = 'like a cat'

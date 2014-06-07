@@ -27,6 +27,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/' # path to location
 
 # Application definition
 
@@ -42,6 +44,7 @@ INSTALLED_APPS = (
     'users',
     'helper',
     'comments',
+    'messaging',
 )
 
 MIDDLEWARE_CLASSES = (

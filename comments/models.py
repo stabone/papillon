@@ -5,18 +5,17 @@ from django.db import models
 # from polls.models import Polls
 
 
-""" this stuff cound couse cyclic import """
 class MaterialComments(models.Model):
+    user = models.ForeignKey('auth.User')
     material = models.ForeignKey('courses.Materials')
-    # user = this should come from session
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class PollComments(models.Model):
+    user = models.ForeignKey('auth.User')
     poll = models.ForeignKey('polls.Polls')
-    # user = user identifier
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

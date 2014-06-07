@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 # from django.utils.translation import ugettext as _
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
 from time import time
@@ -29,7 +29,7 @@ class Tuts(models.Model):
         (ADVANCED, 'Grūts'),
     )
     category = models.ForeignKey(Categories, db_index=True)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
