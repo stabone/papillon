@@ -2,24 +2,13 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from courses.models import Categories, Tuts
 
-import string
-import random
-
-
-# Create your tests here.
-def random_len(min=3, max=255): # 255 set for varchar fields
-	return random.choice(range(min, max))
-
-
-def random_string(length=6):
-	return ''.join(random.choice(string.ascii_letters) for i in range(length))
+from helper.utils import random_string
 
 
 class CategoriesTest(TestCase):
 
 	def setUp(self):
-		length = random_len()
-		self.random_str = random_string(length)
+		self.random_str = random_string()
 		obj = Categories.objects.create(course=self.random_str)
 		obj.save()
 		self.pk = obj.id

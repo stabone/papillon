@@ -1,8 +1,16 @@
 from django.db import models
 
 
-class Message(models.Model):
-    # user = models.ForeignField(User) # reference to user model
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+class Messages(models.Model):
+	#sender = models.ForeignField('auth.User') user id (sender)
+	#reciever = models.ForeignField('auth.User') user id (reciever)
+	title = models.CharField(max_length=255)
+	message = models.TextField()
+	red = models.BooleanField(default=False)
+	trash = models.BooleanField(default=False)
+	sent_at = models.DateTimeField(auto_now_add=True)
+
+
+class Contacts(models.Model):
+	user = models.ForeignField('auth.User')
+	added = models.DateTimeField(auto_now_add=True)
