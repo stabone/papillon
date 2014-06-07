@@ -31,7 +31,7 @@ class CategoriesTest(TestCase):
 
 class TutsTest(TestCase):
 	def setup(self):
-        pass
+		pass
 
 	def test_tut_creation(self):
 		pass
