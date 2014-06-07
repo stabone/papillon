@@ -29,3 +29,9 @@ class CategoriesTest(TestCase):
 		self.assertEqual(obj.course, self.random_str)
 
 
+class TutsTest(TestCase):
+	def setup(self):
+		# setup for tutorial
+
+	def test_tut_creation(self):
+		pass

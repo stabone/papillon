@@ -159,5 +159,3 @@ def rate_tut(request):
 # customized 404 error
 def handler404(request):
     return render(request, '404.html')
-
-

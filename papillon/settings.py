@@ -108,4 +108,3 @@ EMAIL_POST_USER = 'ivars883@gmail.com'
 EMAIL_HOST_PASSWORD = 'inbox.lv'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
