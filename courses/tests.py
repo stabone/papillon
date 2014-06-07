@@ -31,7 +31,6 @@ class CategoriesTest(TestCase):
 
 class TutsTest(TestCase):
 	def setup(self):
-		# setup for tutorial
         pass
 
 	def test_tut_creation(self):
