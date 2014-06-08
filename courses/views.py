@@ -3,6 +3,7 @@ import json
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 
 from courses.models import Categories, Tuts, Materials
 from courses.forms import CategoryForm, TutForm, MaterialForm
@@ -13,6 +14,7 @@ def index(request):
     return render(request, 'course/index.html', {'data': data})
 
 
+@login_required
 @csrf_protect
 def add_categorie(request):
     form = CategoryForm()
@@ -27,6 +29,7 @@ def add_categorie(request):
     return render(request, 'course/category_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def add_tut(request, categorie_id):
     form = TutForm()
@@ -43,6 +46,7 @@ def add_tut(request, categorie_id):
     return render(request, 'course/tut_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def add_material(request, tut_id):
     form = MaterialForm()
@@ -59,6 +63,7 @@ def add_material(request, tut_id):
     return render(request, 'course/material_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def edit_categorie(request, categorie_id):
     data = Categories.objects.get(id=categorie_id)
@@ -73,6 +78,7 @@ def edit_categorie(request, categorie_id):
     return render(request, 'course/category_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def edit_tut(request, tut_id):
     data = Tuts.objects.get(id=tut_id)
@@ -87,6 +93,7 @@ def edit_tut(request, tut_id):
     return render(request, 'course/tut_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def edit_material(request):
     return render(request, 'course/material_form.html', {'form': None})
@@ -109,6 +116,7 @@ def show_material(request, tut_id):
     return render(request, 'course/show_material.html', {'data': data})
 
 
+@login_required
 def delete_categorie(request, categorie_id):
     record = Categories.objects.filter(id=categorie_id)
     if(record.delete()):
@@ -117,6 +125,7 @@ def delete_categorie(request, categorie_id):
     return HttpResponseRedirect('/course/')
 
 
+@login_required
 def delete_tut(request, tut_id):
     record = Tuts.objects.filter(id=tut_id)
     if(record.delete()):
@@ -125,6 +134,7 @@ def delete_tut(request, tut_id):
     return HttpResponseRedirect('/course/')
 
 
+@login_required
 def delete_material(request, material_id):
     record = Materials.objects.filter(id=material_id)
     record.delete()
@@ -149,9 +159,7 @@ def rate_tut(request):
         response_data['rated'] = times_rated
         tut.rating = rating
         tut.times_rated = times_rated
-        print(response_data)
         tut.save()
-        print("all is ok")
         return HttpResponse(json.dumps(response_data),content_type='application/json')
     else:
         print("this is get request")

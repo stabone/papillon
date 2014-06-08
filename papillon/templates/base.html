@@ -40,7 +40,8 @@
                     <div class="item">
                         {% if user.is_authenticated %}
                             <div class="ui purple label">
-                                <a href="{% url 'user_profile' %}">{{ user.username }}</a>
+                                <a href="{% url 'user_profile' %}">{{ user.username }}</a>|
+                                <a href="{% url 'user_logout' %}">Iziet</a>
                             </div>
                         {% else %}
                             <a class="ui teal button" href="/user/create/">Reģistrēties</a>

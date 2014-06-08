@@ -4,7 +4,7 @@ from django.db import models
 
 # Create your models here.
 class Polls(models.Model):
-    # author = models.OneToOneField(User)
+    user = models.OneToOneField('auth.User')
     poll = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -40,7 +40,7 @@ class Choises(models.Model):
 for now these fields will be integers
 """
 class Results(models.Model):
-    #user_id = models.ForeignKey(User)
+    user_id = models.ForeignKey('auth.User')
     #poll_id = models.ForeignKey(Polls)
     poll_id = models.PositiveIntegerField()
     #question_id = models.ForeignKey(Questions)

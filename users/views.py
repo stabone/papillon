@@ -25,7 +25,7 @@ def create(request):
         password = ''
 
     try:
-        user = User.objects.create_user(username='jone', password='cookie')
+        user = User.objects.create_user(username='',password='')
         user.email = 'Jone@epasts.lv'
         user.first_name = 'Ivars'
         user.last_name = 'Naglis'
@@ -40,14 +40,17 @@ def create(request):
 @csrf_protect
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/user/')
-    else: # GET and another animals
-        form = UserCreationForm()
+        user_name = request.POST.get('username')
+        e_mail = request.POST.get('email')
+        password = request.POST.get('password')
 
-    return render(request, 'user/register.html', {'form': form})
+        user = User.objects.create_user(username=user_name,email=e_mail,password=password)
+
+        if form.is_valid():
+            user.save()
+            return HttpResponseRedirect('/user/')
+
+    return render(request, 'user/register.html')
 
 
 @login_required
@@ -82,6 +85,9 @@ def send_notification(request):
     return HttpResponseRedirect('/user/')
 
 
+"""
+    for future implementation
+"""
 @csrf_protect
 def login_user(request):
     username = request.POST['username']
@@ -97,11 +103,4 @@ def login_user(request):
     else:
         # return an 'invalid login' error message
         pass
-
-
-@login_required
-@csrf_protect
-def logout_user(request):
-    logout(request)
-    return HttpResponseRedirect('/course/')
 

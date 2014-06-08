@@ -2,8 +2,14 @@
 
 {% block content %}
     <div>
-        {{ user.username }}
-        {{ user.password }}
-        {{ user.email }}
+        <ul>
+            <li>{{ user.username }}</li>
+            <li>{{ user.password }}</li>
+            <li>{{ user.email }}</li>
+            <li>{{ user.first_name }}</li>
+            <li>{{ user.last_name }}</li>
+            <li>{{ user.last_login }}</li>
+            <li>{{ user.date_joined }}</li>
+        </ul>
     </div>
 {% endblock content %}
