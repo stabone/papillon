@@ -6,6 +6,7 @@ from polls.models import Polls, Questions, Choises
 class PollForm(ModelForm):
     class Meta:
         model = Polls
+        exclude = ('user',)
 
 
 class QuestionForm(forms.ModelForm):

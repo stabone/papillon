@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -24,12 +25,15 @@ def index(request, page_numb=None):
     return render(request, 'poll/index.html', {'data': poll_slice})
 
 
+@login_required
 @csrf_protect
 def add_poll(request):
     if(request.method == "POST"):
-        form = PollForm(request.POST)
+        form = PollForm(request.POST, request.user)
         if(form.is_valid()):
-            form.save()
+            poll = form.save(commit=False)
+            poll.user = request.user
+            poll.save()
             return HttpResponseRedirect('/poll/')
     else:
         form = PollForm()
@@ -37,6 +41,7 @@ def add_poll(request):
     return render(request, 'poll/poll_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def add_question(request, poll_id):
     if(request.method == "POST"):
