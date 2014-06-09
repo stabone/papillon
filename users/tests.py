@@ -1,13 +1,16 @@
 from django.test import TestCase
-from users.models import Users
+from users.models import UsersExtra
+
+from django.contrib.auth.models import User
 
 
 class UsersTest(TestCase):
     def setUp(self):
-        obj = Users.objects.create(username='ivars',lastname='naglis',email='stabone@inbox.lv')
+        user_obj = User.objects.create_user(username='Ivars',password='naglis',email='epasts@epasts.lv')
+        obj = UsersExtra.objects.create(user=user_obj,email='stabone@inbox.lv',password='12345678')
         obj.save()
 
 
     def test_user_creating(self):
-        obj = Users.objects.get(email='stabone@inbox.lv')
-        self.assertEqual(obj.username, 'ivars')
+        obj = UsersExtra.objects.get(id=1)
+        self.assertEqual(obj.email, 'stabone@inbox.lv')
