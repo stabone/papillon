@@ -44,7 +44,10 @@
                                 <a href="{% url 'user_logout' %}">Iziet</a>
                             </div>
                         {% else %}
-                            <a class="ui teal button" href="/user/create/">Reģistrēties</a>
+                            <a class="ui teal button" href="{% url 'user_registration' %}">Reģistrēties</a>
+                            <a class="" href="{% url 'user_login' %}">
+                                <i class="sign in icon"></i>
+                            </a>
                         {% endif %}
                     </div>
                     <div class="item">

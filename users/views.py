@@ -38,19 +38,20 @@ def create(request):
 
 
 @csrf_protect
-def register(request):
-    if request.method == "POST":
-        user_name = request.POST.get('username')
-        e_mail = request.POST.get('email')
-        password = request.POST.get('password')
+def registration(request):
+    form = None
 
-        user = User.objects.create_user(username=user_name,email=e_mail,password=password)
+    if request.method == "POST":
+        # user = User.objects.create_user(username=user_name,email=e_mail,password=password)
+        form = UserCreationForm(request.POST)
 
         if form.is_valid():
-            user.save()
+            form.save()
             return HttpResponseRedirect('/user/')
+    else:
+        form = UserCreationForm()
 
-    return render(request, 'user/register.html')
+    return render(request, 'user/register.html', {'form': form})
 
 
 @login_required

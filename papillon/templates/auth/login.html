@@ -8,19 +8,20 @@
 
 	<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 		{% csrf_token %}
+		<div class="ui form">
+			<div class="fields">
+				<label>{{ form.username.label_tag }}</label>
+				{{ form.username }}
+			</div>
 
-		<div>
-			{{ form.username.label_tag }}
-			{{ form.username }}
+			<div class="fields">
+				<label>{{ form.password.label_tag }}</label>
+				{{ form.password }}
+			</div>
+
+			<input type="submit" value="Ien'akt" class="ui green button" />
+			<input type="hidden" name="next" value="{{ next }}" />
 		</div>
-
-		<div>
-			{{ form.password.label_tag }}
-			{{ form.password }}
-		</div>
-
-		<input type="submit" value="Ien'akt" />
-		<input type="hidden" name="next" value="{{ next }}" />
 	</form>
 
 {% endblock content %}
