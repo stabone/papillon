@@ -3,7 +3,8 @@
 {% block content %}
 
     {% if data %}
-        {{ data.first.poll_id }}
+        {#{ data.first.poll_id }#}
+        {{ data.poll.poll}}
     {% endif %}
 
     <form action="{% url 'save_poll_results' %}" method="POST">
@@ -42,9 +43,9 @@
                     </ul>
                 </div>
             </div>
+            <input type="submit" value="Saglabāt" class="ui button green" />
         {% empty %}
             <div class="ui warning message">Neviens ieraksts netika atrasts</div>
         {% endfor %}
-        <input type="submit" value="Saglabāt" class="ui button green" />
     </form>
 {% endblock content %}

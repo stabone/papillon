@@ -57,6 +57,7 @@ def add_question(request, poll_id):
     return render(request, 'poll/question_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def add_choise(request, question_id, poll_id):
     if(request.method == "POST"):
@@ -72,6 +73,7 @@ def add_choise(request, question_id, poll_id):
     return render(request, 'poll/choise_form.html', {'form': form, 'poll': data.poll})
 
 
+@login_required
 @csrf_protect
 def edit_poll(request, poll_id):
     record = get_object_or_404(Polls, id=poll_id)
@@ -87,6 +89,7 @@ def edit_poll(request, poll_id):
     return render(request, 'poll/poll_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def edit_question(request, question_id):
     data = get_object_or_404(Questions, id=question_id)
@@ -102,6 +105,7 @@ def edit_question(request, question_id):
     return render(request, 'poll/question_form.html', {'form': form})
 
 
+@login_required
 @csrf_protect
 def edit_choise(request, choise_id):
     data = get_object_or_404(Choises, id=choise_id)
@@ -153,6 +157,7 @@ def take_question(request, poll_id):
 
 
 # here should be right check
+@login_required
 def delete_poll(request, poll_id):
     record = get_object_or_404(Polls, id=poll_id)
 
@@ -162,6 +167,7 @@ def delete_poll(request, poll_id):
     return HttpResponseRedirect('/poll/')
 
 
+@login_required
 def delete_question(request, question_id):
     record = get_object_or_404(Questions, id=question_id)
 
@@ -171,6 +177,7 @@ def delete_question(request, question_id):
     return HttpResponseRedirect('/poll/')
 
 
+@login_required
 def delete_choise(request, choise_id):
     record = get_object_or_404(Choises, id=choise_id)
 
@@ -180,19 +187,19 @@ def delete_choise(request, choise_id):
     return HttpResponseRedirect('/poll/')
 
 
+@login_required
 @csrf_protect
 def save_poll_results(request):
     if request.method == "POST":
         """ QueryDict converting to python dictionary """
         post_dict = request.POST.dict()
-        #poll = Polls.objects.get(id=1)
         obj_list = []
 
         for key, value in post_dict.iteritems():
             please_int = key[-1]
             try:
                 questiond = int(please_int,base=10)
-                obj_list.append(Results(poll_id=1,question_id=questiond,answer_id=value))
+                obj_list.append(Results(user=request.user,poll=1,question=questiond,answer=value))
             except ValueError:
                 print("Cound't convert '{0}' to integer".format(please_int))
                 # return HttpResponseRedirect('404')

@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 # from django.forms import ModelForm
 from django import forms
 
@@ -11,19 +12,20 @@ class CategoryForm(forms.ModelForm):
             'course': 'Nosaukums',
         }
         widgets = {
-            'course': forms.TextInput(attrs={'class': 'cat'}),
+            'course': forms.TextInput(attrs={'class': 'editor'}),
         }
 
 class TutForm(forms.ModelForm):
     class Meta:
         model = Tuts
         labels = {
-                'categorie_id': 'Kategorija',
+                'category': 'Kategorija',
+                'author': 'Autors',
                 'title': 'Nosaukums',
                 'description': 'Apraksts',
                 'level': 'Limenis',
                 'rating': 'Vertejums',
-                'times_rated': 'Vertets',
+                'times_rated': 'Vērtēts',
                 'tags': 'Birkas',
                 'post': 'Publicet',
         }
@@ -33,3 +35,10 @@ class TutForm(forms.ModelForm):
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Materials
+        labels = {
+            'tut': 'Materiāla nosaukums',
+            'title': 'Nosaukums',
+            'description': 'Apraksts',
+            'video': 'Video',
+            'post': 'Publicēt'
+        }

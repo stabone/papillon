@@ -6,22 +6,34 @@
 		<p>Your username and password didn't match. Please try again.</p>
 	{% endif %}
 
-	<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-		{% csrf_token %}
-		<div class="ui form">
+	<div class="ui form segment">
+		<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+			{% csrf_token %}
 			<div class="fields">
 				<label>{{ form.username.label_tag }}</label>
-				{{ form.username }}
+				<div class="ui left labeled icon input">
+					{{ form.username }}
+					<i class="user icon"></i>
+					<div class="ui corner label">
+						<i class="icon asterisk"></i>
+					</div>
+				</div>
 			</div>
 
 			<div class="fields">
 				<label>{{ form.password.label_tag }}</label>
-				{{ form.password }}
+				<div class="ui left labeled icon input">
+					{{ form.password }}
+					<i class="lock icon"></i>
+					<div class="ui corner label">
+						<i class="icon asterisk"></i>
+					</div>
+				</div>
 			</div>
 
-			<input type="submit" value="Ien'akt" class="ui green button" />
+			<input type="submit" value="Ien'akt" class="ui blue submit button" />
 			<input type="hidden" name="next" value="{{ next }}" />
-		</div>
-	</form>
+		</form>
+	</div>
 
 {% endblock content %}

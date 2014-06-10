@@ -40,11 +40,11 @@ class Choises(models.Model):
 for now these fields will be integers
 """
 class Results(models.Model):
-    user_id = models.ForeignKey('auth.User')
-    #poll_id = models.ForeignKey(Polls)
-    poll_id = models.PositiveIntegerField()
-    #question_id = models.ForeignKey(Questions)
-    question_id = models.PositiveIntegerField()
-    #answer_id = models.ForeignKey(Choises)
-    answer_id = models.PositiveIntegerField()
+    user = models.ForeignKey('auth.User')
+    #poll = models.ForeignKey(Polls)
+    poll = models.PositiveIntegerField()
+    #question = models.ForeignKey(Questions)
+    question = models.PositiveIntegerField()
+    #answer = models.ForeignKey(Choises)
+    answer = models.PositiveIntegerField()
 
