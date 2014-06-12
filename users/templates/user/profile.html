@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <li>
+        <li><a href="{% url 'messaging_inbox' %}">Zinas</a></li>
+    </li>
     <div>
         <ul>
             <li>{{ user.username }}</li>

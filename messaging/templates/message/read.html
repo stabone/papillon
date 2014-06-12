@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="ui message">
+        <div class="header">
+            {{ message.title }}
+        </div>
+        <p>
+            {{ message.message }}
+        </p>
+        {{ message.sent_at }}
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="POST" action="{% url 'messaging_add' %}">
+        {% csrf_token %}
+
+        <div class="ui form">
+
+            <div class="field">
+                <label>{{ form.user_from.label }}</label>
+                {{ form.user_from }}
+            </div>
+            <div class="field">
+                <label>{{ form.user_to.label }}</label>
+                {{ form.user_to }}
+            </div>
+            <div class="field">
+                <label>{{ form.title.label }}</label>
+                {{ form.title }}
+            </div>
+            <div class="field">
+                <label>{{ form.message.label }}</label>
+                {{ form.message }}
+            </div>
+
+            <input type="submit" value="S'ut'it" class="ui green button" />
+        </div>
+    </form>
+{% endblock content %}

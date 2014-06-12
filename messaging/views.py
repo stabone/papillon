@@ -5,32 +5,50 @@ from django.http import HttpResponseRedirect
 from messaging.models import Contacts, Messages
 from messaging.forms import ContactForm, MessagingForm
 
-# Create your views here.
+
+@login_required
+def inbox(request):
+    messages = Messages.objects.all() # for todo filter() by user
+    return render(request, 'message/inbox.html', {'messages': messages})
+
 
 @login_required
 def add_message(request):
     if request.method == "POST":
         message = MessagingForm(request.POST)
+        if message.is_valid():
+            message.save()
+            return HttpResponseRedirect('/message/')
     else:
-        pass
-    
-    return render(request, 'message/index.html')
+        message = MessagingForm()
+
+    return render(request, 'message/send.html', {'form': message})
+
+
+@login_required
+def read_message(request,msg_id):
+    message = Messages.objects.get(id=msg_id)
+
+    return render(request, 'message/read.html', {'message': message})
+
 
 @login_required
 def delete_message(request):
     if request.method == "POST":
         Messages.object.delete()
-        
-        return HttpResponceRedirect('/message/inbox/')
+
+        return HttpResponseRedirect('/message/inbox/')
+
 
 @login_required
 def add_contact(request):
     if request.method == "POST":
         contact = ContactForm(request.POST)
     else:
-        pass
-    
-    return render(request, 'tempalte')
+        contact = ContactForm()
+
+    return render(request, 'contacts/add.html', {'form': contact})
+
 
 @login_required
 def delete_contact(request):
