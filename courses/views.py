@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
@@ -22,7 +22,7 @@ def add_categorie(request):
         form = CategoryForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/course/')
+            return redirect('/course/')
     else:
         form = CategoryForm()
 
@@ -37,7 +37,7 @@ def add_tut(request, categorie_id):
         form = TutForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/course/')
+            return redirect('/course/')
     else:
         categorie = Categories.objects.get(id=categorie_id)
         tut = Tuts(category=categorie)
@@ -54,7 +54,7 @@ def add_material(request, tut_id):
         form = MaterialForm(request.POST, request.FILES)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/course/')
+            return redirect('/course/')
     else:
         tut = Tuts.objects.get(id=tut_id)
         data = Materials(tut=tut)
@@ -71,7 +71,7 @@ def edit_categorie(request, categorie_id):
         form = CategoryForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/course/')
+            return redirect('/course/')
     else:
         form = CategoryForm(instance=data)
 
@@ -86,7 +86,7 @@ def edit_tut(request, tut_id):
         form = TutForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/course/')
+            return redirect('/course/')
     else:
         form = TutForm(instance=data)
 
@@ -101,6 +101,7 @@ def edit_material(request):
 
 def show_categorie(request):
     data = Categories.objects.all()
+
     return render(request, 'course/show_categorie.html', {'data': data})
 
 
@@ -108,11 +109,13 @@ def show_tut(request, tut_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
     data = Tuts.objects.filter(category=tut_id)
+
     return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
 
 def show_material(request, tut_id):
     data = Materials.objects.filter(tut=tut_id)
+
     return render(request, 'course/show_material.html', {'data': data})
 
 
@@ -120,18 +123,18 @@ def show_material(request, tut_id):
 def delete_categorie(request, categorie_id):
     record = Categories.objects.filter(id=categorie_id)
     if(record.delete()):
-        return HttpResponseRedirect('/course/')
+        return redirect('/course/')
 
-    return HttpResponseRedirect('/course/')
+    return redirect('/course/')
 
 
 @login_required
 def delete_tut(request, tut_id):
     record = Tuts.objects.filter(id=tut_id)
     if(record.delete()):
-        return HttpResponseRedirect('/course/')
+        return redirect('/course/')
 
-    return HttpResponseRedirect('/course/')
+    return redirect('/course/')
 
 
 @login_required
@@ -139,7 +142,7 @@ def delete_material(request, material_id):
     record = Materials.objects.filter(id=material_id)
     record.delete()
 
-    return HttpResponseRedirect('/course/')
+    return redirect('/course/')
 
 
 def rate_tut(request):

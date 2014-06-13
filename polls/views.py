@@ -1,11 +1,9 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 
-# my imports
 from polls.models import Polls, Questions, Choises, Results
 from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
@@ -34,7 +32,7 @@ def add_poll(request):
             poll = form.save(commit=False)
             poll.user = request.user
             poll.save()
-            return HttpResponseRedirect('/poll/')
+            return redirect('/poll/')
     else:
         form = PollForm()
 
@@ -48,7 +46,7 @@ def add_question(request, poll_id):
         form = QuestionForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/')
+            return redirect('/poll/')
     else:
         data = get_object_or_404(Polls, id=poll_id)
         question = Questions(poll=data)
@@ -64,9 +62,9 @@ def add_choise(request, question_id, poll_id):
         form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/take/{0}/question/'.format(poll_id))
+            return redirect('/poll/take/{0}/question/'.format(poll_id))
     else:
-        data = get_object_or_404(Questions, id=question_id)
+        data = get_object_or_404(Questions,id=question_id)
         choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
@@ -76,13 +74,13 @@ def add_choise(request, question_id, poll_id):
 @login_required
 @csrf_protect
 def edit_poll(request, poll_id):
-    record = get_object_or_404(Polls, id=poll_id)
+    record = get_object_or_404(Polls,id=poll_id)
 
     if(request.method == "POST"):
         form = PollForm(request.POST, instance=record)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/')
+            return redirect('/poll/')
     else:
         form = PollForm(instance=record)
 
@@ -98,7 +96,7 @@ def edit_question(request, question_id):
         form = QuestionForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/')
+            return redirect('/poll/')
     else:
         form = QuestionForm(instance=data)
 
@@ -114,7 +112,7 @@ def edit_choise(request, choise_id):
         form = ChoiseForm(request.POST, instance=data)
         if(form.is_valid()):
             form.save()
-            return HttpResponseRedirect('/poll/')
+            return redirect('/poll/')
     else:
         form = ChoiseForm(instance=data)
 
@@ -162,9 +160,9 @@ def delete_poll(request, poll_id):
     record = get_object_or_404(Polls, id=poll_id)
 
     if(record.delete()):
-        return HttpResponseRedirect('/poll/')
+        return redirect('/poll/')
 
-    return HttpResponseRedirect('/poll/')
+    return redirect('/poll/')
 
 
 @login_required
@@ -172,9 +170,9 @@ def delete_question(request, question_id):
     record = get_object_or_404(Questions, id=question_id)
 
     if(record.delete()):
-        return HttpResponseRedirect('/poll/')
+        return redirect('/poll/')
 
-    return HttpResponseRedirect('/poll/')
+    return redirect('/poll/')
 
 
 @login_required
@@ -182,9 +180,9 @@ def delete_choise(request, choise_id):
     record = get_object_or_404(Choises, id=choise_id)
 
     if record.delete():
-        return HttpResponseRedirect('/poll/')
+        return redirect('/poll/')
 
-    return HttpResponseRedirect('/poll/')
+    return redirect('/poll/')
 
 
 @login_required
@@ -208,6 +206,4 @@ def save_poll_results(request):
             """ bulk create will perfor save """
             all_results = Results.objects.bulk_create(obj_list)
 
-    return HttpResponseRedirect('/poll/')
-
-
+    return redirect('/poll/')

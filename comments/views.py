@@ -62,5 +62,3 @@ def poll_comments(request):
         obj.save()
 
         return render(request, '', {})
-
-

@@ -7,8 +7,9 @@ from messaging.models import Messages, Contacts
 class MessagingForm(ModelForm):
     class Meta:
         model = Messages
-        exclude = ('red', 'trash', 'sent_at',)
+        exclude = ('user_from', 'red', 'trash', 'sent_at',)
         labels = {
+            'user_to': 'Saņēmējs',
             'title': 'Virsraksts',
             'message': 'Ziņa',
             'red': 'Lasīts',
@@ -20,4 +21,3 @@ class MessagingForm(ModelForm):
 class ContactForm(ModelForm):
     class Meta:
         model = Contacts
-

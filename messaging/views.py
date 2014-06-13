@@ -1,6 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
 
 from messaging.models import Contacts, Messages
 from messaging.forms import ContactForm, MessagingForm
@@ -37,7 +36,7 @@ def delete_message(request):
     if request.method == "POST":
         Messages.object.delete()
 
-        return HttpResponseRedirect('/message/inbox/')
+        return redirect('/message/inbox/')
 
 
 @login_required
@@ -53,4 +52,4 @@ def add_contact(request):
 @login_required
 def delete_contact(request):
     if request.method == "POST":
-        return HttpResponseRedirect('/contact/list/')
+        return redirect('/contact/list/')
