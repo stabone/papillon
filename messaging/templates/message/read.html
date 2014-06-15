@@ -2,7 +2,15 @@
 
 {% block content %}
 
+    <div class="">
+        <div>Uz miskasti</div>
+        <div>Atbildēt</div>
+        <div>Pārsūtīt</div>
+    </div>
+
     <div class="ui message">
+        <div><a class="to_trash" data-id="{{ message.id }}" href="#">Uz miskasti</a></div>
+        No: {{ message.user_from.username }}
         <div class="header">
             {{ message.title }}
         </div>

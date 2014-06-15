@@ -2,4 +2,25 @@
 
 {% block content %}
 
+    <div class="">
+        <div>Dzēst</div>
+        <div>Atjaunot</div>
+        <div>Pārsūtīt</div>
+    </div>
+
+    {% for message in messages %}
+        <div class="ui message">
+            No: {{ message.user_from.username }}
+            <div class="header">
+                {{ message.title }}
+            </div>
+            <p>
+                {{ message.message }}
+            </p>
+            {{ message.sent_at }}
+        </div>
+    {% empty %}
+        <div>Neviena ziņa netika atrasta</div>
+    {% endfor %}
+
 {% endblock content %}

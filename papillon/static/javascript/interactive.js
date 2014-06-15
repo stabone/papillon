@@ -24,7 +24,6 @@ function getCookie(name) {
 var csrftoken = getCookie('csrftoken');
 
 
-
 function populateComments(id) {
     $.ajax({
         type: 'POST',
@@ -42,7 +41,7 @@ function populateComments(id) {
             if(typeof lastCommentID === 'undefined') {
                 lastCommentID = 0;
             }
-            console.log(lastCommentID);
+            consolepopulateComments.log(lastCommentID);
 
             commentList.empty();
 
@@ -184,6 +183,30 @@ function stopPomodoro() {
     console.log(" timer END");
     clearTimeout(timerId);
 }
+
+$('.to_trash').click(function() {
+    var messageID = $(this).data('id');
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/message/to/trash/',
+        data: {
+            messageID: messageID,
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+            console.log('all is good');
+        },
+        error: function(xhr, ajaxOpt, throwError) {
+            // alert(xhr.responseText);
+        }
+    });
+
+    return false;
+});
 
 
 /**

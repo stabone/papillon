@@ -2,13 +2,14 @@
 
 {% block content %}
     <ul>
-        <li><a href="{% url 'messaging_add' %}">Rakst'it zi'nu</a></li>
+        <li><a href="{% url 'messaging_add' %}">Rakstīt ziņu</a></li>
+        <li><a href="{% url 'messaging_trash' %}">Miskaste</a></li>
     </ul>
 
     Message List:
     <ul>
         {% for message in messages %}
-            <li><a href="{% url 'messaging_read' message.id %}">{{ message.title }}</a></li>
+            <li><a href="{% url 'messaging_read' message.id %}">{{ message.title|title }}</a></li>
         {% endfor %}
     </ul>
 {% endblock content %}

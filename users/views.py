@@ -1,4 +1,4 @@
-from django.shortcuts import render #, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
@@ -10,7 +10,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-# Create your views here.
 def index(request):
     users = User.objects.all()
     return render(request, 'user/index.html', {'users': users})
