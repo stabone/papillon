@@ -18,9 +18,9 @@ def index(request):
 @csrf_protect
 def add_categorie(request):
     form = CategoryForm()
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = CategoryForm(request.POST)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
             return redirect('/course/')
     else:
@@ -33,10 +33,12 @@ def add_categorie(request):
 @csrf_protect
 def add_tut(request, categorie_id):
     form = TutForm()
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = TutForm(request.POST)
-        if(form.is_valid()):
-            form.save()
+        if form.is_valid():
+            rec = form.save(commit=False)
+            rec.author = request.user
+            rec.save()
             return redirect('/course/')
     else:
         categorie = Categories.objects.get(id=categorie_id)
@@ -50,9 +52,9 @@ def add_tut(request, categorie_id):
 @csrf_protect
 def add_material(request, tut_id):
     form = MaterialForm()
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = MaterialForm(request.POST, request.FILES)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
             return redirect('/course/')
     else:
@@ -67,9 +69,9 @@ def add_material(request, tut_id):
 @csrf_protect
 def edit_categorie(request, categorie_id):
     data = Categories.objects.get(id=categorie_id)
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = CategoryForm(request.POST, instance=data)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
             return redirect('/course/')
     else:
@@ -82,9 +84,9 @@ def edit_categorie(request, categorie_id):
 @csrf_protect
 def edit_tut(request, tut_id):
     data = Tuts.objects.get(id=tut_id)
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = TutForm(request.POST, instance=data)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
             return redirect('/course/')
     else:
@@ -122,7 +124,7 @@ def show_material(request, tut_id):
 @login_required
 def delete_categorie(request, categorie_id):
     record = Categories.objects.filter(id=categorie_id)
-    if(record.delete()):
+    if record.delete():
         return redirect('/course/')
 
     return redirect('/course/')
@@ -131,7 +133,7 @@ def delete_categorie(request, categorie_id):
 @login_required
 def delete_tut(request, tut_id):
     record = Tuts.objects.filter(id=tut_id)
-    if(record.delete()):
+    if record.delete():
         return redirect('/course/')
 
     return redirect('/course/')
@@ -139,14 +141,15 @@ def delete_tut(request, tut_id):
 
 @login_required
 def delete_material(request, material_id):
-    record = Materials.objects.filter(id=material_id)
+    record = Materials.objects.get(id=material_id)
+    record.video.delete()
     record.delete()
 
     return redirect('/course/')
 
 
 def rate_tut(request):
-    if(request.method == "POST"):
+    if request.method == "POST":
         response_data = {}
         try:
             tut_id = int(request.POST.get('tut_id'))
@@ -166,6 +169,7 @@ def rate_tut(request):
         return HttpResponse(json.dumps(response_data),content_type='application/json')
     else:
         print("this is get request")
+
 
 # customized 404 error
 def handler404(request):

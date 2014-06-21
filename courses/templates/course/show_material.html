@@ -6,15 +6,11 @@
         <a href="{{ request.session.last_url }}">atgriezties</a>
     {% endif %}
 
-    {% if not data %}
-        <div>
-            Pagaidām tutorialu vēl nav!!!
+    {% if data %}
+        <div class="ui label purple">
+            Skaits: {{ data.all.count }}
         </div>
     {% endif %}
-
-    <div class="ui label purple">
-        Skaits: {{ data.all.count }}
-    </div>
 
     {% for rec in data %}
         <div class="ui tertiary segment">

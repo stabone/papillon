@@ -18,9 +18,10 @@ class CategoryForm(forms.ModelForm):
 class TutForm(forms.ModelForm):
     class Meta:
         model = Tuts
+        exclude = ('author',)
         labels = {
                 'category': 'Kategorija',
-                'author': 'Autors',
+                # 'author': 'Autors',
                 'title': 'Nosaukums',
                 'description': 'Apraksts',
                 'level': 'Limenis',
