@@ -1,9 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.db import models
 
-# from courses.models import Materials
-# from polls.models import Polls
-
 
 class MaterialComments(models.Model):
     user = models.ForeignKey('auth.User')
