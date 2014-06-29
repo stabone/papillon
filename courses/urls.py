@@ -1,8 +1,8 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
-    url(r'^$',                  'courses.views.index'),
-    url(r'^add/course/$',       'courses.views.add_categorie', name='add_categorie'),
+    url(r'^$',                  'courses.views.index', name='base_course'),
+    url(r'^add/course/$',       'courses.views.add_categorie', name='add_course'),
     url(r'^add/(\d+)/tut/$',    'courses.views.add_tut', name='add_tut'),
     url(r'^add/(\d+)/material/$', 'courses.views.add_material', name='add_material'),
     url(r'^edit/(\d+)/course/$','courses.views.edit_categorie', name='edit_categorie'),

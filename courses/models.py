@@ -1,10 +1,10 @@
 #-*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-# from django.utils.translation import ugettext as _
 from django.db import models
-# from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+
+from helper.utils import random_string
 
 from time import time
 
@@ -45,8 +45,8 @@ class Tuts(models.Model):
 
 
 def handle_file_upload(instance, filename):
-    filename = "{0}_{1}".format(int(time()), filename)
-    # instance.file.save(save=True)
+    filename = "{0}_{1}".format(int(time()),random_string(max=10))
+    print("{0}".format(filename))
 
 
 class Materials(models.Model):
@@ -54,7 +54,7 @@ class Materials(models.Model):
         extension = file.name.split(".")[-1].lower()
         allowed_formats = ['mkv', 'webm', 'mp4']
         if extension not in allowed_formats:
-            raise ValidationError('Atļautie formāti %s' % ', '.join(allowed_formats))
+            raise ValidationError('Atļautie formāti: %s' % ', '.join(allowed_formats))
 
     tut = models.ForeignKey(Tuts, db_index=True)
     title = models.CharField(max_length=255)

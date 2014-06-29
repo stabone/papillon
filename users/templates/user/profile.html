@@ -3,6 +3,7 @@
 {% block content %}
     <li>
         <li><a href="{% url 'messaging_inbox' %}">Zinas</a></li>
+        <li><a href="{% url 'find_user' %}">Meklēt lietotāju</a></li>
     </li>
     <div>
         <ul>
@@ -13,6 +14,14 @@
             <li>{{ user.last_name }}</li>
             <li>{{ user.last_login }}</li>
             <li>{{ user.date_joined }}</li>
+            <li>{{ user.groups.all }}</li>
+            <li>Lietotāja atļaujas:
+                <ul>
+                    {% for permission in user.get_all_permissions %}
+                        <li>{{ permission }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
         </ul>
     </div>
 {% endblock content %}

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Papillon {learn something}</title>
+    <title>Papillon "Monarch"</title>
     <link rel="stylesheet" href="{% static "css/semantic.min.css" %}" type="text/css" />
     <meta charset="utf-8" />
     </head>
@@ -13,16 +13,22 @@
             <div class="menu">
                 <a href="/" class="active item">Sākums</a>
                 <div class="ui dropdown item">
-                    <a href="/poll/">Aptauja</a><i class="icon dropdown"> </i>
+                    <a href="/poll/">Aptauja</a>
+                    <i class="icon dropdown"> </i>
                     <div class="menu">
-                        <a class="item" href="/poll/add/poll"><i class="add icon"></i>aptauja</a>
+                        <a class="item" href="{% url 'add_poll' %}">
+                            <i class="add icon"></i>aptauja
+                        </a>
                     </div>
                 </div>
 
                 <div class="ui dropdown item">
-                    <a href="/course/">Kategorija</a><i class="icon dropdown"> </i>
+                    <a href="{% url 'base_course' %}">Kategorija</a>
+                    <i class="icon dropdown"> </i>
                     <div class="menu">
-                        <a class="item" href="/course/add/course"><i class="add icon"></i>kategorija</a>
+                        <a class="item" href="{% url 'add_course' %}">
+                            <i class="add icon"></i>kategorija
+                        </a>
                     </div>
                 </div>
 
@@ -56,6 +62,7 @@
                 </div>
            </div>
         </div>
+
         <div id="container">
             {% block content %}
                 Sakuma lapa

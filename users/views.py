@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
+from django.db.models import Q
 from django.core.mail import send_mail
 
 from django.contrib.auth.decorators import login_required
@@ -31,9 +31,9 @@ def create(request):
 
         user.save()
     except IntegrityError:
-        return HttpResponseRedirect('/course/')
+        return redirect('/course/')
 
-    return HttpResponseRedirect('/user/')
+    return redirect('/user/')
 
 
 @csrf_protect
@@ -41,12 +41,11 @@ def registration(request):
     form = None
 
     if request.method == "POST":
-        # user = User.objects.create_user(username=user_name,email=e_mail,password=password)
         form = UserCreationForm(request.POST)
 
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/user/')
+            return redirect('/user/')
     else:
         form = UserCreationForm()
 
@@ -82,7 +81,7 @@ def send_notification(request):
     # except SMTPException:
         # return HttpResponseRedirect('/')
 
-    return HttpResponseRedirect('/user/')
+    return redirect('/user/')
 
 
 """
@@ -90,17 +89,28 @@ def send_notification(request):
 """
 @csrf_protect
 def login_user(request):
-    username = request.POST['username']
-    password = request.POST['password']
+    username = request.POST.get('username')
+    password = request.POST.get('password')
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             login(request, user)
-            # redirect to a success page
+            # redirect() redirect to a success page
         else:
             # return a 'disabled login' error message
+            # redirect()
             pass
     else:
         # return an 'invalid login' error message
         pass
+
+
+def find_user(request):
+    if request.method == "POST":
+        search_str = request.POST.get('search')
+        users = User.objects.values('id', 'username', 'lastname').filter(
+                Q(username__contains=search_str) |
+                Q(lastname__contains=search_str))
+
+    return render(request, 'user/user.html', {'users': users})
 
