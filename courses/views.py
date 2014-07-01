@@ -107,10 +107,10 @@ def show_categorie(request):
     return render(request, 'course/show_categorie.html', {'data': data})
 
 
-def show_tut(request, tut_id):
+def show_tut(request,tut_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
-    data = Tuts.objects.filter(category=tut_id)
+    data = get_list_or_404(Tuts,category=tut_id)
 
     return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
@@ -122,19 +122,27 @@ def show_material(request, tut_id):
 
 
 @login_required
-def delete_categorie(request, categorie_id):
-    record = Categories.objects.filter(id=categorie_id)
-    if record.delete():
+@csrf_protect
+def delete_categorie(request):
+    if request.method == "POST":
+        category_id = request.POST.get('categoryID');
+        record = Categories.objects.filter(id=category_id)
+        record.delete()
         return redirect('/course/')
 
     return redirect('/course/')
 
 
 @login_required
-def delete_tut(request, tut_id):
-    record = Tuts.objects.filter(id=tut_id)
-    if record.delete():
-        return redirect('/course/')
+@csrf_protect
+def delete_tut(request):
+    """ child (material) records should be delete to """
+    if request.method == "POST":
+        category_id = request.POST.get('categoryID')
+        tut_id = request.POST.get('tutID')
+        record = get_object_or_404(Tuts,id=tut_id)
+        record.delete()
+        return redirect('/course/show/{0}/tut/'.format(category_id))
 
     return redirect('/course/')
 

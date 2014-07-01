@@ -16,9 +16,13 @@
             <a href="{% url 'edit_tut' rec.id %}" alt="Labot" title="Labot">
                 <i class="edit icon"></i>
             </a>
-            <a href="{% url 'delete_tut' rec.id %}" alt="Dzēst" title="Dzēst">
-                <i class="trash icon"></i>
-            </a>
+
+            <form method="POST" action="{% url 'delete_tut' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{ course }}" name="categoryID" />
+                <input type="hidden" value="{{ rec.id }}" name="tutID" />
+                <input type="submit" value="Dzēst" />
+            </form>
 
             <div class="sub header">
                 <div id="course-{{ rec.id }}" href="{% url 'rate_tut' %}">
