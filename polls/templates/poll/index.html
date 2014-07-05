@@ -12,7 +12,11 @@
                         <i class="add icon"></i>
                     </a>
                     <a href="{% url 'edit_poll' rec.id %}"><i class="edit icon"></i></a>
-                    <a href="{% url 'delete_poll' rec.id %}"><i class="trash icon"></i></a>
+                    <form method="POST" action="{% url 'delete_poll' %}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{ rec.id }}" name="pollID" />
+                        <input type="submit" value="Dzēst" />
+                    </form>
                     <div>{{ rec.created_at|date:"Y.m.d H:i:s" }}</div>
                 </div>
                 <div class="description">
@@ -30,7 +34,7 @@
             <a class="item" href="/poll/{{ data.previous_page_number }}">
                 <i class="icon left arrow"></i>Iepriekšējais
             </a>
-        {% endif %} 
+        {% endif %}
         <a class="item" href="/poll/{{ data.number }}">{{ data.number }}</a>
         {% if data.has_next %}
             <a class="item" href="/poll/{{ data.next_page_number }}">

@@ -9,7 +9,7 @@ from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
 
 # Create your views here.
-def index(request, page_numb=None):
+def index(request,page_numb=None):
     poll_list = Polls.objects.all()
     paginator = Paginator(poll_list, 5)
 
@@ -26,7 +26,7 @@ def index(request, page_numb=None):
 @login_required
 @csrf_protect
 def add_poll(request):
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = PollForm(request.POST, request.user)
         if(form.is_valid()):
             poll = form.save(commit=False)
@@ -41,8 +41,8 @@ def add_poll(request):
 
 @login_required
 @csrf_protect
-def add_question(request, poll_id):
-    if(request.method == "POST"):
+def add_question(request,poll_id):
+    if request.method == "POST":
         form = QuestionForm(request.POST)
         if(form.is_valid()):
             form.save()
@@ -57,8 +57,8 @@ def add_question(request, poll_id):
 
 @login_required
 @csrf_protect
-def add_choise(request, question_id, poll_id):
-    if(request.method == "POST"):
+def add_choise(request,question_id,poll_id):
+    if request.method == "POST":
         form = ChoiseForm(request.POST)
         if(form.is_valid()):
             form.save()
@@ -73,11 +73,11 @@ def add_choise(request, question_id, poll_id):
 
 @login_required
 @csrf_protect
-def edit_poll(request, poll_id):
+def edit_poll(request,poll_id):
     record = get_object_or_404(Polls,id=poll_id)
 
-    if(request.method == "POST"):
-        form = PollForm(request.POST, instance=record)
+    if request.method == "POST":
+        form = PollForm(request.POST,instance=record)
         if(form.is_valid()):
             form.save()
             return redirect('/poll/')
@@ -89,11 +89,11 @@ def edit_poll(request, poll_id):
 
 @login_required
 @csrf_protect
-def edit_question(request, question_id):
-    data = get_object_or_404(Questions, id=question_id)
+def edit_question(request,question_id):
+    data = get_object_or_404(Questions,id=question_id)
 
-    if(request.method == "POST"):
-        form = QuestionForm(request.POST, instance=data)
+    if request.method == "POST":
+        form = QuestionForm(request.POST,instance=data)
         if(form.is_valid()):
             form.save()
             return redirect('/poll/')
@@ -105,11 +105,11 @@ def edit_question(request, question_id):
 
 @login_required
 @csrf_protect
-def edit_choise(request, choise_id):
-    data = get_object_or_404(Choises, id=choise_id)
+def edit_choise(request,choise_id):
+    data = get_object_or_404(Choises,id=choise_id)
 
-    if(request.method == "POST"):
-        form = ChoiseForm(request.POST, instance=data)
+    if request.method == "POST":
+        form = ChoiseForm(request.POST,instance=data)
         if(form.is_valid()):
             form.save()
             return redirect('/poll/')
@@ -156,30 +156,41 @@ def take_question(request, poll_id):
 
 # here should be right check
 @login_required
-def delete_poll(request, poll_id):
-    record = get_object_or_404(Polls, id=poll_id)
+@csrf_protect
+def delete_poll(request):
 
-    if(record.delete()):
+    if request.method == "POST":
+        poll_id = request.POST.get('pollID')
+        record = get_object_or_404(Polls,id=poll_id)
+        record.delete()
         return redirect('/poll/')
 
     return redirect('/poll/')
 
 
 @login_required
-def delete_question(request, question_id):
-    record = get_object_or_404(Questions, id=question_id)
+@csrf_protect
+def delete_question(request):
 
-    if(record.delete()):
-        return redirect('/poll/')
+    if request.method == "POST":
+        question_id = request.POST.get('questionID')
+        record = get_object_or_404(Questions,id=question_id)
+        poll_id = record.poll.id
+        record.delete()
+        return redirect('/poll/take/{0}/question/'.format(poll_id))
 
     return redirect('/poll/')
 
 
 @login_required
-def delete_choise(request, choise_id):
-    record = get_object_or_404(Choises, id=choise_id)
+@csrf_protect
+def delete_choise(request):
 
-    if record.delete():
+    if request.method == "POST":
+        choise_id = request.POST.get('choiseID')
+        record = get_object_or_404(Choises,id=choise_id)
+
+        record.delete()
         return redirect('/poll/')
 
     return redirect('/poll/')

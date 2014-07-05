@@ -17,9 +17,11 @@
                 <a href="{% url 'edit_poll' rec.id %}">
                     <i class="edit icon"></i>
                 </a>
-                <a href="{% url 'delete_question' rec.id %}">
-                    <i class="trash icon"></i>
-                </a>
+                <form method="POST" action="{% url 'delete_question' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="questionID" value="{{ rec.id }}" />
+                    <input type="submit" value="Dzēst" />
+                </form>
                 <div>
                     <ul>
                     {% for answer_id, answer_list in answers %}
@@ -29,13 +31,15 @@
                                 <div class="ui radio checkbox">
                                     <input type="radio" name="answer_grp_{{ answer_id }}" value="{{ id }}" />
                                     <label>{{ option }}</label>
-                                    <a href="{% url 'edit_choise' id %}">
-                                        <i class="edit icon"></i>
-                                    </a>
-                                    <a href="{% url 'delete_choise' id %}">
-                                        <i class="trash icon"></i>
-                                    </a>
                                 </div>
+                                <a href="{% url 'edit_choise' id %}">
+                                    <i class="edit icon"></i>
+                                </a>
+                                <form method="POST" action="{% url 'delete_question' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="questionID" value="{{ id }}" />
+                                    <input type="submit" value="Dzēst" />
+                                </form>
                                 </div>
                             {% endfor %}
                         {% endifequal %}
@@ -43,9 +47,12 @@
                     </ul>
                 </div>
             </div>
-            <input type="submit" value="Saglabāt" class="ui button green" />
         {% empty %}
             <div class="ui warning message">Neviens ieraksts netika atrasts</div>
         {% endfor %}
+
+        {% if data %}
+            <input type="submit" value="Saglabāt" class="ui button green" />
+        {% endif %}
     </form>
 {% endblock content %}

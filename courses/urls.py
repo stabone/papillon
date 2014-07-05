@@ -13,5 +13,5 @@ urlpatterns = patterns('',
     url(r'^show/(\d+)/material/$', 'courses.views.show_material', name='show_material'),
     url(r'^delete/course/$', 'courses.views.delete_categorie', name='delete_categorie'),
     url(r'^delete/tut/$', 'courses.views.delete_tut', name='delete_tut'),
-    url(r'^delete/(\d+)/material/$', 'courses.views.delete_material', name='delete_material'),
+    url(r'^delete/material/$', 'courses.views.delete_material', name='delete_material'),
 )
