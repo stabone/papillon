@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 
 
 def index(request):
-    return HttpResponseRedirect('/course/')
+	return render(request, 'index.html')
 
 
 def handler400(request):

@@ -16,9 +16,11 @@
         <div class="ui tertiary segment">
             <div class="ui inverted purple block header">
                 {{ rec.title }}
-                <a class="ui red" href="/course/delete/{{ rec.id }}/material">
-                    <i class="trash icon"></i>
-                </a>
+                <form method="POST" action="{% url 'delete_material' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="materialID" value="{{ rec.id }}" />
+                    <input type="submit" value="Dzēst" />
+                </form>
             </div>
             <video controls width="320" height="240"
                         alt="{{ rec.video.name }}" title="{{ rec.video.name }}">

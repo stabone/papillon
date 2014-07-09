@@ -110,7 +110,7 @@ def show_categorie(request):
 def show_tut(request,tut_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
-    data = get_list_or_404(Tuts,category=tut_id)
+    data = Tuts.objects.filter(category=tut_id)
 
     return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
 
@@ -148,10 +148,15 @@ def delete_tut(request):
 
 
 @login_required
-def delete_material(request, material_id):
-    record = Materials.objects.get(id=material_id)
-    record.video.delete()
-    record.delete()
+@csrf_protect
+def delete_material(request):
+    if request.method == "POST":
+        material_id = request.POST.get('materialID')
+        record = Materials.objects.get(id=material_id)
+        record.video.delete()
+        record.delete()
+
+        return redirect('/course/')
 
     return redirect('/course/')
 

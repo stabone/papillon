@@ -5,6 +5,9 @@
     <div>
         Kategoriju saraksts
     </div>
+    <div>
+        <a href="{% url 'add_course' %}">Pievienot</a>
+    </div>
     {% for rec in data %}
         <div class="data">
             <a href="{% url 'show_tut' rec.id %}">{{ rec.course }}</a>

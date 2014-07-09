@@ -114,3 +114,6 @@ def find_user(request):
 
     return render(request, 'user/user.html', {'users': users})
 
+
+def get_user_statistic(request):
+    return render(request, 'user/statistic.html', {'data': 'someting'})

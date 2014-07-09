@@ -47,6 +47,7 @@ class Tuts(models.Model):
 def handle_file_upload(instance, filename):
     filename = "{0}_{1}".format(int(time()),random_string(max=10))
     print("{0}".format(filename))
+    return filename
 
 
 class Materials(models.Model):
