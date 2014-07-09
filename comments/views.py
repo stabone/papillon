@@ -1,5 +1,6 @@
 import json
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 
 from courses.models import Materials
@@ -20,10 +21,11 @@ def video_comments(request):
         response_data['success'] = 'Comment added!!!'
 
         material = Materials.objects.get(id=video_id)
-        obj = MaterialComments.objects.create(material=material,comment=comment)
+        obj = MaterialComments.objects.create(user=request.user,material=material,comment=comment)
         obj.save()
 
-        return HttpResponse(json.dumps(response_data),content_type='application/json')
+        # return HttpResponse(json.dumps(response_data),content_type='application/json')
+        return redirect(reverse('show_material',args=[video_id]))
 
 
 def get_video_comments(request):
@@ -37,6 +39,8 @@ def get_video_comments(request):
         except ValueError:
             pass
 
+        # there should be way for dic converting
+        # to JSON data
         for comment in comments:
             response_data.append({
                 'commentID': comment.id,

@@ -83,6 +83,7 @@ $("#comment-form").submit(function(event) {
     console.log('video ID: ' + videoID);
     console.log('video comment: ' + comment);
 
+    /*
     $.ajax({
         type: 'POST',
         dataType: 'json',
@@ -101,10 +102,10 @@ $("#comment-form").submit(function(event) {
             // alert(xhr.responseText);
         }
     });
+    */
 
-    return false;
+    // return false;
     // event.preventDefault();
-    // event.stopPropagation();
 });
 
 function postRating(courseID, starLevel) {

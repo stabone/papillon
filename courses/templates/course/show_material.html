@@ -40,8 +40,9 @@
             {% csrf_token %}
             <div class="ui form">
                 <div class="field">
+                    <input type="hidden" name="videoID" value="{{ rec.id }}">
                     <label>Komentārs:</label>
-                    <textarea id="comment-field" data-video="{{ rec.id }}"></textarea>
+                    <textarea name="comment" id="comment-field" data-video="{{ rec.id }}"></textarea>
                 </div>
                 <input type="submit" value="Komentēt" class="ui green button" />
             </div>
