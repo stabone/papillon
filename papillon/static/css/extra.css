@@ -1,0 +1,21 @@
+#container {
+	width: 900px;
+	margin: 20px auto 30px;
+	border-color: #d35400;
+	border-width: 2px;
+}
+
+.action {
+	list-style: none;
+	display: inline;
+}
+
+.action > li {
+	display: inline;
+	margin: 3px;
+	padding: 2px;
+}
+
+.action > li > form {
+	display: inline;
+}

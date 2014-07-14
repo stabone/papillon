@@ -7,6 +7,8 @@
         {{ data.poll.poll}}
     {% endif %}
 
+    Izpildīt testu
+
     <form action="{% url 'save_poll_results' %}" method="POST">
         {% csrf_token %}
         {% for rec in data %}

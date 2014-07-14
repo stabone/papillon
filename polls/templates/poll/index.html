@@ -2,26 +2,41 @@
 
 
 {% block content %}
+
+    <h3>Jautājumi</h3>
+
     <div class="ui divided list">
     {% for rec in data %}
         <div class="item">
             <div class="content">
                 <div class="header">
-                    <a href="{% url 'take_question' rec.id %}">{{ rec.poll }}</a>
-                    <a href="{% url 'add_question' rec.id %}" alt="Pievienot variantu" title="Pievienot">
-                        <i class="add icon"></i>
+                    <a href="{% url 'take_question' rec.id %}">
+                        {{ rec.poll }}
                     </a>
-                    <a href="{% url 'edit_poll' rec.id %}"><i class="edit icon"></i></a>
-                    <form method="POST" action="{% url 'delete_poll' %}">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{ rec.id }}" name="pollID" />
-                        <input type="submit" value="Dzēst" />
-                    </form>
-                    <div>{{ rec.created_at|date:"Y.m.d H:i:s" }}</div>
+                    <ul class="action">
+                        <li class="action-add">
+                            <a href="#" alt="Pievienot" title="Pievienot">
+                                <i class="add icon"></i>
+                            </a>
+                        </li>
+                        <li class="action-edit">
+                            <a href="{% url 'edit_poll' rec.id %}">
+                                <i class="edit icon"></i>
+                            </a>
+                        </li>
+                        <li class="action-delete">
+                            <form method="POST" action="{% url 'delete_poll' %}">
+                                {% csrf_token %}
+                                <input type="hidden" value="{{ rec.id }}" name="pollID" />
+                                <input type="submit" value="Dzēst" />
+                            </form>
+                        </li>
+                    </ul>
                 </div>
                 <div class="description">
                     {{ rec.description }}
                 </div>
+                <div>{{ rec.created_at|date:"Y.m.d H:i:s" }}</div>
             </div>
         </div>
     {% empty %}

@@ -17,9 +17,10 @@ class PollForm(ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Questions
+        exclude = ('poll',)
         labels = {
-            'poll': 'Aptauja',
-            'question': 'Jautājums'
+            # 'poll': 'Aptauja',
+            'question': 'Jautājums',
         }
         widgets = {
                 'question': forms.TextInput(attrs={'class': ''}),

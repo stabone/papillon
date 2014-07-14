@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from polls.models import Results
 
 
 def index(request):
@@ -116,4 +117,5 @@ def find_user(request):
 
 
 def get_user_statistic(request):
-    return render(request, 'user/statistic.html', {'data': 'someting'})
+    data = Results.objects.filter(user=request.user)
+    return render(request, 'user/statistic.html', {'data': data})

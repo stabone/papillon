@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>{{ poll.poll }}</h2>
+
+    <ul>
+    {% for question in questions %}
+
+        <li>
+            {{ question.id }} -> {{ question.question }}
+            <a href="{% url 'add_choise' question.id poll.id %}" alt="Pievienot" title="Pievienot">
+                <i class="add icon"></i>
+            </a>
+
+            <ul>
+                {% for choise in question.choises %}
+                    <li>
+                        {{ choise.option }}
+                        <a href="{% url 'add_choise' question.id poll.id %}" alt="Pievienot" title="Pievienot">
+                            <i class="edit icon"></i>
+                        </a>
+
+                        <form method="POST" action="{% url 'delete_choise' %}">
+                            {% csrf_token %}
+
+                            <input type="hidden" name="pollID" value="{{ poll.id }}" />
+                            <input type="hidden" name="choiseID" value="{{ choise.id }}" />
+                            <input type="submit" value="Dzēst" />
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% if form.question.errors %}
+        <div class="ui error message">
+            {{ form.question.label }}
+            <ul class="list">
+                <li>{{ form.question.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'add_question' %}">
+        {% csrf_token %}
+        <input type="hidden" name="poll" value="{{ poll.id }}" />
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.poll.label }}</label>
+                {{ form.poll }}
+            </div>
+
+            <div class="field">
+                <label>{{ form.question.label }}</label>
+                {{ form.question }}
+            </div>
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
+    </form>
+{% endblock content %}

@@ -4,4 +4,8 @@
 
 	some 3D.js magic
 
+	{% for i in data %}
+		<div>{{ i.poll }} -> {{ i.question }} -> {{ i.answer }}</div>
+	{% endfor %}
+
 {% endblock content %}

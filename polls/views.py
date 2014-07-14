@@ -3,6 +3,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
+
 
 from polls.models import Polls, Questions, Choises, Results
 from polls.forms  import PollForm, QuestionForm, ChoiseForm
@@ -28,7 +30,7 @@ def index(request,page_numb=None):
 def add_poll(request):
     if request.method == "POST":
         form = PollForm(request.POST, request.user)
-        if(form.is_valid()):
+        if form.is_valid():
             poll = form.save(commit=False)
             poll.user = request.user
             poll.save()
@@ -41,16 +43,18 @@ def add_poll(request):
 
 @login_required
 @csrf_protect
-def add_question(request,poll_id):
+def add_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
-        if(form.is_valid()):
-            form.save()
+        if form.is_valid():
+            poll = get_object_or_404(Polls, id=request.POST.get('poll'))
+
+            all_form = form.save(commit=False)
+            all_form.poll = poll
+            all_form.save()
             return redirect('/poll/')
     else:
-        data = get_object_or_404(Polls, id=poll_id)
-        question = Questions(poll=data)
-        form = QuestionForm(instance=question)
+        form = QuestionForm()
 
     return render(request, 'poll/question_form.html', {'form': form})
 
@@ -60,9 +64,9 @@ def add_question(request,poll_id):
 def add_choise(request,question_id,poll_id):
     if request.method == "POST":
         form = ChoiseForm(request.POST)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
-            return redirect('/poll/take/{0}/question/'.format(poll_id))
+            return redirect(reverse('edit_poll_content',args=[poll_id]))
     else:
         data = get_object_or_404(Questions,id=question_id)
         choise = Choises(question=data)
@@ -119,6 +123,46 @@ def edit_choise(request,choise_id):
     return render(request, 'poll/choise_form.html', {'form': form})
 
 
+def get_choise_list(choise_obj):
+    choise_list = []
+    for choise in choise_obj:
+        choise_list.append({'id': choise.id, 'option': choise.option, 'correct': choise.correct})
+
+    return choise_list
+
+
+def parse_question(question_obj):
+    question_list = []
+    for question in question_obj:
+        choises = Choises.objects.filter(question=question)
+        question_list.append({
+            'id': question.id,
+            'question': question.question,
+            'choises': get_choise_list(choises)
+        })
+
+    return question_list
+
+
+@login_required
+@csrf_protect
+def edit_poll_content(request,poll_id):
+    poll = get_object_or_404(Polls,id=poll_id)
+
+    if request.method == "POST":
+        form = QuestionForm(request.POST, poll)
+        if(form.is_valid()):
+            form.save()
+            return redirect('/poll/')
+    else:
+        questions = get_list_or_404(Questions,poll=poll)
+        data = parse_question(questions)
+
+        form = QuestionForm()
+
+    return render(request, 'poll/edit_poll_content.html', {'form': form, 'questions': data, 'poll': poll})
+
+
 def take_poll(request, poll_id):
     data = get_object_or_404(Choises, poll=poll_id)
 
@@ -134,24 +178,18 @@ def pack_questions(choises):
     """
     answer_list = []
     for answer in choises:
-        answer_list.append((answer.id, answer.option,))
+        answer_list.append({'id': answer.id, 'option': answer.option})
 
     return answer_list
 
 
 def take_question(request, poll_id):
-    data = Questions.objects.filter(poll=poll_id)
-    answer_list = []
-    for rec in data:
-        choises = Choises.objects.filter(question=rec.id)
-        """
-            answer list is appendet to anser stack
-            for all questions
-        """
-        question_list = pack_questions(choises)
-        answer_list.append((rec.id, question_list,))
+    poll = Polls.objects.get(id=poll_id)
+    questions = Questions.objects.filter(poll=poll)
+    poll_data = {'id': poll.id, 'name': poll.poll}
+    data = parse_question(questions)
 
-    return render(request, 'poll/take.html', {'data': data, 'answers': answer_list})
+    return render(request, 'poll/poll_take.html', {'poll': poll_data , 'questions': data})
 
 
 # here should be right check
@@ -188,10 +226,11 @@ def delete_choise(request):
 
     if request.method == "POST":
         choise_id = request.POST.get('choiseID')
+        poll_id = request.POST.get('pollID')
         record = get_object_or_404(Choises,id=choise_id)
 
         record.delete()
-        return redirect('/poll/')
+        return redirect(reverse('edit_poll_content',args=[poll_id]))
 
     return redirect('/poll/')
 
@@ -199,6 +238,7 @@ def delete_choise(request):
 @login_required
 @csrf_protect
 def save_poll_results(request):
+    print('like a cat')
     if request.method == "POST":
         """ QueryDict converting to python dictionary """
         post_dict = request.POST.dict()

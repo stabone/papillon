@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>Forma testu veikšanai</h3>
+
+    <h2>{{ poll.name }}</h2>
+
+    <div><a href="{% url 'edit_poll_content' poll.id %}">Labot aptaju</a></div>
+
+    <form action="{% url 'save_poll_results' %}" method="POST">
+        {% csrf_token %}
+
+        {% for question in questions %}
+            {#{ question.id }#} -> {{ question.question }}
+            <!-- <a href="{% url 'edit_poll' question.id %}"><i class="edit icon"></i></a> -->
+
+            <ul>
+                {% for choise in question.choises %}
+                    <li>
+                        <input type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
+                        <lable>{{ choise.option }}</lable>
+                    </li>
+                {% endfor %}
+            </ul>
+
+        {% empty %}
+            <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+        {% endfor %}
+
+        {% if questions %}
+            <input type="submit" value="Saglabāt" class="ui button green" />
+        {% endif %}
+    </form>
+
+{% endblock content %}
