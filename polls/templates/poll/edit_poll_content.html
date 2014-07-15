@@ -4,6 +4,10 @@
 
     <h2>{{ poll.poll }}</h2>
 
+    <div>
+        <a href="">Pievienot jautājumu</a>
+    </div>
+
     <ul>
     {% for question in questions %}
 
@@ -17,7 +21,7 @@
                 {% for choise in question.choises %}
                     <li>
                         {{ choise.option }}
-                        <a href="{% url 'add_choise' question.id poll.id %}" alt="Pievienot" title="Pievienot">
+                        <a href="{% url 'edit_choise' question.id %}" alt="Labot" title="Labot">
                             <i class="edit icon"></i>
                         </a>
 

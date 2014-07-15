@@ -52,7 +52,7 @@ def add_question(request):
             all_form = form.save(commit=False)
             all_form.poll = poll
             all_form.save()
-            return redirect('/poll/')
+            return redirect(reverse('take_question',args=[poll.id]))
     else:
         form = QuestionForm()
 
@@ -147,15 +147,15 @@ def parse_question(question_obj):
 @login_required
 @csrf_protect
 def edit_poll_content(request,poll_id):
-    poll = get_object_or_404(Polls,id=poll_id)
+    poll = Polls.objects.get(id=poll_id)
 
     if request.method == "POST":
         form = QuestionForm(request.POST, poll)
         if(form.is_valid()):
             form.save()
-            return redirect('/poll/')
+            return redirect(reverse('take_question',args=[poll.id]))
     else:
-        questions = get_list_or_404(Questions,poll=poll)
+        questions = Questions.objects.filter(poll=poll)
         data = parse_question(questions)
 
         form = QuestionForm()

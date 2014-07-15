@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     url(r'^([0-9]*)$', 'polls.views.index'),
-    url(r'^add/poll/$', 'polls.views.add_poll', name='add_poll'),
+    url(r'^add/$', 'polls.views.add_poll', name='add_poll'),
     url(r'^add/(\d+)/(\d+)/choise/$', 'polls.views.add_choise', name='add_choise'),
     url(r'^add/question/$', 'polls.views.add_question', name='add_question'),
     url(r'^edit/(\d+)/$', 'polls.views.edit_poll', name='edit_poll'),
