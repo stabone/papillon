@@ -5,8 +5,25 @@
     <h2>{{ poll.poll }}</h2>
 
     <div>
-        <a href="">Pievienot jautājumu</a>
+        <a href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
     </div>
+
+    <form method="POST" action="{% url 'add_question' %}">
+        {% csrf_token %}
+        <input type="hidden" name="poll" value="{{ poll.id }}" />
+        <div class="ui form">
+            <div class="field">
+                <label>{{ form.poll.label }}</label>
+                {{ form.poll }}
+            </div>
+
+            <div class="field">
+                <label>{{ form.question.label }}</label>
+                {{ form.question }}
+            </div>
+            <input type="submit" value="Saglabāt" class="ui green button" />
+        </div>
+    </form>
 
     <ul>
     {% for question in questions %}
@@ -48,20 +65,4 @@
         </div>
     {% endif %}
 
-    <form method="POST" action="{% url 'add_question' %}">
-        {% csrf_token %}
-        <input type="hidden" name="poll" value="{{ poll.id }}" />
-        <div class="ui form">
-            <div class="field">
-                <label>{{ form.poll.label }}</label>
-                {{ form.poll }}
-            </div>
-
-            <div class="field">
-                <label>{{ form.question.label }}</label>
-                {{ form.question }}
-            </div>
-            <input type="submit" value="Saglabāt" class="ui green button" />
-        </div>
-    </form>
 {% endblock content %}

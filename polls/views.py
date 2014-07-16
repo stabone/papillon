@@ -52,7 +52,7 @@ def add_question(request):
             all_form = form.save(commit=False)
             all_form.poll = poll
             all_form.save()
-            return redirect(reverse('take_question',args=[poll.id]))
+            return redirect(reverse('take_poll',args=[poll.id]))
     else:
         form = QuestionForm()
 
@@ -153,7 +153,7 @@ def edit_poll_content(request,poll_id):
         form = QuestionForm(request.POST, poll)
         if(form.is_valid()):
             form.save()
-            return redirect(reverse('take_question',args=[poll.id]))
+            return redirect(reverse('take_poll',args=[poll.id]))
     else:
         questions = Questions.objects.filter(poll=poll)
         data = parse_question(questions)
@@ -162,34 +162,14 @@ def edit_poll_content(request,poll_id):
 
     return render(request, 'poll/edit_poll_content.html', {'form': form, 'questions': data, 'poll': poll})
 
-
+@login_required
 def take_poll(request, poll_id):
-    data = get_object_or_404(Choises, poll=poll_id)
-
-    return render(request, 'poll/take.html', {'data': data})
-
-
-def pack_questions(choises):
-    """
-        ansers are stored in dictionary where as key
-        is used answer pk
-
-        returns list with ansers dictionaries
-    """
-    answer_list = []
-    for answer in choises:
-        answer_list.append({'id': answer.id, 'option': answer.option})
-
-    return answer_list
-
-
-def take_question(request, poll_id):
     poll = Polls.objects.get(id=poll_id)
     questions = Questions.objects.filter(poll=poll)
     poll_data = {'id': poll.id, 'name': poll.poll}
     data = parse_question(questions)
 
-    return render(request, 'poll/poll_take.html', {'poll': poll_data , 'questions': data})
+    return render(request, 'poll/take_poll.html', {'poll': poll_data, 'questions': data})
 
 
 # here should be right check
@@ -215,7 +195,7 @@ def delete_question(request):
         record = get_object_or_404(Questions,id=question_id)
         poll_id = record.poll.id
         record.delete()
-        return redirect(reverse('take_question',args=[poll_id])))
+        return redirect(reverse('take_poll',args=[poll_id]))
 
     return redirect('/poll/')
 
@@ -238,7 +218,6 @@ def delete_choise(request):
 @login_required
 @csrf_protect
 def save_poll_results(request):
-    print('like a cat')
     if request.method == "POST":
         """ QueryDict converting to python dictionary """
         post_dict = request.POST.dict()

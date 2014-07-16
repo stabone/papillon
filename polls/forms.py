@@ -23,7 +23,7 @@ class QuestionForm(forms.ModelForm):
             'question': 'Jautājums',
         }
         widgets = {
-                'question': forms.TextInput(attrs={'class': ''}),
+                'question': forms.TextInput(attrs={'class': '', 'autofocus': ''}),
         }
 
 

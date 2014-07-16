@@ -5,19 +5,22 @@
 
     <h3>Jautājumi</h3>
 
+    <div>
+        <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
+            <i class="add icon"></i> Pievienot aptauju
+        </a>
+    </div>
+
     <div class="ui divided list">
     {% for rec in data %}
         <div class="item">
             <div class="content">
                 <div class="header">
-                    <a href="{% url 'take_question' rec.id %}">
+                    <a href="{% url 'take_poll' rec.id %}">
                         {{ rec.poll }}
                     </a>
                     <ul class="action">
                         <li class="action-add">
-                            <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
-                                <i class="add icon"></i>
-                            </a>
                         </li>
                         <li class="action-edit">
                             <a href="{% url 'edit_poll' rec.id %}">
