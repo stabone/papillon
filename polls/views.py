@@ -215,7 +215,7 @@ def delete_question(request):
         record = get_object_or_404(Questions,id=question_id)
         poll_id = record.poll.id
         record.delete()
-        return redirect('/poll/take/{0}/question/'.format(poll_id))
+        return redirect(reverse('take_question',args=[poll_id])))
 
     return redirect('/poll/')
 
