@@ -12,13 +12,13 @@ class CategoryForm(forms.ModelForm):
             'course': 'Nosaukums',
         }
         widgets = {
-            'course': forms.TextInput(attrs={'class': 'editor'}),
+            'course': forms.TextInput(attrs={'class': 'editor', 'autofocus': ''}),
         }
 
 class TutForm(forms.ModelForm):
     class Meta:
         model = Tuts
-        exclude = ('author',)
+        exclude = ('author', 'rating', 'times_rated',)
         labels = {
                 'category': 'Kategorija',
                 # 'author': 'Autors',
@@ -31,6 +31,7 @@ class TutForm(forms.ModelForm):
                 'post': 'Publicet',
         }
         widgets = {
+            'title': forms.TextInput(attrs={'autofocus': ''})
         }
 
 class MaterialForm(forms.ModelForm):
