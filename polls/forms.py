@@ -37,5 +37,6 @@ class ChoiseForm(ModelForm):
             'correct': 'Pareizā atbilde'
         }
         widgets = {
+            'option': forms.TextInput(attrs={'autofocus': ''}),
             'correct': forms.CheckboxInput(attrs={'class': 'flag'})
         }

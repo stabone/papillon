@@ -61,7 +61,7 @@ def add_question(request):
 
 @login_required
 @csrf_protect
-def add_choise(request,question_id,poll_id):
+def add_choise(request,poll_id,question_id):
     if request.method == "POST":
         form = ChoiseForm(request.POST)
         if form.is_valid():
@@ -109,14 +109,14 @@ def edit_question(request,question_id):
 
 @login_required
 @csrf_protect
-def edit_choise(request,choise_id):
+def edit_choise(request,poll_id,choise_id):
     data = get_object_or_404(Choises,id=choise_id)
 
     if request.method == "POST":
         form = ChoiseForm(request.POST,instance=data)
         if(form.is_valid()):
             form.save()
-            return redirect('/poll/')
+            return redirect(reverse('edit_poll_content',args=[poll_id]))
     else:
         form = ChoiseForm(instance=data)
 

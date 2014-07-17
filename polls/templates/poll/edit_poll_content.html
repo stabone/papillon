@@ -30,7 +30,7 @@
 
         <li>
             {{ question.id }} -> {{ question.question }}
-            <a href="{% url 'add_choise' question.id poll.id %}" alt="Pievienot" title="Pievienot">
+            <a href="{% url 'add_choise' poll.id question.id %}" alt="Pievienot" title="Pievienot">
                 <i class="add icon"></i>
             </a>
 
@@ -38,7 +38,7 @@
                 {% for choise in question.choises %}
                     <li>
                         {{ choise.option }}
-                        <a href="{% url 'edit_choise' question.id %}" alt="Labot" title="Labot">
+                        <a href="{% url 'edit_choise' poll.id question.id %}" alt="Labot" title="Labot">
                             <i class="edit icon"></i>
                         </a>
 
