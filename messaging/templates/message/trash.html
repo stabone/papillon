@@ -3,12 +3,19 @@
 {% block content %}
 
     <div class="">
-        <div>Dzēst</div>
-        <div>Atjaunot</div>
+        <div>{% include "message/delete_msg.html" %}</div>
+
         <div>Pārsūtīt</div>
     </div>
 
     {% for message in messages %}
+        <form method="POST" action="{% url 'messaging_restore' %}">
+            {% csrf_token %}
+
+            <input type="hidden" name="messageID" value="{{ message.id }}" />
+            <input type="submit" value="Atjanunot" />
+        </form>
+
         <div class="ui message">
             No: {{ message.user_from.username }}
             <div class="header">

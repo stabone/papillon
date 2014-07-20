@@ -7,9 +7,25 @@
     </ul>
 
     Message List:
-    <ul>
+    <table>
+
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+            </tr>
+
         {% for message in messages %}
-            <li><a href="{% url 'messaging_read' message.id %}">{{ message.title|title }}</a></li>
+            <tr>
+                <td>
+                    <a href="{% url 'messaging_read' message.id %}">
+                        {{ message.title|title }}
+                    </a>
+                </td>
+                <td>
+                    {{ message.sent_at|date:"Y.m.d H:i:s" }}
+                </td>
+            </tr>
         {% endfor %}
-    </ul>
+
+    </table>
 {% endblock content %}
