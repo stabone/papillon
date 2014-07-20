@@ -10,14 +10,17 @@
 
     <div class="ui message">
         <div>
-            {% include "message/delete_msg.html" %}
-
-            <form method="POST" action="{% url 'messaging_delete' %}">
+            <form method="POST" action="{% url 'messaging_to_trash' %}">
                 {% csrf_token %}
 
                 <input type="hidden" name="messageID" value="{{ message.id }}" />
-                <input type="submit" value="Dzēst" />
+                <input type="submit" value="Uz miskasti" />
             </form>
+
+            {% include "message/delete_msg.html" %}
+
+            <a href="{% url 'messaging_respond' message.id %}">Atbildēt</a>
+
         </div>
         No: {{ message.user_from.username }}
         <div class="header">
