@@ -28,13 +28,14 @@
                 <div id="course-{{ rec.id }}" href="{% url 'rate_tut' %}">
                     {{ rec.rating }}
                 </div>
+
                 <div>
                     {% for i in 'asdfg'|make_list %}
-                        <i class="star icon rating"
-                            data-course="{{ rec.id }}"
+                        <i class="star icon rating" data-course="{{ rec.id }}"
                             data-star="{{ i }}"></i>
                     {% endfor %}
                 </div>
+
                 <div class="ui clearing divider"></div>
                 {{ rec.description }}
             </div>
@@ -45,6 +46,9 @@
     {% empty %}
         <div class="ui warning message">
             <p>Pagaidām nekas nav pievienots</p>
+            <div>
+                <a href="{% url 'add_tut' course %}">Pievienot pamācību</a>
+            </div>
         </div>
     {% endfor %}
 {% endblock content %}

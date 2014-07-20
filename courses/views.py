@@ -77,7 +77,7 @@ def edit_categorie(request, categorie_id):
     else:
         form = CategoryForm(instance=data)
 
-    return render(request, 'course/category_form.html', {'form': form})
+    return render(request, 'course/edit_category.html', {'form': form})
 
 
 @login_required
@@ -107,12 +107,12 @@ def show_categorie(request):
     return render(request, 'course/show_categorie.html', {'data': data})
 
 
-def show_tut(request,tut_id):
+def show_tut(request,category_id):
     current_path = request.get_full_path()
     request.session['last_url'] = current_path
-    data = Tuts.objects.filter(category=tut_id)
+    data = Tuts.objects.filter(category=category_id)
 
-    return render(request, 'course/show_tut.html', {'data': data, 'course': tut_id})
+    return render(request, 'course/show_tut.html', {'data': data, 'course': category_id})
 
 
 def show_material(request, tut_id):

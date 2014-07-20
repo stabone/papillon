@@ -20,15 +20,15 @@ class TutForm(forms.ModelForm):
         model = Tuts
         exclude = ('author', 'rating', 'times_rated',)
         labels = {
-                'category': 'Kategorija',
-                # 'author': 'Autors',
-                'title': 'Nosaukums',
-                'description': 'Apraksts',
-                'level': 'Limenis',
-                'rating': 'Vertejums',
-                'times_rated': 'Vērtēts',
-                'tags': 'Birkas',
-                'post': 'Publicet',
+            'category': 'Kategorija',
+            # 'author': 'Autors',
+            'title': 'Nosaukums',
+            'description': 'Apraksts',
+            'level': 'Limenis',
+            'rating': 'Vertejums',
+            'times_rated': 'Vērtēts',
+            'tags': 'Birkas',
+            'post': 'Publicet',
         }
         widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
@@ -43,4 +43,7 @@ class MaterialForm(forms.ModelForm):
             'description': 'Apraksts',
             'video': 'Video',
             'post': 'Publicēt'
+        }
+        widgets = {
+            'title': forms.TextInput(attrs={'autofocus': ''})
         }
