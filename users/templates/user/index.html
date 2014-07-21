@@ -5,12 +5,17 @@
     <div>
         Lietotāju saraksts
     </div>
+
+    {% include "user/find.html" %}
+
     <table class="ui sortable table segment">
         <thead>
             <tr>
                 <th>Vārds</th>
                 <th>Uzvārds</th>
-                <th>Parole</th>
+                <th>Atļaujas</th>
+                <th>Dzēst</th>
+                <!-- <th>Parole</th> -->
             </tr>
         </thead>
         <tbody>
@@ -18,7 +23,16 @@
                 <tr>
                     <td>{{ user.username }}</td>
                     <td>{{ user.last_name }}</td>
-                    <td>{{ user.password }}</td>
+                    <td></td>
+                    <td>
+                        <form method="POST" action="{% url 'user_delete' %}">
+                            {% csrf_token %}
+
+                            <input type="hidden" name="userID" value="{{ user.id }}" />
+                            <input type="submit" value="Dzēst" />
+                        </form>
+                    </td>
+                    <!-- <td>{#{ user.password }#}</td> -->
                 </tr>
             {% endfor %}
         </tbody>

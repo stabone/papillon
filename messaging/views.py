@@ -87,7 +87,9 @@ def to_trash_message(request):
 @csrf_protect
 def delete_message(request):
     if request.method == "POST":
-        Messages.object.delete()
+        messageID = request.POST.get('messageID')
+        message = get_object_or_404(Messages, id=messageID)
+        message.delete()
 
         return redirect(reverse('messaging_inbox'))
 

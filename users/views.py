@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse as url
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
@@ -11,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from polls.models import Results
 
 
+@login_required
 def index(request):
     users = User.objects.all()
     return render(request, 'user/index.html', {'users': users})
@@ -37,6 +39,7 @@ def create(request):
     return redirect('/user/')
 
 
+@login_required
 @csrf_protect
 def registration(request):
     form = None
@@ -46,7 +49,7 @@ def registration(request):
 
         if form.is_valid():
             form.save()
-            return redirect('/user/')
+            return redirect(url('user_base'))
     else:
         form = UserCreationForm()
 
@@ -107,15 +110,22 @@ def login_user(request):
 
 
 def find_user(request):
-    if request.method == "POST":
-        search_str = request.POST.get('search')
-        users = User.objects.values('id', 'username', 'lastname').filter(
-                Q(username__contains=search_str) |
-                Q(lastname__contains=search_str))
+    if request.method == 'POST':
+        search_str = request.POST.get('user')
+        users = User.objects.filter(Q(username__contains=search_str) | Q(last_name__contains=search_str))
 
-    return render(request, 'user/user.html', {'users': users})
+        return render(request, 'user/index.html', {'users': users})
 
 
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
     return render(request, 'user/statistic.html', {'data': data})
+
+
+def user_delete(request):
+    if request.method == 'POST':
+        user_id = request.POST.get('userID')
+        user = User.objects.get(id=user_id)
+        user.delete()
+
+        return redirect(url('user_base'))

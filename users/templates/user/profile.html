@@ -3,7 +3,8 @@
 {% block content %}
     <li>
         <li><a href="{% url 'messaging_inbox' %}">Zinas</a></li>
-        <li><a href="{% url 'find_user' %}">Meklēt lietotāju</a></li>
+        <li><a href="{% url 'user_base' %}">Lietotāji</a></li>
+        <li>{% include 'user/find.html' %}</li>
     </li>
     <div>
         <ul>

@@ -1,0 +1,7 @@
+
+<form method="POST" action="{% url 'user_find' %}">
+	{% csrf_token %}
+
+	<input type="search" placeholder="Lietotājs" name="user" />
+	<input type="submit" value="Meklēt" />
+</form>
