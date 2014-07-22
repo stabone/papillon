@@ -2,19 +2,27 @@
 
 {% block content %}
 
-    <div class="">
-        <div>{% include "message/delete_msg.html" %}</div>
-
-        <div>Pārsūtīt</div>
+    <div>
+        <a href="{% url 'messaging_inbox' %}">Atpakaļ</a>
     </div>
 
     {% for message in messages %}
-        <form method="POST" action="{% url 'messaging_restore' %}">
-            {% csrf_token %}
+        <li>
+            <li>
+                <form method="POST" action="{% url 'messaging_restore' %}">
+                    {% csrf_token %}
 
-            <input type="hidden" name="messageID" value="{{ message.id }}" />
-            <input type="submit" value="Atjanunot" />
-        </form>
+                    <input type="hidden" name="messageID" value="{{ message.id }}" />
+                    <input type="submit" value="Atjanunot" />
+                </form>
+            </li>
+            <li>
+                {% include "message/delete_msg.html" %}
+            </li>
+            <li>
+                <a href="{% url 'messaging_respond' message.id %}">Atbildēt</a>
+            </li>
+        </li>
 
         <div class="ui message">
             No: {{ message.user_from.username }}
