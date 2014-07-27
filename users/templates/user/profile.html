@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <li>
+    <ul>
         <li><a href="{% url 'messaging_inbox' %}">Zinas</a></li>
         <li><a href="{% url 'user_base' %}">Lietotāji</a></li>
         <li>{% include 'user/find.html' %}</li>
-    </li>
+        <li><a href="{% url 'user_edit' %}">Labot profilu</a></li>
+    </ul>
     <div>
         <ul>
             <li>{{ user.username }}</li>

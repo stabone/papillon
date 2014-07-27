@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
 from django.db.models import Q
@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from users.forms import UserForm
 from polls.models import Results
 
 
@@ -67,11 +68,15 @@ def user_profile(request):
 
 @login_required
 @csrf_protect
-def edit_profile(request):
-    user_id = request.user.id
-    # load user data
-    # all goodies in form
-    return render(request, 'user/profile.html', {'form': form})
+def user_edit(request):
+    user = get_object_or_404(User, id=request.user.id)
+    if request.method == 'POST':
+        user.groups.name = "cookie"
+        user.groups.permissions = ['one', 'two']
+
+        redirect(url('user_edit'))
+
+    return render(request, 'user/edit.html', {'user_data': user})
 
 
 def send_notification(request):
