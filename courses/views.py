@@ -10,7 +10,9 @@ from courses.forms import CategoryForm, TutForm, MaterialForm
 
 def parser_categories(record_objects):
 
-    for rec in records:
+    data = {}
+
+    for rec in record_objects:
         first_char = rec.course[0].upper()
         data_rec = {'id': rec.id, 'course': rec.course}
 
@@ -19,6 +21,8 @@ def parser_categories(record_objects):
             data[first_char].append(data_rec)
         else:
             data[first_char] = [data_rec]
+
+    return data
 
 
 def index(request):
