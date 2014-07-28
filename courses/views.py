@@ -8,9 +8,23 @@ from django.contrib.auth.decorators import login_required
 from courses.models import Categories, Tuts, Materials
 from courses.forms import CategoryForm, TutForm, MaterialForm
 
+def parser_categories(record_objects):
+
+    for rec in records:
+        first_char = rec.course[0].upper()
+        data_rec = {'id': rec.id, 'course': rec.course}
+
+        # add to key if it dosn't exists
+        if first_char in data:
+            data[first_char].append(data_rec)
+        else:
+            data[first_char] = [data_rec]
+
 
 def index(request):
-    data = Categories.objects.all().order_by('course')
+    records= Categories.objects.all().order_by('course')
+    data = parser_categories(records)
+
     return render(request, 'course/index.html', {'data': data})
 
 

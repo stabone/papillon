@@ -5,25 +5,32 @@
     <div>
         Kategoriju saraksts
     </div>
+
     <div>
         <a href="{% url 'add_course' %}">Pievienot kategoriju</a>
     </div>
-    {% for rec in data %}
-        <div class="data">
-            <a href="{% url 'show_tut' rec.id %}">{{ rec.course }}</a>
-            <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu">
-                <i class="add icon"></i>
-            </a>
-            <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot">
-                <i class="edit icon"></i>
-            </a>
 
-            <form method="POST" action="{% url  'delete_categorie' %}">
-                {% csrf_token %}
-                <input type="hidden" value="{{ rec.id }}" name="categoryID">
-                <input type="submit" class="trash icon" value="Dzēst">
-            </form>
-        </div>
+    {% for key, value in data.items %}
+        <ul>
+            <li>
+                {{ key }}
+                <ul>
+                    {% for rec in value %}
+                        <li>{{ rec.course }}
+                        <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu"><i class="add icon"></i></a>
+                        <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
+                        </li>
+
+                        <form method="POST" action="{% url  'delete_categorie' %}">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ rec.id }}" name="categoryID">
+                            <input type="submit" class="trash icon" value="Dzēst">
+                        </form>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+
     {% empty %}
         <div class="ui warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
