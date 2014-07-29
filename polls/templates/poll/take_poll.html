@@ -20,6 +20,9 @@
                     <li>
                         <input type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
                         <lable>{{ choise.option }}</lable>
+                        {% if choise.correct %}
+                            [OK]
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>

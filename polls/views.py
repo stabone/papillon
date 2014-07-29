@@ -10,10 +10,40 @@ from polls.models import Polls, Questions, Choises, Results
 from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
 
+def create_poll_dict(poll_list):
+    poll_dict = {}
+
+    for record in poll_list:
+        poll_dict[record.id] = {
+            'id': record.id,
+            'poll': record.poll,
+            'description': record.description
+        }
+
+    return poll_dict
+
+
+def pop_done_polls(poll_list,user_obj):
+    poll_dict = create_poll_dict(poll_list)
+    done_polls = Results.objects.filter(user=user_obj)
+    valid_polls = []
+
+    for record in done_polls:
+        if record.poll in poll_dict:
+            del poll_dict[record.poll]
+
+    for key in poll_dict:
+        valid_polls.append(poll_dict[key])
+
+    return valid_polls
+
+
 # Create your views here.
 def index(request,page_numb=None):
     poll_list = Polls.objects.all()
-    paginator = Paginator(poll_list, 5)
+    poll_dict = pop_done_polls(poll_list,request.user)
+
+    paginator = Paginator(poll_dict, 5)
 
     try:
         poll_slice = paginator.page(page_numb)
@@ -237,3 +267,8 @@ def save_poll_results(request):
             all_results = Results.objects.bulk_create(obj_list)
 
     return redirect('/poll/')
+
+
+def get_user_statistic(request):
+    data = Results.objects.filter(user=request.user)
+    return render(request, 'poll/statistic.html', {'data': data})

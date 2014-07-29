@@ -40,7 +40,6 @@ def create(request):
     return redirect('/user/')
 
 
-@login_required
 @csrf_protect
 def registration(request):
     form = None
@@ -120,11 +119,6 @@ def find_user(request):
         users = User.objects.filter(Q(username__contains=search_str) | Q(last_name__contains=search_str))
 
         return render(request, 'user/index.html', {'users': users})
-
-
-def get_user_statistic(request):
-    data = Results.objects.filter(user=request.user)
-    return render(request, 'user/statistic.html', {'data': data})
 
 
 def user_delete(request):

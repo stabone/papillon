@@ -47,4 +47,5 @@ class Results(models.Model):
     question = models.PositiveIntegerField()
     #answer = models.ForeignKey(Choises)
     answer = models.PositiveIntegerField()
+    correct = models.BooleanField(default=False)
 

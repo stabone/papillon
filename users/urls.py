@@ -7,6 +7,5 @@ urlpatterns = patterns('',
     url(r'^email/send/$', 'users.views.send_notification', name='send_notification'),
     url(r'^find/$', 'users.views.find_user', name='user_find'),
     url(r'^edit/$', 'users.views.user_edit', name='user_edit'),
-    url(r'^statistic/$', 'users.views.get_user_statistic', name='user_statistic'),
     url(r'^delete/$', 'users.views.user_delete', name='user_delete'),
 )
