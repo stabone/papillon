@@ -4,6 +4,10 @@
 
 	some 3D.js magic
 
+	{% for choise in choises %}
+		{{ choise.id }}
+	{% endfor %}
+
 	{% for i in data %}
 		<div>{{ i.poll }} -> {{ i.question }} -> {{ i.answer }}</div>
 	{% endfor %}

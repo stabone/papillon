@@ -9,8 +9,12 @@ class PollForm(ModelForm):
         model = Polls
         exclude = ('user',)
         labels = {
+            'public': 'Publisks?',
             'poll': 'Virsraksts',
             'description': 'Apraksts'
+        }
+        widgets = {
+            'poll': forms.TextInput(attrs={'autofocus': ''})
         }
 
 

@@ -6,14 +6,14 @@
 
     <h2>{{ poll.name }}</h2>
 
-    <div><a href="{% url 'edit_poll_content' poll.id %}">Labot aptaju</a></div>
+    <div><a href="{% url 'edit_poll_content' poll.id %}">Pievienot jautājumu</a></div>
 
     <form action="{% url 'save_poll_results' %}" method="POST">
         {% csrf_token %}
 
         {% for question in questions %}
             {#{ question.id }#} -> {{ question.question }}
-            <!-- <a href="{% url 'edit_poll' question.id %}"><i class="edit icon"></i></a> -->
+            <a href="{% url 'add_choise' poll.id question.id %}"><i class="add icon"></i></a>
 
             <ul>
                 {% for choise in question.choises %}

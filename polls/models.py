@@ -5,7 +5,8 @@ from django.db import models
 # Create your models here.
 class Polls(models.Model):
     user = models.ForeignKey('auth.User')
-    poll = models.CharField(max_length=255)
+    public = models.BooleanField(default=True)
+    poll = models.CharField(max_length=255, db_index=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

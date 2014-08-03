@@ -17,17 +17,17 @@
         <div class="item">
             <div class="content">
                 <div class="header">
-                    <a href="{% url 'take_poll' rec.id %}">
-                        {{ rec.poll }}
-                    </a>
+
+                    <a href="{% url 'take_poll' rec.id %}">{{ rec.poll }}</a>
+
                     <ul class="action">
-                        <li class="action-add">
-                        </li>
+
+                        <li class="action-add"></li>
+
                         <li class="action-edit">
-                            <a href="{% url 'edit_poll' rec.id %}">
-                                <i class="edit icon"></i>
-                            </a>
+                            <a href="{% url 'edit_poll' rec.id %}"><i class="edit icon"></i></a>
                         </li>
+
                         <li class="action-delete">
                             <form method="POST" action="{% url 'delete_poll' %}">
                                 {% csrf_token %}
@@ -35,6 +35,9 @@
                                 <input type="submit" value="Dzēst" />
                             </form>
                         </li>
+
+                        <span class="created-at">{{ rec.created_at }}</span>
+
                     </ul>
                 </div>
                 <div class="description">

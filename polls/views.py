@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 
 from polls.models import Polls, Questions, Choises, Results
@@ -17,7 +18,8 @@ def create_poll_dict(poll_list):
         poll_dict[record.id] = {
             'id': record.id,
             'poll': record.poll,
-            'description': record.description
+            'description': record.description,
+            'created_at': record.created_at
         }
 
     return poll_dict
@@ -39,8 +41,9 @@ def pop_done_polls(poll_list,user_obj):
 
 
 # Create your views here.
+@login_required
 def index(request,page_numb=None):
-    poll_list = Polls.objects.all()
+    poll_list = Polls.objects.all().order_by('-id')
     poll_dict = pop_done_polls(poll_list,request.user)
 
     paginator = Paginator(poll_dict, 5)
@@ -64,7 +67,7 @@ def add_poll(request):
             poll = form.save(commit=False)
             poll.user = request.user
             poll.save()
-            return redirect('/poll/')
+            return redirect(reverse('base_poll'))
     else:
         form = PollForm()
 
@@ -114,7 +117,7 @@ def edit_poll(request,poll_id):
         form = PollForm(request.POST,instance=record)
         if(form.is_valid()):
             form.save()
-            return redirect('/poll/')
+            return redirect(reverse('base_poll'))
     else:
         form = PollForm(instance=record)
 
@@ -130,7 +133,7 @@ def edit_question(request,question_id):
         form = QuestionForm(request.POST,instance=data)
         if(form.is_valid()):
             form.save()
-            return redirect('/poll/')
+            return redirect(reverse('base_poll'))
     else:
         form = QuestionForm(instance=data)
 
@@ -156,7 +159,11 @@ def edit_choise(request,poll_id,choise_id):
 def get_choise_list(choise_obj):
     choise_list = []
     for choise in choise_obj:
-        choise_list.append({'id': choise.id, 'option': choise.option, 'correct': choise.correct})
+        choise_list.append({
+            'id': choise.id,
+            'option': choise.option,
+            'correct': choise.correct
+        })
 
     return choise_list
 
@@ -211,9 +218,9 @@ def delete_poll(request):
         poll_id = request.POST.get('pollID')
         record = get_object_or_404(Polls,id=poll_id)
         record.delete()
-        return redirect('/poll/')
+        return redirect(reverse('base_poll'))
 
-    return redirect('/poll/')
+    return redirect(reverse('base_poll'))
 
 
 @login_required
@@ -227,7 +234,7 @@ def delete_question(request):
         record.delete()
         return redirect(reverse('take_poll',args=[poll_id]))
 
-    return redirect('/poll/')
+    return redirect(reverse('base_poll'))
 
 
 @login_required
@@ -242,7 +249,7 @@ def delete_choise(request):
         record.delete()
         return redirect(reverse('edit_poll_content',args=[poll_id]))
 
-    return redirect('/poll/')
+    return redirect(reverse('base_poll'))
 
 
 @login_required
@@ -266,9 +273,20 @@ def save_poll_results(request):
             """ bulk create will perfor save """
             all_results = Results.objects.bulk_create(obj_list)
 
-    return redirect('/poll/')
+    return redirect(reverse('base_poll'))
 
 
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
-    return render(request, 'poll/statistic.html', {'data': data})
+    question_list = []
+
+    for rec in data:
+        choises = Choises.objects.filter(Q(question=rec.question) & Q(correct=True))
+        for choise in choises:
+            question_list.append({
+                'id': choise.id,
+                'question_id': choise.question.id,
+                'option': choise.option,
+            })
+
+    return render(request, 'poll/statistic.html', {'data': data, 'choises': question_list})

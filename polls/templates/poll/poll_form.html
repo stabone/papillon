@@ -20,6 +20,16 @@
         </div>
     {% endif %}
 
+
+    {% if form.public.errors %}
+        <div class="ui error message">
+            {{ form.public.label }}
+            <ul class="list">
+                <li>{{ form.public.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
     <form method="POST" action="">
         {% csrf_token %}
         <div class="ui form">
@@ -31,6 +41,11 @@
             <div class="field">
                 <label>{{ form.description.label }}</label>
                 {{ form.description }}
+            </div>
+
+            <div class="field">
+                <label>{{ form.public.label }}</label>
+                {{ form.public }}
             </div>
             <input type="submit" value="Saglabāt" class="ui green button" />
         </div>
