@@ -16,15 +16,16 @@
                 {{ key }}
                 <ul>
                     {% for rec in value %}
-                        <li>{{ rec.course }}
-                        <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu"><i class="add icon"></i></a>
-                        <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
+                        <li>
+                            <a href="{% url 'show_tut' rec.id %}">{{ rec.course }}</a>
+                            <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu"><i class="add icon"></i></a>
+                            <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
                         </li>
 
                         <form method="POST" action="{% url  'delete_categorie' %}">
                             {% csrf_token %}
-                            <input type="hidden" value="{{ rec.id }}" name="categoryID">
-                            <input type="submit" class="trash icon" value="Dzēst">
+                            <input type="hidden" value="{{ rec.id }}" name="categoryID"/>
+                            <input type="submit" class="trash icon" value="Dzēst"/>
                         </form>
                     {% endfor %}
                 </ul>

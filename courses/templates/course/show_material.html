@@ -15,40 +15,17 @@
     {% for rec in data %}
         <div class="ui tertiary segment">
             <div class="ui inverted purple block header">
-                {{ rec.title }}
+                <a href="{% url 'show_video' rec.id %}">{{ rec.title }}</a>
                 <form method="POST" action="{% url 'delete_material' %}">
                     {% csrf_token %}
                     <input type="hidden" name="materialID" value="{{ rec.id }}" />
                     <input type="submit" value="Dzēst" />
                 </form>
             </div>
-            <video controls width="320" height="240"
-                        alt="{{ rec.video.name }}" title="{{ rec.video.name }}">
-                <source src="{{ rec.video.url }}" type="video/mp4">
-                <source src="{{ rec.video.url }}" type="video/webm">
-                Please update your browser
-            </video>
             <p>
                 {{ rec.description }}
             </p>
         </div>
-
-        <span class="show-comments" data-id="{{ rec.id }}">Show Comments</span>
-        <ul id="list-{{ rec.id }}" class="comment-list" data-id="{{ rec.id }}">
-
-        </ul>
-
-        <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
-            {% csrf_token %}
-            <div class="ui form">
-                <div class="field">
-                    <input type="hidden" name="videoID" value="{{ rec.id }}">
-                    <label>Komentārs:</label>
-                    <textarea name="comment" id="comment-field" data-video="{{ rec.id }}"></textarea>
-                </div>
-                <input type="submit" value="Komentēt" class="ui green button" />
-            </div>
-        </form>
 
     {% empty %}
         <div class="ui warning message">

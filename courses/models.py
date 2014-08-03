@@ -44,15 +44,23 @@ class Tuts(models.Model):
         return self.title
 
 
+def get_file_extention(filename):
+    extentio = filename.split('.')[-1].lower()
+    return extentio
+
+
 def handle_file_upload(instance, filename):
-    filename = "{0}_{1}".format(int(time()),random_string(max=10))
-    print("{0}".format(filename))
+    filename = "{0}_{1}.{2}".format(
+                        int(time()),
+                        random_string(max=10),
+                        get_file_extention(filename) )
+    # print("{0}".format(filename))
     return filename
 
 
 class Materials(models.Model):
     def verify_format(file):
-        extension = file.name.split(".")[-1].lower()
+        extension = get_file_extention(file.name)
         allowed_formats = ['mkv', 'webm', 'mp4']
         if extension not in allowed_formats:
             raise ValidationError('Atļautie formāti: %s' % ', '.join(allowed_formats))

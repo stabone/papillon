@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Video - {{ video.title }}</h1>
+
+    <video controls width="320" height="240" alt="{{ video.name }}" title="{{ video.name }}">
+        <source src="{{ video.video.url }}" type="video/mp4" />
+        <source src="{{ video.video.url }}" type="video/webm" />
+        Please update your browser
+    </video>
+
+    <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
+        {% csrf_token %}
+        <div class="ui form">
+            <div class="field">
+                <input type="hidden" name="videoID" value="{{ video.id }}">
+                <label>Komentārs:</label>
+                <textarea name="comment" id="comment-field" data-video="{{ video.id }}"></textarea>
+            </div>
+            <input type="submit" value="Komentēt" class="ui green button" />
+        </div>
+    </form>
+
+{% endblock content %}

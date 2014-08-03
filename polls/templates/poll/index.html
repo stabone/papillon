@@ -48,17 +48,21 @@
     {% endfor %}
     </div>
 
-    <div class="ui pagination menu">
-        {% if data.has_previous %}
-            <a class="item" href="/poll/{{ data.previous_page_number }}">
-                <i class="icon left arrow"></i>Iepriekšējais
-            </a>
-        {% endif %}
-        <a class="item" href="/poll/{{ data.number }}">{{ data.number }}</a>
-        {% if data.has_next %}
-            <a class="item" href="/poll/{{ data.next_page_number }}">
-                <i class="icon right arrow"></i>Nākošais
-            </a>
-        {% endif %}
-    </div>
+    {% if data.paginator.num_pages > 1 %}
+        <div class="ui pagination menu">
+            {% if data.has_previous %}
+                <a class="item" href="/poll/{{ data.previous_page_number }}">
+                    <i class="icon left arrow"></i>Iepriekšējais
+                </a>
+            {% endif %}
+
+            <a class="item" href="/poll/{{ data.number }}">{{ data.number }}</a>
+
+            {% if data.has_next %}
+                <a class="item" href="/poll/{{ data.next_page_number }}">
+                    <i class="icon right arrow"></i>Nākošais
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock content %}

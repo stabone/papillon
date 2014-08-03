@@ -9,13 +9,15 @@
     {% for rec in data %}
         <h2 class="ui header">
             <a href="{% url 'show_material' rec.id %}">{{ rec.title }}</a>
+        </h2>
 
-            <a href="{% url 'add_material' rec.id %}" alt="Pievienot materiālu" title="Pievienot materiālu">
-                <i class="add icon"></i>
-            </a>
-            <a href="{% url 'edit_tut' rec.id %}" alt="Labot" title="Labot">
-                <i class="edit icon"></i>
-            </a>
+
+        <div>
+            <a href="{% url 'add_material' rec.id %}" alt="Pievienot materiālu" title="Pievienot materiālu"><i class="add icon"></i></a>
+
+            <a href="{% url 'edit_tut' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
+
+            <span>{{ rec.created_at }}</span>
 
             <form method="POST" action="{% url 'delete_tut' %}">
                 {% csrf_token %}
@@ -36,12 +38,10 @@
                     {% endfor %}
                 </div>
 
-                <div class="ui clearing divider"></div>
                 {{ rec.description }}
             </div>
-        </h2>
-        <div class="ui horizontal icon divider">
-            <i class="circular book icon"></i>
+
+            <div class="ui clearing divider"></div>
         </div>
     {% empty %}
         <div class="ui warning message">
