@@ -9,11 +9,16 @@
         Please update your browser
     </video>
 
+    <form method="POST" action="{% url 'publish_video' %}">
+        <input type="hidden" value="{{ video.id }}" name="videoID" />
+        <input type="submit" value="Publicēt" />
+    </form>
+
     <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
         {% csrf_token %}
         <div class="ui form">
             <div class="field">
-                <input type="hidden" name="videoID" value="{{ video.id }}">
+                <input type="hidden" name="videoID" value="{{ video.id }}" />
                 <label>Komentārs:</label>
                 <textarea name="comment" id="comment-field" data-video="{{ video.id }}"></textarea>
             </div>

@@ -18,7 +18,7 @@ class CategoryForm(forms.ModelForm):
 class TutForm(forms.ModelForm):
     class Meta:
         model = Tuts
-        exclude = ('author', 'rating', 'times_rated',)
+        exclude = ('author', 'rating', 'times_rated', 'post',)
         labels = {
             'category': 'Kategorija',
             # 'author': 'Autors',
@@ -28,7 +28,7 @@ class TutForm(forms.ModelForm):
             'rating': 'Vertejums',
             'times_rated': 'Vērtēts',
             'tags': 'Birkas',
-            'post': 'Publicet',
+            # 'post': 'Publicet',
         }
         widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
@@ -37,6 +37,7 @@ class TutForm(forms.ModelForm):
 class MaterialForm(forms.ModelForm):
     class Meta:
         model = Materials
+        exclude = ('post',)
         labels = {
             'tut': 'Materiāla nosaukums',
             'title': 'Nosaukums',

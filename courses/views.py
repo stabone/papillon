@@ -212,6 +212,9 @@ def rate_tut(request):
     else:
         print("this is get request")
 
+def publish_video(request):
+    pass
+
 
 # customized 404 error
 def handler404(request):
