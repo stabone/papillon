@@ -212,8 +212,18 @@ def rate_tut(request):
     else:
         print("this is get request")
 
+
 def publish_video(request):
-    pass
+    if request.method == "POST":
+        video_id = request.POST.get('videoID')
+        action = request.POST.get('action')
+        video = get_object_or_404(Materials, id=video_id)
+        video.post = True if action == 'False' else False
+        video.save()
+
+        return redirect(reverse('show_video', args=[video_id]))
+
+    return redirect(reverse('show_video', args=[video_id]))
 
 
 # customized 404 error

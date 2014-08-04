@@ -10,12 +10,16 @@
     </video>
 
     <form method="POST" action="{% url 'publish_video' %}">
+        {% csrf_token %}
+
         <input type="hidden" value="{{ video.id }}" name="videoID" />
+        <input type="hidden" value="{{ video.post }}" name="action" />
         <input type="submit" value="Publicēt" />
     </form>
 
     <form method="POST" action="{% url 'video_comments' %}" id="comment-form">
         {% csrf_token %}
+
         <div class="ui form">
             <div class="field">
                 <input type="hidden" name="videoID" value="{{ video.id }}" />
