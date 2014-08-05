@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 from courses.models import Categories, Tuts, Materials
 from courses.forms import CategoryForm, TutForm, MaterialForm
@@ -138,7 +139,11 @@ def show_tut(request,category_id):
 
 
 def show_material(request, tut_id):
-    data = Materials.objects.filter(tut=tut_id)
+    # for user and editor difering
+    if request.user.is_superuser:
+        data = Materials.objects.filter(Q(tut=tut_id) & Q(post=True))
+    else:
+        data = Materials.objects.filter(tut=tut_id)
 
     return render(request, 'course/show_material.html', {'data': data})
 
