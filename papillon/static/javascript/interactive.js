@@ -3,7 +3,16 @@
  * Django
  */
 
-
+if (window.navigator.onLine) {
+    // http://diveintohtml5.info/storage.html
+    // http://html5doctor.com/introducing-web-sql-databases/
+    // http://code.tutsplus.com/tutorials/working-with-indexeddb--net-34673
+    console.log('you are online');
+    $('#navigatorStatus').addClass('online-status');
+} else {
+    console.log('you are offline');
+    $('#navigatorStatus').addClass('offline-status');
+}
 
 function getCookie(name) {
     var cookieValue = null;
