@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>Pievienot grupu</h1>
+
+    <ul>
+    {% for group in groups %}
+        <li>{{ group.name }}</li>
+    {% endfor %}
+    </ul>
+
+    <form method="POST" action="{% url 'group_add' %}">
+        {% csrf_token %}
+
+        <input type="text" name="group_name" />
+        <input type="submit" value="Saglabāt" />
+    </form>
+{% endblock content %}

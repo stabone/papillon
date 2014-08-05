@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^find/$', 'users.views.find_user', name='user_find'),
     url(r'^edit/$', 'users.views.user_edit', name='user_edit'),
     url(r'^delete/$', 'users.views.user_delete', name='user_delete'),
+    url(r'^add/group/$', 'users.views.create_group', name='group_add'),
 )

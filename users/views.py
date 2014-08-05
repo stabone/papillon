@@ -3,11 +3,11 @@ from django.views.decorators.csrf import csrf_protect
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse as url
+from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.contrib.auth import authenticate, login, logout
 from users.forms import UserForm
 from polls.models import Results
@@ -35,9 +35,22 @@ def create(request):
 
         user.save()
     except IntegrityError:
-        return redirect('/course/')
+        return redirect(reverse('user_base'))
 
-    return redirect('/user/')
+    return redirect(reverse('user_base'))
+
+
+def create_group(request):
+    if request.method == "POST":
+        group_name = request.POST.get('group_name')
+        group = Group(name=group_name)
+        group.save();
+
+        return redirect(reverse('user_base'))
+    else:
+        groups = Group.objects.all()
+
+    return render(request, 'user/add_group.html', {'groups': groups})
 
 
 @csrf_protect
@@ -49,7 +62,7 @@ def registration(request):
 
         if form.is_valid():
             form.save()
-            return redirect(url('user_base'))
+            return redirect(reverse('user_base'))
     else:
         form = UserCreationForm()
 
@@ -73,7 +86,7 @@ def user_edit(request):
         user.groups.name = "cookie"
         user.groups.permissions = ['one', 'two']
 
-        redirect(url('user_edit'))
+        redirect(reverse('user_edit'))
 
     return render(request, 'user/edit.html', {'user_data': user})
 
@@ -127,4 +140,4 @@ def user_delete(request):
         user = User.objects.get(id=user_id)
         user.delete()
 
-        return redirect(url('user_base'))
+        return redirect(reverse('user_base'))
