@@ -20,14 +20,15 @@
 	display: inline;
 }
 
-.online-status {
-	background-color: #2ecc71;
+.navigator-status {
 	border-radius: 3px;
-	height: 5px;
+	text-align: center;
 }
 
-.offline-status {
+.navigator-status.online{
+	background-color: #2ecc71;
+}
+
+.navigator-status.offline {
 	background-color: #e74c3c;
-	border-radius: 3px;
-	height: 5px;
 }

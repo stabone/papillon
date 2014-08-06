@@ -3,16 +3,24 @@
  * Django
  */
 
-if (window.navigator.onLine) {
-    // http://diveintohtml5.info/storage.html
-    // http://html5doctor.com/introducing-web-sql-databases/
-    // http://code.tutsplus.com/tutorials/working-with-indexeddb--net-34673
-    console.log('you are online');
-    $('#navigatorStatus').addClass('online-status');
-} else {
-    console.log('you are offline');
-    $('#navigatorStatus').addClass('offline-status');
-}
+
+var navStatus = $('#navigatorStatus');
+
+// http://diveintohtml5.info/storage.html
+// http://html5doctor.com/introducing-web-sql-databases/
+// http://code.tutsplus.com/tutorials/working-with-indexeddb--net-34673
+// http://www.html5rocks.com/en/mobile/workingoffthegrid/
+window.addEventListener("offline", function(e) {
+    // check if connection is lost
+    navStatus.removeClass();
+    navStatus.addClass('navigator-status offline').text('Pazuda savienujus');
+}, false);
+
+window.addEventListener("online", function(e) {
+    // check if connection is set
+    navStatus.removeClass();
+    navStatus.addClass('navigator-status online').text('Izsevās pieslēgties');
+}, false);
 
 function getCookie(name) {
     var cookieValue = null;

@@ -7,7 +7,8 @@ from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
 from users.forms import UserForm
 from polls.models import Results
@@ -46,11 +47,19 @@ def create_group(request):
         group = Group(name=group_name)
         group.save();
 
-        return redirect(reverse('user_base'))
+        return redirect(reverse('group_add'))
     else:
         groups = Group.objects.all()
 
     return render(request, 'user/add_group.html', {'groups': groups})
+
+def add_permissions(request):
+    perms = Permission.objects.all();
+    content_type = ContentType.objects.get_for_model(User)
+
+    print(content_type)
+
+    return render(request, 'user/permissions.html', {'perms': perms})
 
 
 @csrf_protect

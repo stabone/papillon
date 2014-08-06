@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <select size="20" multiple>
+    {% for perm in perms %}
+        <option value="{{ perm.codename }}">{{ perm.name }}</option>
+    {% endfor %}
+    </select>
+{% endblock content %}
