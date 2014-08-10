@@ -159,7 +159,7 @@ function postRating(courseID, starLevel) {
 $('.rating').click(function(){
     var starLevel = $(this).data('star');
     var courseID = $(this).data('course');
-
+http://nicolasgallagher.com/flexible-css-cover-images/
     return postRating(courseID, starLevel);
 });
 
@@ -167,40 +167,31 @@ $('.rating').click(function(){
 var timerId;
 var classState = true;
 
-$('#timer').click(function() {
-    startPomodoro();
+$('#timer-icon').click(function() {
+    // show configuration and controls
+    $('#timer-tray').toggle();
 });
 
-function startPomodoro() {
-    timerID = setInterval('pomodoro()', 1000);
-}
-
-function pomodoro() {
-    updateDOM();
-}
+$('#timer-start').click(function() {
+    pomodoroTimer = setInterval('pomodoroEndAlert()', 20000);
+    pomodoroIndicatorTimer = setInterval('updateDOM()', 5000);
+});
 
 function updateDOM() {
-    console.log(" it's on going process");
-    var timer = $('#timer');
-    var purple = 'purple time icon';
-    var green = 'green time icon';
+    var timer = $('#timer-icon');
     var timerColor;
 
     if(classState) {
-        timerColor = purple;
+        timerColor = 'purple time icon';
         classState = false;
     } else {
-        timerColor = green;
+        timerColor = 'green time icon';
         classState = true;
     }
 
     timer.attr('class', timerColor);
 }
 
-function stopPomodoro() {
-    console.log(" timer END");
-    clearTimeout(timerId);
-}
 
 $('.to_trash').click(function() {
     var messageID = $(this).data('id');

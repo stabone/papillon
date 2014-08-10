@@ -4,11 +4,19 @@
 {% block content %}
     <h1>Pievienot grupu</h1>
 
-    <ul>
-    {% for group in groups %}
-        <li>{{ group.name }}</li>
-    {% endfor %}
-    </ul>
+    <a href="{% url 'group_perms_add' %}">Tiesību saraksts</a>
+
+    <form method="POST" action="{% url 'group_add' %}">
+        {% csrf_token %}
+
+        <select name="group_id">
+        {% for group in groups %}
+            <option value="{{ group.id }}">{{ group.name }}</option>
+        {% endfor %}
+        </select>
+
+        <input type="submit" name="Piešķirt" />
+    </form>
 
     <form method="POST" action="{% url 'group_add' %}">
         {% csrf_token %}

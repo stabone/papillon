@@ -53,13 +53,40 @@ def create_group(request):
 
     return render(request, 'user/add_group.html', {'groups': groups})
 
-def add_permissions(request):
-    perms = Permission.objects.all();
-    content_type = ContentType.objects.get_for_model(User)
 
-    print(content_type)
+def add_group(request):
+    if request.method == "POST":
+        group_id = request.POST.get('group_id')
+        group = get_object_or_404(Group, id=group_id)
+        request.user.groups.add(group)
 
-    return render(request, 'user/permissions.html', {'perms': perms})
+    return redirect(reverse('group_create'))
+
+
+def add_group_perms(request,group_id=None):
+    if request.method == "POST":
+        group_id = request.POST.get('group_id')
+        perms_list = request.POST.getlist('permissions')
+        try:
+            pk_list = [int(perm_id) for perm_id in perms_list]
+        except ValueError:
+            print('cant convert value')
+
+        group = get_object_or_404(Group, id=group_id)
+        perms = Permission.objects.in_bulk(pk_list)
+
+        print(perms.count)
+
+        group.permissions = perms
+        group.save()
+
+        return redirect(reverse('group_perms_add'))
+
+    else:
+        groups = Group.objects.all()
+        perms = Permission.objects.all()
+
+    return render(request, 'user/permissions.html', {'perms': perms, 'groups': groups})
 
 
 @csrf_protect

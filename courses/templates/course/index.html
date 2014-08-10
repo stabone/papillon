@@ -10,11 +10,11 @@
         <a href="{% url 'add_course' %}">Pievienot kategoriju</a>
     </div>
 
-    {% for key, value in data.items %}
-        <ul>
-            <li>
+    <ul id="library">
+        {% for key, value in data.items %}
+            <li class="item">
                 {{ key }}
-                <ul>
+                <ul class="library-section">
                     {% for rec in value %}
                         <li>
                             <a href="{% url 'show_tut' rec.id %}">{{ rec.course }}</a>
@@ -30,9 +30,9 @@
                     {% endfor %}
                 </ul>
             </li>
-        </ul>
 
-    {% empty %}
-        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
-    {% endfor %}
+        {% empty %}
+            <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+        {% endfor %}
+    </ul>
 {% endblock content %}

@@ -1,9 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <select size="20" multiple>
-    {% for perm in perms %}
-        <option value="{{ perm.codename }}">{{ perm.name }}</option>
-    {% endfor %}
-    </select>
+
+    <form method="POST" action="{% url 'group_perms_add' %}">
+
+        {% csrf_token %}
+
+        <select name="group_id">
+            {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+            {% endfor %}
+        </select>
+
+        {% if perms %}
+        <select name="permissions" size="20" multiple>
+            {% for perm in perms %}
+                <!-- <option value="{{ perm.codename }}">{{ perm.name }}</option> -->
+                <option value="{{ perm.id }}">{{ perm.name }}</option>
+            {% endfor %}
+        </select>
+        {% endif %}
+
+        <input type="submit" name="Pievienot atļaujas" />
+    </form>
 {% endblock content %}

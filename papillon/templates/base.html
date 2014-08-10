@@ -4,73 +4,54 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <title>Papillon "Monarch"</title>
-    <link rel="stylesheet" type="text/css" href="{% static "css/semantic.min.css" %}" />
-    <link rel="stylesheet" type="text/css" href="{% static "css/extra.css" %}">
-    <meta charset="utf-8" />
+        <title>Papillon "Monarch"</title>
+        <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/semantic.min.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/extra.css" %}">
+        <meta charset="utf-8" />
     </head>
     <body>
-        <div id="navigatorStatus"></div>
-        <div class="ui tiered menu">
-            <div class="menu">
-                <a href="/" class="active item">Sākums</a>
-                <div class="ui dropdown item">
-                    <a href="/poll/">Aptauja</a>
-                    <i class="icon dropdown"> </i>
-                    <div class="menu">
-                        <a class="item" href="{% url 'user_statistic' %}">
-                            Statistika
-                        </a>
-                        <a class="item" href="{% url 'add_poll' %}">
-                            <i class="add icon"></i>aptauja
-                        </a>
-                    </div>
-                </div>
+        <header>
+            <div id="navigatorStatus"></div>
+        </header>
 
-                <div class="ui dropdown item">
-                    <a href="{% url 'base_course' %}">Kategorija</a>
-                    <i class="icon dropdown"> </i>
-                    <div class="menu">
-                        <a class="item" href="{% url 'add_course' %}">
-                            <i class="add icon"></i>kategorija
-                        </a>
-                    </div>
-                </div>
+        <nav>
+            <ul id="menu">
+                <li class="menu-item"><a href="/" >Sākums</a></li>
+                <li class="menu-item"><a href="{% url 'base_poll' %}">Aptauja</a></li>
+                <li class="menu-item"><a href="{% url 'user_statistic' %}">Statistika</a></li>
+                <li class="menu-item"><a href="{% url 'base_course' %}">Kategorija</a></li>
+                <!-- <li class="menu-item"><a href="/play-ground/">Play Ground</a></li> -->
 
-                <div class="ui item">
-                    <a href="/play-ground/">Play Ground</a>
-                </div>
-
-                <div class="right menu">
-                    <!-- <div class="item">
-                        <div class="ui icon input">
-                            <input type="text" placeholder="Meklēt...">
-                            <i class="search link icon"></i>
-                        </div>
-                    </div> -->
-                    <div class="item">
-                        {% if user.is_authenticated %}
-                            <div class="ui purple label">
-                                <a href="{% url 'user_profile' %}">{{ user.username }}</a>|
-                                <a href="{% url 'user_logout' %}">Iziet</a>
-                            </div>
-                        {% else %}
-                            <a class="ui teal button" href="{% url 'user_registration' %}">Reģistrēties</a>
-                            <a class="" href="{% url 'user_login' %}">
-                                <i class="sign in icon"></i>
-                            </a>
-                        {% endif %}
-                    </div>
-                    <div class="item">
-                        <i class="green time icon" id="timer"></i>
-                    </div>
-                </div>
-           </div>
-        </div>
+                {% if user.is_authenticated %}
+                    <li class="menu-item"><a href="{% url 'user_profile' %}">{{ user.username }}</a></li>
+                    <li class="menu-item"><a href="{% url 'user_logout' %}">Iziet</a></li>
+                {% else %}
+                    <li class="menu-item"><a href="{% url 'user_registration' %}">Reģistrēties</a></li>
+                    <li class="menu-item"><a href="{% url 'user_login' %}">Ieiet</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <ul>
+            <li>
+                <i class="green time icon" id="timer-icon"></i>
+                <ul id="timer-tray" class="hide">
+                    <li id="timer-start">Start</li>
+                    <li id="timer-end">End</li>
+                    <li id="timer-reset">Reset</li>
+                    <li>Pomodoro: <input id="pomo-time" type="range" value="25" min="25" max="35"/>
+                        <div id="pomo-time-value"></div>
+                    </li>
+                    <li>Pauze: <input id="timeout" type="range" value="5" min="5" max="10"/>
+                        <div id="timeout-value"></div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
         <div id="container">
             {% block content %}
-                Sakuma lapa
+
             {% endblock content %}
         </div>
 

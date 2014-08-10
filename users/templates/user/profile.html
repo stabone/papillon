@@ -17,7 +17,13 @@
             <li>{{ user.last_name }}</li>
             <li>{{ user.last_login }}</li>
             <li>{{ user.date_joined }}</li>
-            <li>{{ user.groups.all }}</li>
+            <li>
+                <ul>
+                {% for group in user.groups.all %}
+                    <li>{{ group.name }}</li>
+                {% endfor %}
+                </ul>
+            </li>
             <li>Lietotāja atļaujas:
                 <ul>
                     {% for permission in user.get_all_permissions %}
