@@ -47,9 +47,11 @@ def list_groups(request):
     return render(request, 'user/group.html', {'groups': groups})
 
 
+@csrf_protect
 def create_group(request):
     if request.method == "POST":
         group_name = request.POST.get('group_name')
+
         group = Group(name=group_name)
         group.save();
 
@@ -60,13 +62,46 @@ def create_group(request):
     return render(request, 'user/add_group.html', {'groups': groups})
 
 
+@csrf_protect
 def add_group(request):
     if request.method == "POST":
         group_id = request.POST.get('group_id')
+
         group = get_object_or_404(Group, id=group_id)
         request.user.groups.add(group)
 
     return redirect(reverse('group_create'))
+
+
+def edit_group(request, group_id):
+    group = get_object_or_404(Group, id=group_id)
+
+    return render(request, 'user/edit_group.html', {'group': group})
+
+
+@csrf_protect
+def update_group(request):
+    if request.method == "POST":
+        group_id = request.POST.get('group_id')
+        group_name = request.POST.get('group_name')
+
+        group = get_object_or_404(Group, id=group_id)
+        group.name = group_name
+
+        group.save()
+
+    return redirect(reverse('group_list'))
+
+
+@csrf_protect
+def delete_group(request):
+    if request.method == "POST":
+        group_id = request.POST.get('group_id')
+
+        group = get_object_or_404(Group, id=group_id)
+        group.delete()
+
+    return redirect(reverse('group_list'))
 
 
 def add_group_perms(request,group_id=None):

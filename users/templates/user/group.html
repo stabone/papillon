@@ -6,8 +6,15 @@
         {% for group in groups %}
         <li>
             {{ group.name }}
-            [<a href="{% url 'group_edit' %}">Labot</a>]
-            [<a href="{% url 'group_delete' group.id %}">Dzēst</a>]
+            [<a href="{% url 'group_edit' group.id %}">Labot</a>]
+
+            <form class="form-delete" method="POST" action="{% url 'group_delete' %}">
+                {% csrf_token %}
+
+                <input type="hidden" name="group_id" value="{{ group.id }}" />
+                <input type="submit" value="Dzēst" />
+            </form>
+
         </li>
         {% endfor %}
     </li>

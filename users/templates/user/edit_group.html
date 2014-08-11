@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <form method="POST" action="{% url 'group_update' %}">
+
+        {% csrf_token %}
+
+        <input type="hidden" name="group_id" value="{{ group.id }}" />
+        <input type="text" name="group_name" value="{{ group.name }}" />
+
+        <input type="submit" value="Saglabāt" />
+
+    </form>
+
+{% endblock content %}
+
