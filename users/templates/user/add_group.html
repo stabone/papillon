@@ -18,10 +18,11 @@
         <input type="submit" name="Piešķirt" />
     </form>
 
-    <form method="POST" action="{% url 'group_add' %}">
+    <form method="POST" action="{% url 'group_create' %}">
         {% csrf_token %}
 
         <input type="text" name="group_name" />
         <input type="submit" value="Saglabāt" />
     </form>
 {% endblock content %}
+

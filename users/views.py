@@ -41,6 +41,12 @@ def create(request):
     return redirect(reverse('user_base'))
 
 
+def list_groups(request):
+    groups = Group.objects.all()
+
+    return render(request, 'user/group.html', {'groups': groups})
+
+
 def create_group(request):
     if request.method == "POST":
         group_name = request.POST.get('group_name')

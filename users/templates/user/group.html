@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <ul>
+        {% for group in groups %}
+        <li>
+            {{ group.name }}
+            [<a href="{% url 'group_edit' %}">Labot</a>]
+            [<a href="{% url 'group_delete' group.id %}">Dzēst</a>]
+        </li>
+        {% endfor %}
+    </li>
+
+{% endblock content %}
+

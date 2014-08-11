@@ -8,6 +8,15 @@
 
     {% include "user/find.html" %}
 
+    <ul id="nav-sub">
+        <li>Grupu atļaujas</li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
     <table class="ui sortable table segment">
         <thead>
             <tr>
@@ -21,7 +30,7 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td>{{ user.username }}</td>
+                    <td><a href="{% url 'user_profile' %}">{{ user.username }}</a></td>
                     <td>{{ user.last_name }}</td>
                     <td></td>
                     <td>
@@ -38,3 +47,4 @@
         </tbody>
     </table>
 {% endblock content %}
+
