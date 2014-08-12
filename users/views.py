@@ -41,12 +41,14 @@ def create(request):
     return redirect(reverse('user_base'))
 
 
+@login_required
 def list_groups(request):
     groups = Group.objects.all()
 
     return render(request, 'user/group.html', {'groups': groups})
 
 
+@login_required
 @csrf_protect
 def create_group(request):
     if request.method == "POST":
@@ -62,6 +64,7 @@ def create_group(request):
     return render(request, 'user/add_group.html', {'groups': groups})
 
 
+@login_required
 @csrf_protect
 def add_group(request):
     if request.method == "POST":
@@ -73,12 +76,14 @@ def add_group(request):
     return redirect(reverse('group_create'))
 
 
+@login_required
 def edit_group(request, group_id):
     group = get_object_or_404(Group, id=group_id)
 
     return render(request, 'user/edit_group.html', {'group': group})
 
 
+@login_required
 @csrf_protect
 def update_group(request):
     if request.method == "POST":
@@ -93,6 +98,7 @@ def update_group(request):
     return redirect(reverse('group_list'))
 
 
+@login_required
 @csrf_protect
 def delete_group(request):
     if request.method == "POST":
@@ -143,7 +149,7 @@ def registration(request):
     else:
         form = UserCreationForm()
 
-    return render(request, 'user/register.html', {'form': form})
+    return render(request, 'user/registration.html', {'form': form})
 
 
 @login_required
@@ -218,3 +224,4 @@ def user_delete(request):
         user.delete()
 
         return redirect(reverse('user_base'))
+
