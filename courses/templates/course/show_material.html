@@ -16,11 +16,15 @@
         <div class="ui tertiary segment">
             <div class="ui inverted purple block header">
                 <a href="{% url 'show_video' rec.id %}">{{ rec.title }}</a>
+
+                {% if user.is_staff %}
                 <form method="POST" action="{% url 'delete_material' %}">
                     {% csrf_token %}
                     <input type="hidden" name="materialID" value="{{ rec.id }}" />
                     <input type="submit" value="Dzēst" />
                 </form>
+                {% endif %}
+
             </div>
             <p>
                 {{ rec.description }}

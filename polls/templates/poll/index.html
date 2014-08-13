@@ -7,9 +7,11 @@
 
     <div>
         <a href="{% url 'user_statistic' %}">Statistika</a>
+        {% if user.is_staff %}
         <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
             <i class="add icon"></i> Pievienot aptauju
         </a>
+        {% endif %}
     </div>
 
     <div class="ui divided list">
@@ -24,6 +26,7 @@
 
                         <li class="action-add"></li>
 
+                        {% if user.is_staff %}
                         <li class="action-edit">
                             <a href="{% url 'edit_poll' rec.id %}"><i class="edit icon"></i></a>
                         </li>
@@ -35,6 +38,7 @@
                                 <input type="submit" value="Dzēst" />
                             </form>
                         </li>
+                        {% endif %}
 
                         <span class="created-at">{{ rec.created_at }}</span>
 

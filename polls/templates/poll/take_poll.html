@@ -6,13 +6,15 @@
 
     <h2>{{ poll.name }}</h2>
 
+    {% if user.is_staff %}
     <div><a href="{% url 'edit_poll_content' poll.id %}">Pievienot jautājumu</a></div>
+    {% endif %}
 
     <form action="{% url 'save_poll_results' %}" method="POST">
         {% csrf_token %}
 
         {% for question in questions %}
-            {#{ question.id }#} -> {{ question.question }}
+            -> {{ question.question }}
             <a href="{% url 'add_choise' poll.id question.id %}"><i class="add icon"></i></a>
 
             <ul>
@@ -20,7 +22,7 @@
                     <li>
                         <input type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
                         <lable>{{ choise.option }}</lable>
-                        {% if choise.correct %}
+                        {% if choise.correct and user.is_staff %}
                             [OK]
                         {% endif %}
                     </li>
