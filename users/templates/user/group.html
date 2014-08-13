@@ -2,19 +2,25 @@
 
 {% block content %}
 
+    <a href="{% url 'group_add' %}">Pievienot grupu</a>
+    <a href="{% url 'group_perms_add' %}">Pievienot atļaju grupai</a>
+
     <ul>
         {% for group in groups %}
         <li>
-            {{ group.name }}
-            [<a href="{% url 'group_edit' group.id %}">Labot</a>]
+            <ul class="context">
+                <li>{{ group.name }}</li>
+                <li class="edit"><a href="{% url 'group_edit' group.id %}">Labot</a></li>
 
-            <form class="form-delete" method="POST" action="{% url 'group_delete' %}">
-                {% csrf_token %}
+                <li class="delete">
+                    <form class="form-delete" method="POST" action="{% url 'group_delete' %}">
+                        {% csrf_token %}
 
-                <input type="hidden" name="group_id" value="{{ group.id }}" />
-                <input type="submit" value="Dzēst" />
-            </form>
-
+                        <input type="hidden" name="group_id" value="{{ group.id }}" />
+                        <input type="submit" value="Dzēst" />
+                    </form>
+                </li>
+            </ul>
         </li>
         {% endfor %}
     </li>

@@ -112,5 +112,15 @@ input[type='text']:required {
     box-shadow: 4px 4px 20px rgba(200, 0, 0, 0.85);
 }
 
+.context {
+    list-style: none;
+}
 
+.context li {
+    display: inline;
+}
+
+.context li > form {
+    display: inline;
+}
 

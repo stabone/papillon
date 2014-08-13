@@ -57,7 +57,7 @@ def create_group(request):
         group = Group(name=group_name)
         group.save();
 
-        return redirect(reverse('group_add'))
+        return redirect(reverse('group_list'))
     else:
         groups = Group.objects.all()
 

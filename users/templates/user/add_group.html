@@ -6,6 +6,7 @@
 
     <a href="{% url 'group_perms_add' %}">Tiesību saraksts</a>
 
+    <!--
     <form method="POST" action="{% url 'group_add' %}">
         {% csrf_token %}
 
@@ -17,6 +18,7 @@
 
         <input type="submit" name="Piešķirt" />
     </form>
+    -->
 
     <form method="POST" action="{% url 'group_create' %}">
         {% csrf_token %}

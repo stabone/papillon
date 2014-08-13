@@ -6,16 +6,17 @@
 
         {% csrf_token %}
 
-        <select name="group_id">
+        <label>Grupa</label>
+        <select name="group_id" size="20">
             {% for group in groups %}
                 <option value="{{ group.id }}">{{ group.name }}</option>
             {% endfor %}
         </select>
 
         {% if perms %}
+        <label>Atļaujas</label>
         <select name="permissions" size="20" multiple>
             {% for perm in perms %}
-                <!-- <option value="{{ perm.codename }}">{{ perm.name }}</option> -->
                 <option value="{{ perm.id }}">{{ perm.name }}</option>
             {% endfor %}
         </select>
