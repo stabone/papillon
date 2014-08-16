@@ -1,5 +1,5 @@
 from django import forms
-from django_markdown.widgets import MarkdownWidget
+# from django_markdown.widgets import MarkdownWidget
 from articles.models import Articles
 
 
