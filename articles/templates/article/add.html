@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{#% load django_markdown %#}
+
+{% block content %}
+
+    <form method="POST" action="{% url 'article_add' %}">
+        {% csrf_token %}
+
+        <div>
+            {{ form.title.label }}
+            {{ form.title }}
+        </div>
+
+        <div>
+            {{ form.article.label }}
+            {{ form.article }}
+        </div>
+
+        <input type="submit" value="Saglabāt" />
+    </form>
+
+{% endblock content %}

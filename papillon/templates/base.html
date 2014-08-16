@@ -21,7 +21,7 @@
                 <li class="menu-item"><a href="{% url 'base_poll' %}">Aptauja</a></li>
                 <li class="menu-item"><a href="{% url 'user_statistic' %}">Statistika</a></li>
                 <li class="menu-item"><a href="{% url 'base_course' %}">Kategorija</a></li>
-                <!-- <li class="menu-item"><a href="/play-ground/">Play Ground</a></li> -->
+                <li class="menu-item"><a href="{% url 'article_base' %}">Raksti</a></li>
 
                 {% if user.is_authenticated %}
                     <li class="menu-item"><a href="{% url 'user_profile' %}">{{ user.username }}</a></li>

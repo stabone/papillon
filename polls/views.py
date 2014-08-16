@@ -131,7 +131,7 @@ def edit_question(request,question_id):
 
     if request.method == "POST":
         form = QuestionForm(request.POST,instance=data)
-        if(form.is_valid()):
+        if form.is_valid():
             form.save()
             return redirect(reverse('base_poll'))
     else:
