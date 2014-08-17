@@ -46,7 +46,7 @@ INSTALLED_APPS = (
     'comments',
     'messaging',
     'articles',
-    # 'django_markdown',
+    'django_markdown',
 )
 
 MIDDLEWARE_CLASSES = (

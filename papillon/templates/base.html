@@ -58,5 +58,10 @@
         <script type="text/javascript" src="{% static "javascript/jquery.min.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/semantic.min.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/interactive.js" %}"></script>
+
+        {% block extra_scripts %}
+
+        {% endblock extra_scripts %}
+
     </body>
 </html>

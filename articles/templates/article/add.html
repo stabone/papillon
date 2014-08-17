@@ -3,15 +3,53 @@
 
 {% block content %}
 
+    {% if form.title.errors %}
+        <div class="ui error message">
+            {{ form.title.label }}
+            <ul class="list">
+                {% for error in form.title.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.description.errors %}
+        <div class="ui error message">
+            {{ form.description.label }}
+            <ul class="list">
+                {% for error in form.description.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.article.errors %}
+        <div class="ui error message">
+            {{ form.article.label }}
+            <ul class="list">
+                {% for error in form.article.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <form method="POST" action="{% url 'article_add' %}">
         {% csrf_token %}
 
-        <div>
+        <div class="form-section">
             {{ form.title.label }}
             {{ form.title }}
         </div>
 
-        <div>
+        <div class="form-section">
+            {{ form.description.label }}
+            {{ form.description }}
+        </div>
+
+        <div class="form-section">
             {{ form.article.label }}
             {{ form.article }}
         </div>

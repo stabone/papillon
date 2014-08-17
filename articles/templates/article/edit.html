@@ -1,17 +1,30 @@
 {% extends "base.html" %}
+{% load django_markdown %}
+
 
 {% block content %}
 
     <form method="POST" action="{% url 'article_update' article_id %}">
         {% csrf_token %}
 
-        <div>
-            {{ form.title.label }}
+        <div class="form-section">
+            <label for="id_title">
+                {{ form.title.label }}
+            </label>
             {{ form.title }}
         </div>
 
-        <div>
-            {{ form.article.label }}
+        <div class="form-section">
+            <label for="id_description">
+                {{ form.description.label }}
+            </label>
+            {{ form.description }}
+        </div>
+
+        <div class="form-section">
+            <label for="id_article">
+                {{ form.article.label }}
+            </label>
             {{ form.article }}
         </div>
 
@@ -19,3 +32,7 @@
     </form>
 
 {% endblock content %}
+
+{% block extra_scripts %}
+    {#% markdown_media %#}
+{% endblock extra_scripts %}

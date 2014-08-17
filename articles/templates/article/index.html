@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load django_markdown %}
 
 {% block content %}
 
@@ -8,23 +8,36 @@
     <a href="{% url 'article_add' %}">Pievienot ierakstu</a>
 
     <ul>
-        {% for article in articles %}
-            <li>
-                <ul>
-                    <li>{{ article.title }}</li>
-                    <li>{{ article.created_at }}</li>
-                    <li class=""><a href="{% url 'article_edit' article.id %}">Labot</a></li>
-                    <li class="">
-                        <form method="POST" action="{% url 'article_delete' %}">
-                            {% csrf_token %}
 
-                            <input type="hidden" value="{{ article.id }}" name="article_id" />
-                            <input type="submit" value="Dzēst" />
-                        </form>
+        {% for article in articles %}
+            <li class="section">
+                <ul>
+                    <li class="article-title">
+                        <a href="{% url 'article_item' article.id %}">
+                            {{ article.title|title }}
+                        </a>
+                    </li>
+
+                    <li class="description">
+                        <p>{{ article.description }}</p>
+                        <a href="{% url 'article_item' article.id %}">Vairāk...</a>
+                    </li>
+
+                    <li class="meta-time">
+                        {{ article.created_at|date:"Y.m.d H:i:s" }}
+                    </li>
+
+                    <li class="">
+                        <a href="{% url 'article_edit' article.id %}">Labot</a>
+                    </li>
+
+                    <li class="">
+                        {% include 'article/delete.html' %}
                     </li>
                 </ul>
             </li>
         {% endfor %}
+
     </ul>
 
 {% endblock content %}

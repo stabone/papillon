@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load django_markdown %}
+
+{% block content %}
+
+    <ul>
+        <li class=""><a href="{% url 'article_edit' article.id %}">Labot</a></li>
+        <li class="">{% include 'article/delete.html' %}</li>
+    </ul>
+
+    <h3>{{ article.title }}</h3>
+
+    <div class="article">
+        {{ article.article|markdown }}
+    </div>
+
+{% endblock content %}

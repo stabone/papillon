@@ -20,12 +20,13 @@ def add(request):
         # save article
         articleForm = ArticleForm(request.POST)
 
-        if articleForm.is_valid:
+        if articleForm.is_valid():
             article = articleForm.save(commit=False)
+            article_id = article.id
             article.user = request.user
             article.save()
 
-        return redirect(reverse('article_base'))
+            return redirect(reverse('article_item', args=[article_id]))
     else:
         articleForm = ArticleForm()
 
@@ -52,7 +53,16 @@ def update(request, article_id):
         if article.is_valid():
             article.save()
 
-    return redirect(reverse('article_base'))
+            return redirect(reverse('article_item', args=[article_id]))
+
+    return render(request, 'article/edit.html', {'form': article, 'article_id': article_id})
+
+
+@login_required
+def item(request, article_id):
+    article = get_object_or_404(Articles, id=article_id)
+
+    return render(request, 'article/item.html', {'article': article})
 
 
 @login_required
