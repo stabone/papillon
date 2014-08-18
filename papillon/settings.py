@@ -28,7 +28,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/' # path to location
+LOGIN_REDIRECT_URL = '/user/profile/' # path to location
 
 # Application definition
 

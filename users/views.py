@@ -20,6 +20,14 @@ def index(request):
     return render(request, 'user/index.html', {'users': users})
 
 
+@login_required
+def user_profile(request):
+    user_id = request.user.id
+    user = User.objects.get(id=user_id)
+
+    return render(request, 'user/profile.html', {'user': user})
+
+
 def create(request):
     if request.method == "POST":
         email = request.POST.get('email')
@@ -150,15 +158,6 @@ def registration(request):
         form = UserCreationForm()
 
     return render(request, 'user/registration.html', {'form': form})
-
-
-@login_required
-@csrf_protect
-def user_profile(request):
-    user_id = request.user.id
-    user = User.objects.get(id=user_id)
-
-    return render(request, 'user/profile.html', {'user': user})
 
 
 @login_required
