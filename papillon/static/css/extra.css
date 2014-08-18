@@ -101,7 +101,7 @@ ul#timer-tray li {
     display: block;
 }
 
-input[type='text'] {
+input[type='text'], input[type='password'] {
     height: 24px;
     border-radius: 3px;
     margin: 7px;
@@ -152,7 +152,9 @@ input[type='text']:required {
     display: block;
 }
 
-.form-section input[type='text'], .form-section textarea {
+.form-section input[type='text'],
+.form-section input[type='password'],
+.form-section textarea {
     width: 96%;
 }
 

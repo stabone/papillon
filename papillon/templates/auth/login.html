@@ -3,35 +3,32 @@
 {% block content %}
 
 	{% if form.errors %}
-		<p>Your username and password didn't match. Please try again.</p>
+		<ul>
+            {% for error in form.errors %}
+                <li>{{ error|escape }}</li>
+            {% endfor %}
+        </ul>
 	{% endif %}
 
-	<div class="ui form segment">
+	<div class="">
 		<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
 			{% csrf_token %}
-			<div class="fields">
-				<label>{{ form.username.label_tag }}</label>
-				<div class="ui left labeled icon input">
-					{{ form.username }}
-					<i class="user icon"></i>
-					<div class="ui corner label">
-						<i class="icon asterisk"></i>
-					</div>
-				</div>
+
+			<div class="form-section">
+				<label for="id_username">
+                    {{ form.username.label_tag }}
+                </label>
+				{{ form.username }}
 			</div>
 
-			<div class="fields">
-				<label>{{ form.password.label_tag }}</label>
-				<div class="ui left labeled icon input">
-					{{ form.password }}
-					<i class="lock icon"></i>
-					<div class="ui corner label">
-						<i class="icon asterisk"></i>
-					</div>
-				</div>
+			<div class="form-section">
+				<label for="id_password">
+                    {{ form.password.label_tag }}
+                </label>
+				{{ form.password }}
 			</div>
 
-			<input type="submit" value="Ien'akt" class="ui blue submit button" />
+            <input type="submit" value="Ienākt" class="submit button" />
 			<input type="hidden" name="next" value="{{ next }}" />
 		</form>
 	</div>
