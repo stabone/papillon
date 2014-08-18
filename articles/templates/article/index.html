@@ -3,11 +3,11 @@
 
 {% block content %}
 
-    <h3>Articles</h3>
+    {% if user.is_staff %}
+        <a href="{% url 'article_add' %}">Pievienot ierakstu</a>
+    {% endif %}
 
-    <a href="{% url 'article_add' %}">Pievienot ierakstu</a>
-
-    <ul>
+    <ul id="articles">
 
         {% for article in articles %}
             <li class="section">

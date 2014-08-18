@@ -38,21 +38,23 @@
     <form action="" method="POST">
         {% csrf_token %}
 
-        <div class="ui form">
-            <div class="fields">
-                <label>{{ form.username.label }}</label>
+            <div class="form-section">
+                <label for="id_username">
+                    {{ form.username.label }}
+                </label>
                 {{ form.username }}
             </div>
-            <div class="fields">
+
+            <div class="form-section">
                 <label>{{ form.password1.label }}</label>
                 {{ form.password1 }}
             </div>
-            <div class="fields">
+
+            <div class="form-section">
                 <label>{{ form.password2.label }}</label>
                 {{ form.password2 }}
             </div>
 
-            <input type="submit" value="Reģistrēties" class="ui green button" />
-        </div>
+            <input type="submit" value="Reģistrēties" class="green button" />
     </form>
 {% endblock content %}

@@ -158,3 +158,14 @@ input[type='text']:required {
     width: 96%;
 }
 
+/* article styles */
+
+#articles, #articles .section ul {
+    list-style: none;
+}
+
+.meta-time {
+    color: #2c3e50;
+    font-style: italic;
+    font-size: 14px;
+}

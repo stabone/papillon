@@ -1,0 +1,7 @@
+
+<form method="POST" action="{% url 'article_delete' %}">
+    {% csrf_token %}
+
+    <input type="hidden" value="{{ article.id }}" name="article_id" />
+    <input type="submit" value="Dzēst" />
+</form>
