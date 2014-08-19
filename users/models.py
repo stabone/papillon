@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, PermissionsMixin, AbstractBaseUser
 
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/
 
@@ -48,7 +48,7 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
