@@ -6,13 +6,13 @@
         <li><a href="{% url 'user_base' %}">Lietotāji</a></li>
         <li>{% include 'user/find.html' %}</li>
         <li><a href="{% url 'user_edit' %}">Labot profilu</a></li>
-        {% if user.is_staff %}
+        {% if user.is_superuser %}
         <li><a href="{% url 'group_list' %}">Grupas</a></li>
         {% endif %}
     </ul>
     <div>
         <ul>
-            <li>{{ user.username }}</li>
+            <li>{{ user.user_name }}</li>
             <li>{{ user.password }}</li>
             <li>{{ user.email }}</li>
             <li>{{ user.first_name }}</li>

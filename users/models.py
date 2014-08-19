@@ -9,21 +9,6 @@ from django.contrib.auth.models import BaseUserManager, PermissionsMixin, Abstra
 def handle_file_upload(instance, filename):
     filename = "/users/{0}_{1}".format(int(time()), filename)
 
-"""
-class UsersProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    email = models.CharField(max_length=255,unique=True)
-    image = models.ImageField(
-            upload_to=handle_file_upload,
-            max_length=255,
-            blank=True,
-            null=True
-        )
-    location = models.SlugField(max_length=100,blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-"""
-
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -50,6 +35,7 @@ class CustomUserManager(BaseUserManager):
         user.user_name=user_name
         user.last_name=last_name
         user.is_admin = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
@@ -70,7 +56,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             null=True
         )
     bio = models.TextField()
-    is_actice = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
