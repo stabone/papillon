@@ -50,13 +50,12 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    user_name = models.CharField(max_length=128, min_length=3)
-    last_name = models.CharField(max_length=128, min_length=3)
+    user_name = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=128)
 
     email = models.EmailField(
             verbose_name='Epasts',
             max_length=255,
-            min_length=5,
             unique=True
         )
     image = models.ImageField(
