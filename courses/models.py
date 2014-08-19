@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.conf import settings
 from django.core.exceptions import ValidationError
 
 from helper.utils import random_string
@@ -29,7 +30,7 @@ class Tuts(models.Model):
         (ADVANCED, 'Grūts'),
     )
     category = models.ForeignKey(Categories, db_index=True)
-    author = models.ForeignKey('auth.User')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)

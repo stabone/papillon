@@ -1,8 +1,9 @@
 from django.db import models
+from django.conf import settings
 
 
 class Articles(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=255,blank=False)
     description = models.CharField(max_length=255,blank=False)
     article = models.TextField()

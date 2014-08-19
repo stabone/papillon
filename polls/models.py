@@ -1,10 +1,11 @@
 #-*- coding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 
 
 # Create your models here.
 class Polls(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     public = models.BooleanField(default=True)
     poll = models.CharField(max_length=255, db_index=True)
     description = models.TextField(blank=True)
@@ -41,7 +42,7 @@ class Choises(models.Model):
 for now these fields will be integers
 """
 class Results(models.Model):
-    user = models.ForeignKey('auth.User')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     #poll = models.ForeignKey(Polls)
     poll = models.PositiveIntegerField()
     #question = models.ForeignKey(Questions)

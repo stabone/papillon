@@ -1,5 +1,6 @@
 #-*- coding: utf-8 -*-
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import BaseUserManager, PermissionsMixin, AbstractBaseUser
 
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/
@@ -8,14 +9,20 @@ from django.contrib.auth.models import BaseUserManager, PermissionsMixin, Abstra
 def handle_file_upload(instance, filename):
     filename = "/users/{0}_{1}".format(int(time()), filename)
 
-
+"""
 class UsersProfile(models.Model):
-    user = models.OneToOneField('auth.User')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     email = models.CharField(max_length=255,unique=True)
-    image = models.ImageField(upload_to=handle_file_upload,max_length=255,blank=True,null=True)
+    image = models.ImageField(
+            upload_to=handle_file_upload,
+            max_length=255,
+            blank=True,
+            null=True
+        )
     location = models.SlugField(max_length=100,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+"""
 
 
 class CustomUserManager(BaseUserManager):
@@ -35,23 +42,21 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password):
-        """
-        Creates and saves a superuser with the given email, date of
-        birth and password.
-        """
+    def create_superuser(self, email, password, user_name, last_name):
         user = self.create_user(
             email,
             password=password
         )
+        user.user_name=user_name
+        user.last_name=last_name
         user.is_admin = True
         user.save(using=self._db)
         return user
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    user_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    user_name = models.CharField(verbose_name='Vārds',max_length=128)
+    last_name = models.CharField(verbose_name='Uzvārds',max_length=128)
 
     email = models.EmailField(
             verbose_name='Epasts',
@@ -73,7 +78,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'password', 'user_name', 'last_name']
+    REQUIRED_FIELDS = ['password', 'user_name', 'last_name']
 
     def get_full_name(self):
         full_name = "%s %s" % (self.user_name, self.last_name)
@@ -88,12 +93,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
-
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        return True
 
     @property
     def is_staff(self):
