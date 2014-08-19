@@ -8,6 +8,7 @@ from django.contrib.auth.models import BaseUserManager, PermissionsMixin, Abstra
 def handle_file_upload(instance, filename):
     filename = "/users/{0}_{1}".format(int(time()), filename)
 
+
 class UsersProfile(models.Model):
     user = models.OneToOneField('auth.User')
     email = models.CharField(max_length=255,unique=True)
@@ -49,12 +50,13 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    user_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
-    password = models.CharField(max_length=128)
+    user_name = models.CharField(max_length=128, min_length=3)
+    last_name = models.CharField(max_length=128, min_length=3)
+
     email = models.EmailField(
             verbose_name='Epasts',
             max_length=255,
+            min_length=5,
             unique=True
         )
     image = models.ImageField(
@@ -75,10 +77,15 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['email', 'password', 'user_name', 'last_name']
 
     def get_full_name(self):
-        return self.user_name + ' ' + self.last_name
+        full_name = "%s %s" % (self.user_name, self.last_name)
+
+        return full_name.strip()
 
     def get_short_name(self):
         return self.user_name
+
+    def get_email(self):
+        return self.email
 
     def __str__(self):              # __unicode__ on Python 2
         return self.email
@@ -92,3 +99,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_staff(self):
         return self.is_admin
+
