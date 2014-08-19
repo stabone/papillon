@@ -1,6 +1,7 @@
 from django.test import TestCase
 from comments.models import MaterialComments, PollComments
 from polls.models import Polls
+from users.models import CustomUser
 from django.contrib.auth.models import User
 
 from helper.utils import random_string
@@ -9,7 +10,7 @@ from helper.utils import random_string
 """
 class MaterialCommentsTest(TestCase):
     def setUp(self):
-        user_obj = User.objects.create_user(username='Ivars',password='naglis',email='epasts@epasts.lv')
+        user_obj = CustomUser.objects.create_user(user_name='Ivars',password='naglis',email='epasts@epasts.lv')
         material = how to test file upload???
         obj = MaterialComments.objects.create(user=user_obj,material=)
         obj.save()
@@ -22,7 +23,7 @@ class MaterialCommentsTest(TestCase):
 
 class PollCommentsTest(TestCase):
     def setUp(self):
-        user_obj = User.objects.create(username='Ivars',password='Naglis',email='epasts@epasts.lv')
+        user_obj = CustomUser.objects.create(user_name='Ivars',password='Naglis',email='epasts@epasts.lv')
         poll_obj = Polls.objects.create(user=user_obj,poll=random_string())
         obj = PollComments.objects.create(user=user_obj,poll=poll_obj,comment=random_string(max=600))
         obj.save()

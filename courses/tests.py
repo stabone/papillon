@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from users.models import CustomUser
 from courses.models import Categories, Tuts
 
 from helper.utils import random_string
