@@ -6,6 +6,7 @@ from courses.models import Categories, Tuts, Materials
 
 
 class CategoryForm(forms.ModelForm):
+
     class Meta:
         model = Categories
         labels = {
@@ -16,12 +17,12 @@ class CategoryForm(forms.ModelForm):
         }
 
 class TutForm(forms.ModelForm):
+
     class Meta:
         model = Tuts
         exclude = ('author', 'rating', 'times_rated', 'post',)
         labels = {
             'category': 'Kategorija',
-            # 'author': 'Autors',
             'title': 'Nosaukums',
             'description': 'Apraksts',
             'level': 'Limenis',
@@ -35,6 +36,7 @@ class TutForm(forms.ModelForm):
         }
 
 class MaterialForm(forms.ModelForm):
+
     class Meta:
         model = Materials
         exclude = ('post',)

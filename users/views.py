@@ -12,6 +12,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
 # from users.forms import UserForm
 from users.models import CustomUser
+from users.forms import UserForm
 from polls.models import Results
 
 
@@ -129,13 +130,13 @@ def registration(request):
     form = None
 
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = UserForm(request.POST)
 
         if form.is_valid():
             form.save()
             return redirect(reverse('user_base'))
     else:
-        form = UserCreationForm()
+        form = UserForm()
 
     return render(request, 'user/registration.html', {'form': form})
 

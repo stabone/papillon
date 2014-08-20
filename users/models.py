@@ -7,7 +7,7 @@ from django.contrib.auth.models import BaseUserManager, PermissionsMixin, Abstra
 
 
 def handle_file_upload(instance, filename):
-    filename = "/users/{0}_{1}".format(int(time()), filename)
+    filename = "/users/{1}".format(filename)
 
 
 class CustomUserManager(BaseUserManager):
@@ -64,7 +64,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['password', 'user_name', 'last_name']
+    REQUIRED_FIELDS = ['user_name', 'last_name']
+
+    def get_avatar(self):
+        return self.image if self.image else '/media/users/default.svg'
 
     def get_full_name(self):
         full_name = "%s %s" % (self.user_name, self.last_name)
