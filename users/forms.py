@@ -21,7 +21,7 @@ class UserForm(ModelForm):
             'email': {
                 'required': 'Lauks ir obligāts',
                 'invalid': 'Norādītā epasta formāts ir nederīgs',
-            }
+            },
 
             'password': {
                 'required': 'Lauks ir obligāts',
