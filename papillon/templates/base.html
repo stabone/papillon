@@ -24,7 +24,7 @@
                 <li class="menu-item"><a href="{% url 'article_base' %}">Raksti</a></li>
 
                 {% if user.is_authenticated %}
-                    <li class="menu-item"><a href="{% url 'user_profile' %}">{{ user.username }}</a></li>
+                    <li class="menu-item"><a href="{% url 'user_profile' %}">{{ user.get_full_name }}</a></li>
                     <li class="menu-item"><a href="{% url 'user_logout' %}">Iziet</a></li>
                 {% else %}
                     <li class="menu-item"><a href="{% url 'user_registration' %}">Reģistrēties</a></li>

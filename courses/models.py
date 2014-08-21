@@ -10,7 +10,6 @@ from helper.utils import random_string
 from time import time
 
 
-# Create your models here.
 class Categories(models.Model):
     course = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -34,8 +33,6 @@ class Tuts(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
-    rating = models.PositiveSmallIntegerField(default=1)
-    times_rated = models.PositiveIntegerField(default=0)
     tags = models.CharField(max_length=255)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -43,6 +40,11 @@ class Tuts(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+class Rating(models.Model):
+    tutorial = models.PositiveIntegerField() # for Tut table reference
+    rating = models.PositiveSmallIntegerField()
 
 
 def get_file_extention(filename):

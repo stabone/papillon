@@ -11,7 +11,6 @@
             <a href="{% url 'show_material' rec.id %}">{{ rec.title }}</a>
         </h2>
 
-
         <div>
 
             {% if user.is_staff %}
@@ -30,18 +29,16 @@
             <span>{{ rec.created_at }}</span>
 
             <div class="sub header">
-                <div id="course-{{ rec.id }}" href="{% url 'rate_tut' %}">
-                    {{ rec.rating }}
-                </div>
-
-                <div>
-                    {% for i in 'asdfg'|make_list %}
-                        <i class="star icon rating" data-course="{{ rec.id }}"
-                            data-star="{{ i }}"></i>
+            <em>{{ rating }}/5</em>
+                <div class="">
+                    {% for i in '12345'|make_list %}
+                        <a href="{% url 'rate_tut' rec.id i %}">{{ i }}</a>
                     {% endfor %}
                 </div>
 
-                {{ rec.description }}
+                <div class="meta-description">
+                    {{ rec.description }}
+                </div>
             </div>
 
             <div class="ui clearing divider"></div>

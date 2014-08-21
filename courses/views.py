@@ -5,9 +5,9 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.db.models import Q
+from django.db.models import Q, Avg
 
-from courses.models import Categories, Tuts, Materials
+from courses.models import Categories, Tuts, Materials, Rating
 from courses.forms import CategoryForm, TutForm, MaterialForm
 
 def parser_categories(record_objects):
@@ -130,12 +130,17 @@ def show_categorie(request):
     return render(request, 'course/show_categorie.html', {'data': data})
 
 
-def show_tut(request,category_id):
+def show_tut(request, tut_id):
     current_path = request.get_full_path()
-    # request.session['last_url'] = current_path
-    data = Tuts.objects.filter(category=category_id)
+    data = Tuts.objects.filter(category=tut_id)
 
-    return render(request, 'course/show_tut.html', {'data': data, 'course': category_id})
+    statistics = Rating.objects.filter(tutorial=tut_id).aggregate(avg_val=Avg('rating'))
+    avg_val = statistics['avg_val'] if statistics['avg_val'] else 0
+
+    return render(request, 'course/show_tut.html', {
+                                    'data': data,
+                                    'course': tut_id,
+                                    'rating': avg_val})
 
 
 def show_material(request, tut_id):
@@ -195,27 +200,15 @@ def delete_material(request):
     return redirect(reverse('base_course'))
 
 
-def rate_tut(request):
-    if request.method == "POST":
-        response_data = {}
-        try:
-            tut_id = int(request.POST.get('tut_id'))
-            level  = int(request.POST.get('level'))
-        except ValueError:
-            response_data['error'] = 'Illegal values'
-            return HttpResponse(json.dumps(response_data),content_type='application/json')
+def rate_tut(request, tut_id, rating):
+    tut = Tuts.objects.get(id=tut_id)
 
-        tut = get_object_or_404(Tuts, id=tut_id)
-        rating = tut.rating + level
-        times_rated = tut.times_rated + 1
-        response_data['level'] = rating / times_rated
-        response_data['rated'] = times_rated
-        tut.rating = rating
-        tut.times_rated = times_rated
-        tut.save()
-        return HttpResponse(json.dumps(response_data),content_type='application/json')
-    else:
-        print("this is get request")
+    obj = Rating.objects.create(tutorial=tut_id, rating=rating)
+    obj.save()
+
+    print('asdfadsfadsfsdf')
+
+    return redirect(reverse('show_tut', args=[tut_id]))
 
 
 def publish_video(request):
