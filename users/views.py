@@ -6,11 +6,9 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.decorators import login_required
-# from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, Group, Permission
+from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
-# from users.forms import UserForm
 from users.models import CustomUser
 from users.forms import UserForm
 from polls.models import Results
@@ -130,6 +128,13 @@ def registration(request):
     form = None
 
     if request.method == "POST":
+        email = request.POST.get('email')
+        password1 = request.POST.get('password')
+        password2 = request.POST.get('password_second')
+
+        user_name = request.POST.get('user_name')
+        last_name = request.POST.get('last_name')
+
         form = UserForm(request.POST)
 
         if form.is_valid():
