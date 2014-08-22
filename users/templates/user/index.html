@@ -8,40 +8,32 @@
 
     {% include "user/find.html" %}
 
-    <ul id="nav-sub">
-        <li>Grupu atļaujas</li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-
     <table class="ui sortable table segment">
         <thead>
             <tr>
                 <th>Vārds</th>
                 <th>Uzvārds</th>
-                <th>Atļaujas</th>
+                <th>Status</th>
                 <th>Dzēst</th>
-                <!-- <th>Parole</th> -->
             </tr>
         </thead>
         <tbody>
             {% for user in users %}
                 <tr>
-                    <td><a href="{% url 'user_profile' %}">{{ user.username }}</a></td>
+                    <td><a href="{% url 'user_profile' %}">{{ user.user_name }}</a></td>
                     <td>{{ user.last_name }}</td>
-                    <td></td>
                     <td>
-                        <form method="POST" action="{% url 'user_delete' %}">
-                            {% csrf_token %}
-
-                            <input type="hidden" name="userID" value="{{ user.id }}" />
-                            <input type="submit" value="Dzēst" />
-                        </form>
+                        {% if user.is_superuser and user.is_admin %}
+                            Superlietotājs
+                        {% elif user.is_admin %}
+                            Admins
+                        {% else %}
+                            Lietotājs
+                        {% endif %}
                     </td>
-                    <!-- <td>{#{ user.password }#}</td> -->
+                    <td>
+                        {% include 'user/delete_user.html' %}
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

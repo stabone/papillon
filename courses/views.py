@@ -206,8 +206,6 @@ def rate_tut(request, tut_id, rating):
     obj = Rating.objects.create(tutorial=tut_id, rating=rating)
     obj.save()
 
-    print('asdfadsfadsfsdf')
-
     return redirect(reverse('show_tut', args=[tut_id]))
 
 
