@@ -2,15 +2,25 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from articles.models import Articles
 from articles.forms import ArticleForm
 
 
-def index(request):
-    articles = Articles.objects.all()
+def index(request, page_numb=None):
+    article_list = Articles.objects.all()
 
-    return render(request, 'article/index.html', {'articles': articles})
+    paginator = Paginator(article_list, 10)
+
+    try:
+        article_slice = paginator.page(page_numb)
+    except PageNotAnInteger:
+        article_slice = paginator.page(1)
+    except EmptyPage:
+        article_slice = paginator.page(paginator.num_pages)
+
+    return render(request, 'article/index.html', {'articles': article_slice})
 
 
 @login_required
@@ -22,11 +32,10 @@ def add(request):
 
         if articleForm.is_valid():
             article = articleForm.save(commit=False)
-            article_id = article.id
             article.user = request.user
             article.save()
 
-            return redirect(reverse('article_item', args=[article_id]))
+            return redirect(reverse('article_item', args=[article.id]))
     else:
         articleForm = ArticleForm()
 

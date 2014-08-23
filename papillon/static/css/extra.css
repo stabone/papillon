@@ -1,3 +1,15 @@
+
+a[href]:link,
+a[href]:visited,
+a[href]:hover,
+a[href]:active {
+    text-decoration: none;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #2C3E50;
+    font-weight: bold;
+}
+
 #container {
     width: 900px;
     margin: 20px auto 30px;
@@ -39,21 +51,27 @@ nav ul#menu {
     list-style: none;
     width: 900px;
     margin: 20px auto 20px;
-    font-size: 24px;
+    /*font-size: 24px;*/
+}
+
+nav ul#menu li.menu-item {
+    background: #34495e;
+    display: inline;
+    border: 1px solid #2c3e50;
+    border-radius: 3px;
+    padding: 4px;
 }
 
 nav ul#menu li.menu-item > a {
     text-decoration: none;
-}
-
-nav ul#menu li.menu-item {
-    display: inline;
-    border: 1px solid black;
-    padding: 4px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #ffffff;
 }
 
 nav ul#menu li.menu-item:hover {
-    background-color: #efefef;
+    background-color: #374452;
+    box-shadow: 0px 3px 0px teal;
 }
 
 nav ul#menu li.menu-item ul#timer-tray {
@@ -172,8 +190,15 @@ input[type='email']:required {
 
 /* article styles */
 
-#articles, #articles .section ul {
+#articles {
     list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#articles li.section {
+    margin-top: 5px;
+    margin-bottom: 8px;
 }
 
 .meta-time {
@@ -182,8 +207,14 @@ input[type='email']:required {
     font-size: 14px;
 }
 
+.meta-more {
+    text-transform:
+}
 
+.meta-edit {
 
-#test-auto {
-    margin: 20px auto 20px;
+}
+
+.meta-delete {
+
 }

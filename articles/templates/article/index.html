@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load django_markdown %}
 
+
 {% block content %}
 
     {% if user.is_staff %}
@@ -11,33 +12,54 @@
 
         {% for article in articles %}
             <li class="section">
-                <ul>
-                    <li class="article-title">
-                        <a href="{% url 'article_item' article.id %}">
-                            {{ article.title|title }}
-                        </a>
-                    </li>
+                <div class="article-title">
+                    <a href="{% url 'article_item' article.id %}">
+                        {{ article.title|title }}
+                    </a>
+                </div>
 
-                    <li class="description">
-                        <p>{{ article.description }}</p>
-                        <a href="{% url 'article_item' article.id %}">Vairāk...</a>
-                    </li>
+                <div class="description">
+                    <p>{{ article.description }}</p>
+                    <a class="meta-more" href="{% url 'article_item' article.id %}">Vairāk...</a>
+                </div>
 
-                    <li class="meta-time">
-                        {{ article.created_at|date:"Y.m.d H:i:s" }}
-                    </li>
+                <div class="meta-time">
+                    {{ article.created_at|date:"Y.m.d H:i:s" }}
+                </div>
 
-                    <li class="">
-                        <a href="{% url 'article_edit' article.id %}">Labot</a>
-                    </li>
+                {% if user.is_superuser %}
+                <div class="meta-edit">
+                    <a href="{% url 'article_edit' article.id %}">Labot</a>
+                </div>
 
-                    <li class="">
-                        {% include 'article/delete.html' %}
-                    </li>
-                </ul>
+                <div class="meta-delete">
+                    {% include 'article/delete.html' %}
+                </div>
+                {% endif %}
+
             </li>
         {% endfor %}
 
     </ul>
+
+    {% if articles.paginator.num_pages > 1 %}
+        <div class="ui pagination menu">
+            {% if articles.has_previous %}
+                <a class="item" href="{% url 'article_base' articles.previous_page_number %}">
+                    <i class="icon left arrow"></i>Iepriekšējais
+                </a>
+            {% endif %}
+
+            <a class="item" href="{% url 'article_base' articles.number %}">
+                {{ articles.number }}
+            </a>
+
+            {% if articles.has_next %}
+                <a class="item" href="{% url 'article_base' articles.next_page_number %}">
+                    <i class="icon right arrow"></i>Nākošais
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
 
 {% endblock content %}

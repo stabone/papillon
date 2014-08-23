@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% load django_markdown %}
 
+
 {% block content %}
+
+    <div>
+        <a href="{% url 'article_base' %}">Raksti</a>
+    </div>
 
     <ul>
         <li class=""><a href="{% url 'article_edit' article.id %}">Labot</a></li>
