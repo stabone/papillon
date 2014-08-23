@@ -5,9 +5,6 @@ from users.models import CustomUser
 
 class UserForm(forms.ModelForm):
 
-    error_messages = {
-        'password_mismatch': 'Norādītās paroles nesakrita',
-    }
     password1 = forms.CharField(label='Parole',
                             max_length=32,
                             min_length=6,
@@ -39,6 +36,7 @@ class UserForm(forms.ModelForm):
         }
 
         error_messages = {
+            'password_mismatch': 'Norādītās paroles nesakrīt',
             'email': {
                 'required': 'Lauks ir obligāts',
                 'unique': 'Šāds epasts jau eksistē',

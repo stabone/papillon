@@ -1,44 +1,68 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <div>
+        {% include 'user/find.html' %}
+    </div>
+
     <ul>
-        <li><a href="{% url 'messaging_inbox' %}">Zinas</a></li>
-        <li><a href="{% url 'user_base' %}">Lietotāji</a></li>
-        <li>{% include 'user/find.html' %}</li>
-        <li><a href="{% url 'user_edit' %}">Labot profilu</a></li>
+        <li>
+            <a href="{% url 'messaging_inbox' %}">Zinas</a>
+        </li>
+        <li>
+            <a href="{% url 'user_base' %}">Lietotāji</a>
+        </li>
+        <li>
+            <a href="{% url 'user_edit' %}">Labot profilu</a>
+        </li>
+
         {% if user.is_superuser %}
-        <li><a href="{% url 'group_list' %}">Grupas</a></li>
+            <li>
+                <a href="{% url 'group_list' %}">Grupas</a>
+            </li>
         {% endif %}
     </ul>
+
     <div>
         <div class="user avatar">
             <img src="{{ user.get_avatar }}" />
         </div>
+
         <table>
-            <tr><td></td><td>{{ user.user_name }}</td></tr>
-            <tr><td></td><td>{{ user.last_name }}</td></tr>
-            <tr><td></td><td>{{ user.email }}</td></tr>
+            <tr>
+                <td>Vārds:</td>
+                <td>{{ user.user_name }}</td>
+            </tr>
+            <tr>
+                <td>Uzvārds:</td>
+                <td>{{ user.last_name }}</td>
+            </tr>
+            <tr>
+                <td>E-pasts:</td>
+                <td>{{ user.email }}</td>
+            </tr>
         </table>
-        <ul>
-            <li>{{ user.user_name }}</li>
-            <li>{{ user.password }}</li>
-            <li>{{ user.email }}</li>
-            <li>{{ user.last_login }}</li>
-            <li>{{ user.date_joined }}</li>
-            <li>
-                <ul>
+
+        {% if groups %}
+        <div>
+            Grupas:
+            <ul>
                 {% for group in user.groups.all %}
                     <li>{{ group.name }}</li>
                 {% endfor %}
-                </ul>
-            </li>
-            <li>Lietotāja atļaujas:
-                <ul>
-                    {% for permission in user.get_all_permissions %}
-                        <li>{{ permission }}</li>
-                    {% endfor %}
-                </ul>
-            </li>
-        </ul>
+            </ul>
+        </div>
+        {% endif %}
+
+        <div>
+            Lietotāja atļaujas:
+            <ul>
+                {% for permission in user.get_all_permissions %}
+                    <li>{{ permission }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
     </div>
 {% endblock content %}
