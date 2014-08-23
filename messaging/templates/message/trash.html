@@ -9,23 +9,20 @@
     {% for message in messages %}
         <li>
             <li>
-                <form method="POST" action="{% url 'messaging_restore' %}">
-                    {% csrf_token %}
-
-                    <input type="hidden" name="messageID" value="{{ message.id }}" />
-                    <input type="submit" value="Atjanunot" />
-                </form>
+                {% include "message/trash_msg.html" %}
             </li>
+
             <li>
                 {% include "message/delete_msg.html" %}
             </li>
+
             <li>
                 <a href="{% url 'messaging_respond' message.id %}">Atbildēt</a>
             </li>
         </li>
 
         <div class="ui message">
-            No: {{ message.user_from.username }}
+            No: {{ message.user_from.user_name }}
             <div class="header">
                 {{ message.title }}
             </div>

@@ -189,5 +189,5 @@ def user_delete(request):
         user = CustomUser.objects.get(id=user_id)
         user.delete()
 
-        return redirect(reverse('user_base'))
+    return redirect(reverse('user_base'))
 

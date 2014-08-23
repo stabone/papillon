@@ -1,0 +1,7 @@
+
+<form method="POST" action="{% url 'messaging_restore' %}">
+    {% csrf_token %}
+
+    <input type="hidden" name="messageID" value="{{ message.id }}" />
+    <input type="submit" value="Atjanunot" />
+</form>

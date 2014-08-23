@@ -218,3 +218,36 @@ input[type='email']:required {
 .meta-delete {
 
 }
+
+.message-list {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #efefef;
+}
+
+.message-list td, .message-list th {
+    padding: 5px;
+    border-radius: 2px;
+    border-collapse: collapse;
+    border: 1px solid #efefef;
+}
+
+.message-list .message-date {
+    width: 180px;
+}
+
+.message-list .message-from {
+    width: 130px;
+}
+
+.message-list tr:nth-child(odd) {
+    background-color: red;
+}
+
+.message-list tr:nth-child(even) {
+    background-color: blue;
+}
+
+.message-list tr:first-child {
+    background-color: green;
+}

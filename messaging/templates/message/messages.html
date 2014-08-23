@@ -1,28 +1,38 @@
 {% extends "base.html" %}
 
+
 {% block content %}
     <ul>
         <li><a href="{% url 'messaging_add' %}">Rakstīt ziņu</a></li>
         <li><a href="{% url 'messaging_trash' %}">Miskaste</a></li>
     </ul>
 
-    Message List:
-    <table>
+    <div class="table-title">
+        Ziņas:
+    </div>
 
-            <tr>
-                <th>Title</th>
-                <th>Date</th>
-            </tr>
+    <table class="message-list">
+
+        <tr>
+            <th>Datums</th>
+            <th>No</th>
+            <th>Temats</th>
+        </tr>
 
         {% for message in messages %}
             <tr>
+                <td class="message-date">
+                    {{ message.sent_at|date:"Y.m.d H:i:s" }}
+                </td>
+
+                <td class="message-from">
+                    {{ message.user_from.get_full_name }}
+                </td>
+
                 <td>
                     <a href="{% url 'messaging_read' message.id %}">
                         {{ message.title|title }}
                     </a>
-                </td>
-                <td>
-                    {{ message.sent_at|date:"Y.m.d H:i:s" }}
                 </td>
             </tr>
         {% endfor %}

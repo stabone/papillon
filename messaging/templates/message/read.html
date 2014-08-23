@@ -5,28 +5,35 @@
     <a href="{% url 'messaging_inbox' %}">Atpakaļ</a>
 
     <div class="ui message">
-        <div>
-            <form method="POST" action="{% url 'messaging_to_trash' %}">
-                {% csrf_token %}
+        <div class="message-action">
 
-                <input type="hidden" name="messageID" value="{{ message.id }}" />
-                <input type="submit" value="Uz miskasti" />
-            </form>
+            {% include "message/trash_msg.html" %}
 
             {% include "message/delete_msg.html" %}
 
-            <a href="{% url 'messaging_respond' message.id %}">Atbildēt</a>
+            <a href="{% url 'messaging_respond' message.id %}">
+                Atbildēt
+            </a>
 
         </div>
-        No: {{ message.user_from.username }}
-        <div class="header">
-            {{ message.title }}
+
+        <div>
+            <div class="message from">
+                No: {{ message.user_from.get_full_name }}
+            </div>
+
+            <div class="header">
+                {{ message.title }}
+            </div>
+
+            <div class="">
+                {{ message.message }}
+            </div>
+
+            <div class="meta-date">
+                {{ message.sent_at|date:"Y.m.d H:i:s" }}
+            </div>
         </div>
-        <div>Just for diff</div>
-        <p>
-            {{ message.message }}
-        </p>
-        {{ message.sent_at }}
     </div>
 
 {% endblock content %}
