@@ -40,10 +40,9 @@ def pop_done_polls(poll_list,user_obj):
     return valid_polls
 
 
-# Create your views here.
 @login_required
 def index(request,page_numb=None):
-    poll_list = Polls.objects.all().order_by('-id')
+    poll_list = Polls.objects.all()
     poll_dict = pop_done_polls(poll_list,request.user)
 
     paginator = Paginator(poll_dict, 5)

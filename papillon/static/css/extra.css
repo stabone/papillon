@@ -201,6 +201,14 @@ input[type='email']:required {
     margin-bottom: 8px;
 }
 
+#articles .line-separator {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    height: 1px;
+    background-color: #717171;
+    border-bottom: 1px solid #313030;
+}
+
 .meta-time {
     color: #2c3e50;
     font-style: italic;
@@ -208,15 +216,15 @@ input[type='email']:required {
 }
 
 .meta-more {
-    text-transform:
+    font-size: 18px;
 }
 
 .meta-edit {
-
+    display: inline;
 }
 
 .meta-delete {
-
+    display: inline;
 }
 
 .message-list {
