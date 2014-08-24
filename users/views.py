@@ -4,11 +4,11 @@ from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 from users.models import CustomUser
 from users.forms import UserForm
 from polls.models import Results
@@ -147,7 +147,7 @@ def user_edit(request):
         user.groups.name = "cookie"
         user.groups.permissions = ['one', 'two']
 
-        redirect(reverse('user_edit'))
+        return redirect(reverse('user_edit'))
 
     return render(request, 'user/edit.html', {'user_data': user})
 

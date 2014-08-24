@@ -1,6 +1,8 @@
+#-*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
+from django.db.models import Q
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -10,7 +12,7 @@ from messaging.forms import ContactForm, MessagingForm
 
 @login_required
 def inbox(request, page_numb=None):
-    message_list = Messages.objects.filter(trash=False).order_by('-sent_at') # by user
+    message_list = Messages.objects.filter(Q(trash=False) & Q(user_to=request.user)) # by user
 
     paginator = Paginator(message_list, 25)
 
@@ -44,7 +46,11 @@ def add_message(request):
 
 @login_required
 def read_message(request, msg_id):
-    message = Messages.objects.get(id=msg_id)
+    message = get_object_or_404(Messages, id=msg_id)
+
+    if not message.red:
+        message.red = True
+        message.save()
 
     return render(request, 'message/read.html', {'message': message})
 
@@ -111,14 +117,10 @@ def to_trash_message(request):
 
 
 @login_required
-@csrf_protect
-def delete_message(request):
-    if request.method == "POST":
-        messageID = request.POST.get('messageID')
-        message = get_object_or_404(Messages, id=messageID)
-        message.delete()
+def contact_list(request):
+    contacts = Contacts.objects.filter(user=request.user)
 
-    return redirect(reverse('messaging_inbox'))
+    return render(request, 'contacts/list.html', {'contacts': contacts})
 
 
 @login_required
@@ -133,6 +135,44 @@ def add_contact(request):
 
 
 @login_required
+@csrf_protect
+def delete_message(request):
+    if request.method == "POST":
+        message_id = request.POST.get('messageID')
+        message = get_object_or_404(Messages, id=message_id)
+        message.delete()
+
+    return redirect(reverse('messaging_inbox'))
+
+
+@login_required
+@csrf_protect
+def delete_message_list(request):
+    if request.method == "POST":
+        message_id_list = request.POST.getlist('indices[]')
+
+        try:
+            pk_list = [int(msg_id) for msg_id in message_id_list]
+        except ValueError:
+            print('Varbūt izmest 404???')
+
+        messages = Messages.objects.in_bulk(pk_list)
+
+        for message_id in messages:
+            messages[message_id].delete()
+
+    return redirect(reverse('messaging_inbox'))
+
+
+@login_required
+@csrf_protect
 def delete_contact(request):
     if request.method == "POST":
-        return redirect('/contact/list/')
+        contact_id_list = request.POST.getlist('indices')
+
+        try:
+            pk_list = [int(contact_id) for contact_id in contact_id_list]
+        except ValueError:
+            print('Varātu izmest 404 !!!')
+
+    return redirect(reverse('contact_list'))

@@ -8,5 +8,7 @@ urlpatterns = patterns('',
     url(r'^restore/$', 'messaging.views.restore_message', name='messaging_restore'),
     url(r'^trash/([0-9])*$', 'messaging.views.trash_message', name='messaging_trash'),
     url(r'^to/trash/$', 'messaging.views.to_trash_message', name='messaging_to_trash'),
+    url(r'^contact/delete/$', 'messaging.views.delete_contact', name='contact_list'),
     url(r'^delete/$', 'messaging.views.delete_message', name='messaging_delete'),
+    url(r'^delete/list/$', 'messaging.views.delete_message_list', name='msg_list_delete'),
 )

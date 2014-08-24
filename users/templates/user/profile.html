@@ -44,7 +44,7 @@
             </tr>
         </table>
 
-        {% if groups %}
+        <!-- {% if groups %}
         <div>
             Grupas:
             <ul>
@@ -53,16 +53,16 @@
                 {% endfor %}
             </ul>
         </div>
-        {% endif %}
+        {% endif %} -->
 
-        <div>
+        <!-- <div>
             Lietotāja atļaujas:
             <ul>
                 {% for permission in user.get_all_permissions %}
                     <li>{{ permission }}</li>
                 {% endfor %}
             </ul>
-        </div>
+        </div> -->
 
     </div>
 {% endblock content %}

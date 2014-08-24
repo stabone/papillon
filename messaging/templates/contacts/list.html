@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    {% for contact in contacts %}
+        {{ contact.user.get_full_name }}
+    {% endfor %}
+
+{% endblock content %}

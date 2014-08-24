@@ -5,15 +5,23 @@
     <ul>
         <li><a href="{% url 'messaging_add' %}">Rakstīt ziņu</a></li>
         <li><a href="{% url 'messaging_trash' %}">Miskaste</a></li>
+        <li><a href="{% url 'contact_list' %}">Kontakti</a></li>
     </ul>
 
     <div class="table-title">
         Ziņas:
     </div>
 
+    <form action="{% url 'msg_list_delete' %}" method="POST">
+
+    {% csrf_token %}
+
+    <input type="submit" value="Dzēst" />
+
     <table class="message-list">
 
         <tr>
+            <th>Status</th>
             <th>Datums</th>
             <th>No</th>
             <th>Temats</th>
@@ -21,6 +29,18 @@
 
         {% for message in messages %}
             <tr>
+                <td class="{{ message.red|yesno:'message-red,message-notred' }}">
+
+                    <input type="checkbox" name="indices[]" value="{{ message.id }}" />
+
+                    {% if message.red %}
+                        <span title="">X</span>
+                    {% else %}
+                        <span title="Neizlasīta Ziņa">Y</span>
+                    {% endif %}
+
+                </td>
+
                 <td class="message-date">
                     {{ message.sent_at|date:"Y.m.d H:i:s" }}
                 </td>
@@ -38,4 +58,7 @@
         {% endfor %}
 
     </table>
+
+    </form>
+
 {% endblock content %}
