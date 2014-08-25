@@ -28,13 +28,13 @@
         </tr>
 
         {% for message in messages %}
-            <tr>
-                <td class="{{ message.red|yesno:'message-red,message-notred' }}">
+            <tr class="{{ message.red|yesno:'message-red,message-notred' }}">
+                <td class="message-status">
 
                     <input type="checkbox" name="indices[]" value="{{ message.id }}" />
 
                     {% if message.red %}
-                        <span title="">X</span>
+                        <span title="Lasīta ziņa">X</span>
                     {% else %}
                         <span title="Neizlasīta Ziņa">Y</span>
                     {% endif %}

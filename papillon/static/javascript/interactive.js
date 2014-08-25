@@ -159,7 +159,8 @@ function postRating(courseID, starLevel) {
 $('.rating').click(function(){
     var starLevel = $(this).data('star');
     var courseID = $(this).data('course');
-http://nicolasgallagher.com/flexible-css-cover-images/
+
+    // http://nicolasgallagher.com/flexible-css-cover-images/
     return postRating(courseID, starLevel);
 });
 
@@ -167,11 +168,12 @@ http://nicolasgallagher.com/flexible-css-cover-images/
 var timerId;
 var classState = true;
 
-$('#timer-icon').click(function() {
+$('#timer-icon').hover(function() {
     // show configuration and controls
-    $('#timer-tray').toggle();
+    $('#timer-tray').toggle().css({'z-index': 999});
 });
 
+// $('#timer-start').click(function() {
 $('#timer-start').click(function() {
     pomodoroTimer = setInterval('pomodoroEndAlert()', 20000);
     pomodoroIndicatorTimer = setInterval('updateDOM()', 5000);
