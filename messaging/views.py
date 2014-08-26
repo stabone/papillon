@@ -13,6 +13,7 @@ from messaging.forms import ContactForm, MessagingForm
 @login_required
 def inbox(request, page_numb=None):
     message_list = Messages.objects.filter(Q(trash=False) & Q(user_to=request.user)) # by user
+    message_count = unred_message_count()
 
     paginator = Paginator(message_list, 25)
 
@@ -23,7 +24,10 @@ def inbox(request, page_numb=None):
     except EmptyPage:
         message_slice = paginator.page(paginator.num_pages)
 
-    return render(request, 'message/messages.html', {'messages': message_slice})
+    return render(request, 'message/messages.html', {
+                    'messages': message_slice,
+                    'msg_count': message_count,
+                })
 
 
 @login_required
@@ -53,6 +57,17 @@ def read_message(request, msg_id):
         message.save()
 
     return render(request, 'message/read.html', {'message': message})
+
+@login_required
+def unred_message_count():
+    message_count = Messages.objects.filter(Q(user_to=user) & Q(red=False)).count()
+
+    return message_count
+
+
+@login_required
+def total_message_count():
+    pass
 
 
 @login_required
