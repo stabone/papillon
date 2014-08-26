@@ -18,14 +18,13 @@ textarea {
     padding: 3px;
 }
 
-input, select {
-    vertical-align: middle;
-}
-
 input, select, button {
+    vertical-align: middle;
     font-family: "proxima-nova", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     font-smoothing: antialiased;
+    border-radius: 3px;
+    border: 1px solid #c9c9c9;
 }
 
 body {
@@ -40,6 +39,22 @@ body {
 
 a:hover {
     color: #c65c22;
+}
+
+button:disabled {
+    animation-duration: 750ms;
+    animation-name: smooth-disable;
+}
+
+@keyframes smooth-disable {
+    to {
+        /*-webkit-transition: all 750ms;*/
+        /*-moz-transition: all 750ms;*/
+        /*-ms-transition: all 750ms;*/
+        /*-o-transition: all 750ms;*/
+        /*transition: all 750ms;*/
+        color: #c9c9c9;
+    }
 }
 
 /*a[href]:link,

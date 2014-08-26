@@ -12,11 +12,19 @@
         Ziņas:
     </div>
 
+    <span>
+        <a href="#">Kopā: {{ msg_info.total_count }}</a>
+        <a href="#">Nelasītas: {{ msg_info.msg_unred }}</a>
+        <a href="#">Lasītas: {{ msg_info.msg_red }}</a>
+        <a href="#">Miskastē: {{ msg_info.msg_in_trash }}</a>
+    </span>
+
     <form action="{% url 'msg_list_delete' %}" method="POST">
 
     {% csrf_token %}
 
     <input type="submit" value="Dzēst">
+    <button id="show-all-msg">Rādīt visu</button>
     <button id="show-red-msg">Rādīt lasītās</button>
     <button id="show-unred-msg">Rādīt nelasītās</button>
 

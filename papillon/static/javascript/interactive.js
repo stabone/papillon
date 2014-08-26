@@ -88,7 +88,25 @@ $('.show-comments').click(function() {
     }
 });
 
+$("#show-red-msg").click(function() {
+    $(this).prop('disabled', true);
 
+    // $("#show-unred-msg").prop('disabled', true);
+    $(".message-notred").addClass('hide-element');
+    console.log("disabled notred messages");
+});
+
+$("#show-unred-msg").click(function() {
+    $(this).prop('disabled', true);
+    // $("#show-red-msg").prop('disabled', true);
+    $(".message-red").addClass('hide-element');
+    console.log("disabled red messages");
+});
+
+$("#show-all-msg").click(function() {
+    $("#show-red-msg").prop('disabled', false);
+    $("#show-unred-msg").prop('disabled', false);
+});
 
 $("#comment-form").submit(function(event) {
     console.log("comment event triggered");

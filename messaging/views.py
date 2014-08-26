@@ -10,10 +10,45 @@ from messaging.models import Contacts, Messages
 from messaging.forms import ContactForm, MessagingForm
 
 
+def unred_message_count(user_obj):
+    message_count = Messages.objects.filter(
+                        Q(user_to=user_obj) &
+                        Q(red=False) &
+                        ~Q(trash=True)).count()
+
+    return message_count
+
+
+def red_message_count(user_obj):
+    message_count = Messages.objects.filter(
+                        Q(user_to=user_obj) &
+                        Q(red=True) &
+                        ~Q(trash=True)).count()
+
+    return message_count
+
+
+def total_message_count(user_obj):
+    message_count = Messages.objects.filter(user_to=user_obj).count()
+
+    return message_count
+
+def trash_message_count(user_obj):
+    message_count = Messages.objects.filter(Q(user_to=user_obj) & Q(trash=True)).count()
+
+    return message_count
+
+
 @login_required
 def inbox(request, page_numb=None):
     message_list = Messages.objects.filter(Q(trash=False) & Q(user_to=request.user)) # by user
-    message_count = unred_message_count()
+
+    msg_info = {
+        'total_count': total_message_count(request.user),
+        'msg_unred': unred_message_count(request.user),
+        'msg_red': red_message_count(request.user),
+        'msg_in_trash': trash_message_count(request.user),
+    }
 
     paginator = Paginator(message_list, 25)
 
@@ -26,7 +61,7 @@ def inbox(request, page_numb=None):
 
     return render(request, 'message/messages.html', {
                     'messages': message_slice,
-                    'msg_count': message_count,
+                    'msg_info': msg_info,
                 })
 
 
@@ -57,17 +92,6 @@ def read_message(request, msg_id):
         message.save()
 
     return render(request, 'message/read.html', {'message': message})
-
-@login_required
-def unred_message_count():
-    message_count = Messages.objects.filter(Q(user_to=user) & Q(red=False)).count()
-
-    return message_count
-
-
-@login_required
-def total_message_count():
-    pass
 
 
 @login_required
