@@ -6,22 +6,27 @@
 
         {% csrf_token %}
 
-        <label>Grupa</label>
-        <select name="group_id" size="20">
-            {% for group in groups %}
-                <option value="{{ group.id }}">{{ group.name }}</option>
-            {% endfor %}
-        </select>
+        <div class="form-section">
+            <label for="group_list">Grupa</label>
+            <select id="group_list" name="group_id">
+                {% for group in groups %}
+                    <option value="{{ group.id }}">{{ group.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        {% if perms %}
-        <label>Atļaujas</label>
-        <select name="permissions" size="20" multiple>
-            {% for perm in perms %}
-                <option value="{{ perm.id }}">{{ perm.name }}</option>
-            {% endfor %}
-        </select>
-        {% endif %}
+        <div class="form-section">
+            <label for="permission_list">Atļaujas</label>
+            <select id="permission_list" name="permissions" size="20" multiple>
+                {% for perm in perms %}
+                    <option value="{{ perm.id }}">{{ perm.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
-        <input type="submit" name="Pievienot atļaujas" />
+        <div class="form-section">
+            <input type="submit" value="Pievienot atļaujas">
+        </div>
+
     </form>
 {% endblock content %}

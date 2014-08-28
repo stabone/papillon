@@ -25,13 +25,15 @@ input, select, button {
     font-smoothing: antialiased;
     border-radius: 3px;
     border: 1px solid #c9c9c9;
+    padding-top: 10px;
+    padding-bottom: 8px;
 }
 
 input:hover, button:hover {
     box-shadow: 0px 0px 2px indigo;
 }
 
-input::after {
+input[type=text]::after {
     content: "*";
     color: #d45252;
 }
@@ -233,6 +235,15 @@ input[type='email']:required {
 
 .form-section label {
     display: block;
+    padding-top: 16px;
+    padding-bottom: 8px;
+}
+
+.form-section input[type=submit] {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 8px;
 }
 
 .form-section input[type='text'],
@@ -317,6 +328,10 @@ input[type='email']:required {
 
 .message-list tr:first-child {
     background-color: #ef7d7d;
+}
+
+#group_list, #permission_list {
+    width: 340px;
 }
 
 @media all and (max-width: 400px) {
