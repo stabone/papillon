@@ -7,6 +7,8 @@ python:
 env:
   - DJANGO_VERSION=1.6.1
   - DJANGO_VERSION=1.6.2
+  - DJANGO_VERSION=1.6.5
+  - DJANGO_VERSION=1.6.6
 
 install:
   - pip install -q Pillow

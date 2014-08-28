@@ -8,6 +8,9 @@ from articles.models import Articles
 from articles.forms import ArticleForm
 
 
+## TODO
+# for articles > markdown file would be nice
+
 def index(request, page_numb=None):
     article_list = Articles.objects.all()
 
@@ -84,3 +87,4 @@ def delete(request):
         article.delete()
 
     return redirect(reverse('article_base'))
+
