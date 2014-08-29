@@ -5,5 +5,6 @@ urlpatterns = patterns('',
     url(r'^video/add/comment/$', 'comments.views.video_comments', name='video_comments'),
     url(r'^video/get/comment/$', 'comments.views.get_video_comments', name='get_video_comments'),
     url(r'^video/show/comment/$', 'comments.views.show_comments', name='show_comments'),
+    url(r'^video/add/poll/$', 'comments.views.get_poll_comments', name='get_poll_comments'),
     url(r'^video/add/poll/$', 'comments.views.poll_comments', name='poll_comments'),
 )

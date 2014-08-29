@@ -10,6 +10,9 @@ class MaterialComments(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+	ordering = ['-created_at']
+
 
 class PollComments(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -17,4 +20,7 @@ class PollComments(models.Model):
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+	ordering = ['-created_at']
 

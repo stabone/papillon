@@ -8,6 +8,7 @@ from courses.models import Categories, Tuts, Materials
 class CategoryForm(forms.ModelForm):
 
     class Meta:
+
         model = Categories
         labels = {
             'course': 'Nosaukums',
@@ -19,6 +20,7 @@ class CategoryForm(forms.ModelForm):
 class TutForm(forms.ModelForm):
 
     class Meta:
+
         model = Tuts
         exclude = ('author', 'rating', 'times_rated', 'post',)
         labels = {
@@ -38,6 +40,7 @@ class TutForm(forms.ModelForm):
 class MaterialForm(forms.ModelForm):
 
     class Meta:
+
         model = Materials
         exclude = ('post',)
         labels = {
@@ -50,3 +53,4 @@ class MaterialForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
         }
+

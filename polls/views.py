@@ -11,6 +11,7 @@ from polls.models import Polls, Questions, Choises, Results
 from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
 
+# plain python functions
 def create_poll_dict(poll_list):
     poll_dict = {}
 
@@ -38,6 +39,7 @@ def pop_done_polls(poll_list,user_obj):
         valid_polls.append(poll_dict[key])
 
     return valid_polls
+# plain python functions
 
 
 @login_required
@@ -263,10 +265,10 @@ def save_poll_results(request):
             please_int = key[-1]
             try:
                 questiond = int(please_int,base=10)
-                obj_list.append(Results(user=request.user,poll=1,question=questiond,answer=value))
+                obj_list.append(Results(user=request.user, poll=1, question=questiond, answer=value))
             except ValueError:
                 print("Cound't convert '{0}' to integer".format(please_int))
-                # return HttpResponseRedirect('404')
+                return HttpResponseRedirect('404')
 
         if obj_list:
             """ bulk create will perfor save """
@@ -275,6 +277,7 @@ def save_poll_results(request):
     return redirect(reverse('base_poll'))
 
 
+@login_required
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
     question_list = []
@@ -289,3 +292,4 @@ def get_user_statistic(request):
             })
 
     return render(request, 'poll/statistic.html', {'data': data, 'choises': question_list})
+

@@ -48,6 +48,7 @@ INSTALLED_APPS = (
     'comments',
     'messaging',
     'articles',
+    'badges',
     'django_markdown',
 )
 

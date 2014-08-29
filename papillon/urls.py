@@ -10,19 +10,16 @@ urlpatterns = patterns('',
     url(r'^course/', include('courses.urls')),
     url(r'^user/',   include('users.urls')),
     url(r'^comment/',include('comments.urls')),
-    url(r'^message/', include('messaging.urls')),
+    url(r'^message/',  include('messaging.urls')),
     url(r'^markdown/', include('django_markdown.urls')),
-    url(r'^article/', include('articles.urls')),
-    url(r'^login/',  'django.contrib.auth.views.login', {
+    url(r'^article/',  include('articles.urls')),
+    url(r'^badge/',    include('badges.urls')),
+    url(r'^login/',    'django.contrib.auth.views.login', {
             'template_name': 'auth/login.html',
-        },
-        name='user_login'
-    ),
+        }, name='user_login'),
     url(r'^logout/', 'django.contrib.auth.views.logout', {
             'next_page': '/',
-        },
-        name='user_logout'
-    ),
+        }, name='user_logout'),
 )
 
 handler400 = 'helper.views.handler400'
