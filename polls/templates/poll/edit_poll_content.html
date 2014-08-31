@@ -10,19 +10,26 @@
 
     <form method="POST" action="{% url 'add_question' %}">
         {% csrf_token %}
-        <input type="hidden" name="poll" value="{{ poll.id }}" />
-        <div class="ui form">
-            <div class="field">
-                <label>{{ form.poll.label }}</label>
-                {{ form.poll }}
-            </div>
 
-            <div class="field">
-                <label>{{ form.question.label }}</label>
-                {{ form.question }}
-            </div>
-            <input type="submit" value="Saglabāt" class="ui green button" />
+        <input type="hidden" name="poll" value="{{ poll.id }}" />
+
+        <!-- <div class="form-section">
+            <label for="id_poll">
+                {{ form.poll.label }}
+            </label>
+
+            {{ form.poll }}
+        </div> -->
+
+        <div class="form-section">
+            <label for="id_question">
+                {{ form.question.label }}
+            </label>
+
+            {{ form.question }}
         </div>
+
+        <input type="submit" value="Saglabāt" class="ui green button" />
     </form>
 
     <ul>
@@ -42,13 +49,7 @@
                             <i class="edit icon"></i>
                         </a>
 
-                        <form method="POST" action="{% url 'delete_choise' %}">
-                            {% csrf_token %}
-
-                            <input type="hidden" name="pollID" value="{{ poll.id }}" />
-                            <input type="hidden" name="choiseID" value="{{ choise.id }}" />
-                            <input type="submit" value="Dzēst" />
-                        </form>
+                        {% include "poll/delete_choise.html" %}
                     </li>
                 {% endfor %}
             </ul>

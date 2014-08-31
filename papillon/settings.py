@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/article/' # path to location
+LOGIN_REDIRECT_URL = '/article/'
 
 # Application definition
 

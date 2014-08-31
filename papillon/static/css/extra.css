@@ -16,6 +16,22 @@ textarea {
     border-radius: 3px;
     margin: 7px;
     padding: 3px;
+    -webkit-transition: all 750ms;
+    -moz-transition: all 750ms;
+    -ms-transition: all 750ms;
+    -o-transition: all 750ms;
+    transition: all 750ms;
+    height: 120px;
+}
+
+textarea:focus {
+    border: 1px solid indigo;
+    -webkit-transition: all 750ms;
+    -moz-transition: all 750ms;
+    -ms-transition: all 750ms;
+    -o-transition: all 750ms;
+    transition: all 750ms;
+    height: 400px;
 }
 
 input, select, button {
@@ -174,6 +190,12 @@ ul.library-section {
 
 /** LIBRARY **/
 
+
+ul#timer-tray {
+    position: absolute;
+    top: -15px;
+    border: 1px solid red;
+}
 
 ul#timer-tray li {
     display: block;

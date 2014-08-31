@@ -132,7 +132,7 @@ def registration(request):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse('user_base'))
+            return redirect(reverse('user_profile'))
     else:
         form = UserForm()
 

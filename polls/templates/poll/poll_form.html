@@ -32,22 +32,32 @@
 
     <form method="POST" action="">
         {% csrf_token %}
-        <div class="ui form">
-            <div class="field">
-                <label>{{ form.poll.label }}</label>
-                {{ form.poll }}
-            </div>
 
-            <div class="field">
-                <label>{{ form.description.label }}</label>
-                {{ form.description }}
-            </div>
+        <div class="form-section">
+            <label for="id_poll">
+                {{ form.poll.label }}
+            </label>
 
-            <div class="field">
-                <label>{{ form.public.label }}</label>
-                {{ form.public }}
-            </div>
-            <input type="submit" value="Saglabāt" class="ui green button" />
+            {{ form.poll }}
         </div>
+
+        <div class="form-section">
+            <label for="id_description">
+                {{ form.description.label }}
+            </label>
+
+            {{ form.description }}
+        </div>
+
+        <div class="form-section">
+            <label for="id_public">
+                {{ form.public.label }}
+            </label>
+
+            {{ form.public }}
+        </div>
+
+        <input type="submit" value="Saglabāt" class="submit button" />
+
     </form>
 {% endblock content %}

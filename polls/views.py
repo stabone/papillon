@@ -12,6 +12,10 @@ from polls.forms  import PollForm, QuestionForm, ChoiseForm
 
 
 # plain python functions
+def get_latvian_date(date_obj):
+    return date_obj.strftime('%Y.%M.%d %H:%m:%S')
+
+
 def create_poll_dict(poll_list):
     poll_dict = {}
 
@@ -20,7 +24,7 @@ def create_poll_dict(poll_list):
             'id': record.id,
             'poll': record.poll,
             'description': record.description,
-            'created_at': record.created_at
+            'created_at': get_latvian_date(record.created_at),
         }
 
     return poll_dict

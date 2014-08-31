@@ -14,12 +14,15 @@ urlpatterns = patterns('',
     url(r'^markdown/', include('django_markdown.urls')),
     url(r'^article/',  include('articles.urls')),
     url(r'^badge/',    include('badges.urls')),
+
     url(r'^login/',    'django.contrib.auth.views.login', {
             'template_name': 'auth/login.html',
         }, name='user_login'),
+
     url(r'^logout/', 'django.contrib.auth.views.logout', {
             'next_page': '/',
         }, name='user_logout'),
+
 )
 
 handler400 = 'helper.views.handler400'
