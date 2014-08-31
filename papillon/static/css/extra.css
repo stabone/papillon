@@ -29,6 +29,10 @@ input, select, button {
     padding-bottom: 8px;
 }
 
+label:after {
+    content: ":";
+}
+
 input:hover, button:hover {
     box-shadow: 0px 0px 2px indigo;
 }
@@ -145,6 +149,7 @@ nav ul#menu li.menu-item ul#timer-tray {
 /** LIBRARY **/
 ul#library {
     list-style: none;
+    padding: 0px;
 }
 
 ul#library li.item {

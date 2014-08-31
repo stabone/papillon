@@ -1,34 +1,34 @@
-from django import forms #import ModelForm
+from django import forms
 from badges.models import Badges, BadgeTypes
 
 
 class BadgeForm(forms.ModelForm):
 
     class Meta:
-    i	model = Badges
+        model = Badges
 
-	exclude = ('user',)
+        exclude = ('user',)
 
-	lables = {
-	    'title': 'Nosaukums',
-	}
+        lables = {
+            'title': 'Nosaukums',
+        }
 
-	widgets = {
+        widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
         }
 
 
 class BadgeTypeForm(forms.ModelForm):
-    
+
     class Meta:
-	model = BadgeTypes
+        model = BadgeTypes
 
-	lables = {
-	    'title': 'Nosaukums',
-	    'description': 'Apraksts',
-	}
+        lables = {
+            'title': 'Nosaukums',
+            'description': 'Apraksts',
+        }
 
-	widgets = {
+        widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
         }
 

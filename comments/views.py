@@ -1,6 +1,8 @@
+#-*- coding: utf-8 -*-
 import json
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 
 from courses.models import Materials
@@ -12,6 +14,18 @@ from comments.models import MaterialComments, PollComments
 def get_latvian_date(date_obj):
     return date_obj.strftime('%Y.%M.%d %H:%m:%s')
 
+
+def parse_comments(comment_dict):
+    comments = []
+
+    for comment in comment_dict:
+            comments.append({
+                'commentID': comment.id,
+                'comment': comment.comment,
+                'added': get_latvian_date(comment.created_at)
+            })
+
+    return comments
 # plaing pythond fuctions
 
 
@@ -26,7 +40,7 @@ def add_video_comments(request):
         comment = request.POST.get('comment')
 
         material = Materials.objects.get(id=video_id)
-        obj = MaterialComments.objects.create(user=request.user,material=material,comment=comment)
+        obj = MaterialComments.objects.create(user=request.user, material=material, comment=comment)
         obj.save()
 
         response_data = parse_comments({
@@ -37,19 +51,6 @@ def add_video_comments(request):
 
         return HttpResponse(json.dumps(response_data), content_type='application/json')
         # return redirect(reverse('show_material',args=[video_id]))
-
-
-def parse_comments(comment_dict):
-    comments = []
-
-    for comment in comment_dict:
-            comments.append({
-                'commentID': comment.id,
-                'comment': comment.comment,
-                'added': get_latvian_date(comment.created_at)
-            })
-
-    return comments
 
 
 def get_poll_comments(request):
@@ -81,20 +82,31 @@ def get_video_comments(request):
     return HttpResponse(json.dumps(response_data), content_type='application/json')
 
 
-def all_show_comments(request):
+def show_all_comments(request):
     data = MaterialComments.objects.all()
+
     return render(request, 'comment/show_comments.html', {'data': data})
 
 
 @login_required
 def add_poll_comments(request):
-    if request.method == "POST":
-        poll = request.POST.get('')
-        comment = request.POST.get('')
+    response_data = []
 
-        poll_obj = Polls.objects.get(id=poll)
-        obj = PollComments.objecs.create(poll=poll_obj,comment=comment)
+    if request.method == "POST":
+
+        try:
+            poll_id = request.POST.get('pollID')
+        except ValueError:
+            response_data.append({'error': 'Nepareiz identifikātors'})
+            return HttpResponse(response_data, content_type='application/json')
+
+        comment = request.POST.get('comment')
+
+        poll_obj = Polls.objects.get(id=poll_id)
+        obj = PollComments.objecs.create(user=request.user, poll=poll_obj, comment=comment)
         obj.save()
 
-        return render(request, '', {})
+        response_data.append({'success': 'Komentārs pievienots'})
+
+    return HttpResponse(response_data, content_type='application/json')
 

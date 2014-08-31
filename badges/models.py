@@ -29,5 +29,7 @@ class Badges(models.Model):
 
     # unique = user_id and badge
     class Meta:
+
+        unique_together = ('user', 'badge',)
         ordering = ['-created_at']
 

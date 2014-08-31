@@ -1,9 +1,11 @@
+#-*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from djang.forms import BadgeForm, BadgeTypeForm
-from djang.models import Badges, BadgeTypes
+from badges.forms import BadgeForm, BadgeTypeForm
+from badges.models import Badges, BadgeTypes
 
 
 def get_badges(request):
@@ -12,15 +14,17 @@ def get_badges(request):
 
 
 @login_required
+@csrf_protect
 def add_badge(request):
     if request.method == 'POST':
-	badge = BadgeForm(request.POST)
-	badge.save()
+        badge = BadgeForm(request.POST)
+        badge.save()
 
     return redirect()
 
 
 @login_required
+@csrf_protect
 def edit_badge(request, badge_id):
     badge = get_object_or_404(Badges, id=badge_id)
 
@@ -28,8 +32,9 @@ def edit_badge(request, badge_id):
 
 
 @login_required
+@csrf_protect
 def delete_badge(request, badge_id):
-     
+
     badge = get_object_or_404(Badges, id=badge_id)
     badge.delete()
 
@@ -37,20 +42,27 @@ def delete_badge(request, badge_id):
 
 
 @login_required
+@csrf_protect
 def add_badge_type(request):
-    return render(request, '', {})
+
+    form = BadgeTypeForm()
+
+    return render(request, '', {'form': form})
 
 
 @login_required
+@csrf_protect
 def edit_badge_type(request):
-    
-    form = 
-    return render(request, '', {})
+
+    form = BadgeTypeForm()
+
+    return render(request, '', {'form': form})
 
 
 @login_required
+@csrf_protect
 def delete_badge_type(request, type_id):
- 
+
     badge = get_object_or_404(BadgeTypes, id=type_id)
     badge.delete()
 
