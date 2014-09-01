@@ -41,7 +41,7 @@ def trash_message_count(user_obj):
 
 @login_required
 def inbox(request, page_numb=None):
-    message_list = Messages.objects.filter(Q(trash=False) & Q(user_to=request.user)) # by user
+    message_list = Messages.objects.filter(Q(trash=False) & Q(user_to=request.user))
 
     msg_info = {
         'total_count': total_message_count(request.user),
@@ -97,8 +97,8 @@ def read_message(request, msg_id):
 @login_required
 def respond_message(request, msg_id):
     if request.method == 'GET':
-        responce = get_object_or_404(Messages,id=msg_id)
-        message = Messages(user_to=responce.user_from,title=responce.title)
+        responce = get_object_or_404(Messages, id=msg_id)
+        message = Messages(user_to=responce.user_from, title=responce.title)
         form = MessagingForm(instance=message)
 
     return render(request, 'message/respond.html', {'form': form})
@@ -213,5 +213,10 @@ def delete_contact(request):
             pk_list = [int(contact_id) for contact_id in contact_id_list]
         except ValueError:
             print('Varātu izmest 404 !!!')
+
+        contacts = Contacts.objects.in_bulk(pk_list)
+
+        for contact in contacts:
+            contact.delete()
 
     return redirect(reverse('contact_list'))
