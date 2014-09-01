@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    {% if form.course.errors %}
+        <div class="ui error message">
+            {{ form.course.label }}
+            <ul class="list">
+                <li>{{ form.course.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <div class="form-section">
+            <label for="id_course">{{ form.course.label }}</label>
+            {{ form.course }}
+        </div>
+
+        <input type="submit" value="Saglabāt" class="submit button" />
+    </form>
+
+{% endblock content %}

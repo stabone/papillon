@@ -8,7 +8,7 @@
 
     {% if user.is_staff %}
     <div>
-        <a href="{% url 'add_course' %}">Pievienot kategoriju</a>
+        <a href="{% url 'add_categorie' %}">Pievienot kategoriju</a>
     </div>
     {% endif %}
 
@@ -19,10 +19,19 @@
                 <ul class="library-section">
                     {% for rec in value %}
                         <li>
-                            <a href="{% url 'show_tut' rec.id %}">{{ rec.course }}</a>
+                            <a href="{% url 'show_tut' rec.id %}">
+                                {{ rec.course }}
+                            </a>
+
                             {% if user.is_staff %}
-                            <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu"><i class="add icon"></i></a>
-                            <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
+
+                            <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu">
+                                <i class="add icon"></i>
+                            </a>
+
+                            <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot">
+                                <i class="edit icon"></i>
+                            </a>
 
                             <form method="POST" action="{% url  'delete_categorie' %}">
                                 {% csrf_token %}

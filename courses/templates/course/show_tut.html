@@ -2,21 +2,26 @@
 
 
 {% block content %}
-    <div>
-        Tutorialu saraksts
-    </div>
+
+    <h2>Materiālu saraksts</h2>
 
     {% for rec in data %}
-        <h2 class="ui header">
-            <a href="{% url 'show_material' rec.id %}">{{ rec.title }}</a>
-        </h2>
+        <h3 class="">
+            <a href="{% url 'show_material' rec.id %}">
+                {{ rec.title }}
+            </a>
+        </h3>
 
         <div>
 
             {% if user.is_staff %}
-            <a href="{% url 'add_material' rec.id %}" alt="Pievienot materiālu" title="Pievienot materiālu"><i class="add icon"></i></a>
+            <a href="{% url 'add_material' rec.id %}" alt="Pievienot materiālu '{{ rec.title }}'" title="Pievienot materiālu '{{ rec.title }}'">
+                <i class="add icon"></i>
+            </a>
 
-            <a href="{% url 'edit_tut' rec.id %}" alt="Labot" title="Labot"><i class="edit icon"></i></a>
+            <a href="{% url 'edit_tut' rec.id %}" alt="Labot '{{ rec.title }}'" title="Labot '{{ rec.title }}'">
+                <i class="edit icon"></i>
+            </a>
 
             <form method="POST" action="{% url 'delete_tut' %}">
                 {% csrf_token %}
@@ -26,26 +31,24 @@
             </form>
             {% endif %}
 
-            <span>{{ rec.created_at }}</span>
+            <span>{{ rec.created_at|date:"Y.m.d H:i:s" }}</span>
 
-            <div class="sub header">
             <em>{{ rating }}/5</em>
-                <div class="">
-                    {% for i in '12345'|make_list %}
-                        <a href="{% url 'rate_tut' rec.id i %}">{{ i }}</a>
-                    {% endfor %}
-                </div>
+            <div class="star">
+                {% for i in '12345'|make_list %}
+                    <a href="{% url 'rate_tut' rec.id i %}">{{ i }}</a>
+                {% endfor %}
+            </div>
 
-                <div class="meta-description">
-                    {{ rec.description }}
-                </div>
+            <div class="meta-description">
+                {{ rec.description }}
             </div>
 
             <div class="ui clearing divider"></div>
         </div>
     {% empty %}
         <div class="ui warning message">
-            <p>Pagaidām nekas nav pievienots</p>
+            <p>Pagaidām nekas vēl nav pievienots</p>
         </div>
     {% endfor %}
 {% endblock content %}

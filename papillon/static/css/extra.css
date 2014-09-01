@@ -97,7 +97,7 @@ button:disabled {
     margin: 20px auto 30px;
     border-color: #d35400;
     border-width: 2px;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
 }
 
 .action {

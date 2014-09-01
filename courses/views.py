@@ -10,6 +10,7 @@ from django.db.models import Q, Avg
 from courses.models import Categories, Tuts, Materials, Rating
 from courses.forms import CategoryForm, TutForm, MaterialForm
 
+
 def parser_categories(record_objects):
 
     data = {}
@@ -28,26 +29,27 @@ def parser_categories(record_objects):
 
 
 def index(request):
-    records= Categories.objects.all().order_by('course')
+    records = Categories.objects.all().order_by('course')
     data = parser_categories(records)
+    new_materials = Materials.objects.order_by('-created_at')[:5]
 
-    return render(request, 'course/index.html', {'data': data})
+    return render(request, 'course/index.html', {'data': data, 'last': new_materials})
 
 
 @login_required
 @csrf_protect
 def add_categorie(request):
-    form = CategoryForm()
+    form = None
 
     if request.method == "POST":
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('base_course'))
+            return redirect(reverse('base_categorie'))
     else:
         form = CategoryForm()
 
-    return render(request, 'course/category_form.html', {'form': form})
+    return render(request, 'course/add_categorie.html', {'form': form})
 
 
 @login_required
@@ -72,7 +74,7 @@ def add_tut(request, categorie_id):
 @login_required
 @csrf_protect
 def add_material(request, tut_id):
-    form = MaterialForm()
+    form = None
 
     if request.method == "POST":
         form = MaterialForm(request.POST, request.FILES)
@@ -84,22 +86,23 @@ def add_material(request, tut_id):
         data = Materials(tut=tut)
         form = MaterialForm(instance=data)
 
-    return render(request, 'course/material_form.html', {'form': form})
+    return render(request, 'course/add_material.html', {'form': form})
 
 
 @login_required
 @csrf_protect
 def edit_categorie(request, categorie_id):
     data = Categories.objects.get(id=categorie_id)
+
     if request.method == "POST":
         form = CategoryForm(request.POST, instance=data)
         if form.is_valid():
             form.save()
-            return redirect(reverse('base_course'))
+            return redirect(reverse('base_categorie'))
     else:
         form = CategoryForm(instance=data)
 
-    return render(request, 'course/edit_category.html', {'form': form})
+    return render(request, 'course/edit_categorie.html', {'form': form})
 
 
 @login_required
@@ -164,11 +167,12 @@ def show_video(request, material_id):
 def delete_categorie(request):
     if request.method == "POST":
         category_id = request.POST.get('categoryID');
+
         record = Categories.objects.filter(id=category_id)
         record.delete()
-        return redirect(reverse('base_course'))
+        return redirect(reverse('base_categorie'))
 
-    return redirect(reverse('base_course'))
+    return redirect(reverse('base_categorie'))
 
 
 @login_required
@@ -178,12 +182,13 @@ def delete_tut(request):
     if request.method == "POST":
         category_id = request.POST.get('categoryID')
         tut_id = request.POST.get('tutID')
+
         record = get_object_or_404(Tuts,id=tut_id)
         record.delete()
 
         return redirect(reverse('show_tut', args=[category_id]))
 
-    return redirect(reverse('base_course'))
+    return redirect(reverse('base_categorie'))
 
 
 @login_required
@@ -195,7 +200,7 @@ def delete_material(request):
         record.video.delete()
         record.delete()
 
-        return redirect(reverse('base_course'))
+        return redirect(reverse('base_categorie'))
 
     return redirect(reverse('base_course'))
 
@@ -213,6 +218,7 @@ def publish_video(request):
     if request.method == "POST":
         video_id = request.POST.get('videoID')
         action = request.POST.get('action')
+
         video = get_object_or_404(Materials, id=video_id)
         video.post = True if action == 'False' else False
         video.save()
