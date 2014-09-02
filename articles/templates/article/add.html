@@ -40,17 +40,30 @@
         {% csrf_token %}
 
         <div class="form-section">
-            {{ form.title.label }}
+            <lable for="id_title">
+                {{ form.title.label }}
+            </lable>
             {{ form.title }}
         </div>
 
         <div class="form-section">
-            {{ form.description.label }}
+            <lable for="id_attachment">
+                {{ form.attachment.label }}
+            </lable>
+            {{ form.attachment }}
+        </div>
+
+        <div class="form-section">
+            <label for="id_description">
+                {{ form.description.label }}
+            </label>
             {{ form.description }}
         </div>
 
         <div class="form-section">
-            {{ form.article.label }}
+            <lable for="id_article">
+                {{ form.article.label }}
+            </lable>
             {{ form.article }}
         </div>
 

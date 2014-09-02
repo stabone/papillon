@@ -1,6 +1,14 @@
 #-*- coding: utf-8 -*-
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from users.models import CustomUser
+
+
+class MyAuthenticationForm(AuthenticationForm):
+
+    error_messages = {
+        'invalid_login': "Epasta vai paroles lauki nav korekts.",
+    }
 
 
 class UserForm(forms.ModelForm):

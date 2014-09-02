@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block content %}
 
     {% if form.category.errors %}
@@ -86,40 +87,43 @@
     <div class="ui form">
         <form method="POST" action="">
             {% csrf_token %}
-            <div class="field">
-                <label>{{ form.category.label }}</label>
+            <div class="form-section">
+                <label for="id_category">{{ form.category.label }}</label>
                 {{ form.category }}
             </div>
-            <div class="field">
-                <label>{{ form.author.label }}</label>
+
+            <div class="form-section">
+                <label for="id_author">{{ form.author.label }}</label>
                 {{ form.author }}
             </div>
-            <div class="field">
-                <label>{{ form.title.label }}</label>
+
+            <div class="form-section">
+                <label for="id_title">{{ form.title.label }}</label>
                 {{ form.title }}
             </div>
-            <div class="field">
-                <label>{{ form.description.label }}</label>
+
+            <div class="form-section">
+                <label for="id_description">{{ form.description.label }}</label>
                 {{ form.description }}
             <div>
-            <div class="field">
-                <label>{{ form.level.label }}</label>
+
+            <div class="form-section">
+                <label for="id_level">{{ form.level.label }}</label>
                 {{ form.level }}
             <div>
-            <div class="field">
-                <label>{{ form.rating.label }}</label>
+
+            <div class="form-section">
+                <label for="id_rating">{{ form.rating.label }}</label>
                 {{ form.rating }}
             </div>
-            <div class="field">
-                <label>{{ form.times_rated.label }}</label>
-                {{ form.times_rated }}
-            </div>
-            <div class="field">
-                <label>{{ form.tags.label }}</label>
+
+            <div class="form-section">
+                <label for="id_tags">{{ form.tags.label }}</label>
                 {{ form.tags }}
             </div>
-            <div class="field">
-                <label>{{ form.post.label }}</label>
+
+            <div class="form-section">
+                <label for="id_post">{{ form.post.label }}</label>
                 {{ form.post }}
             </div>
 

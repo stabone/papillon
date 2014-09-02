@@ -60,6 +60,7 @@ input[type=text]::after {
 
 body {
     color: #133e39;
+    background-color: #ecf0f1;
     font-family: "chaparral-pro", Georgia, serif;
     font-weight: 300;
     font-size: 20px;
@@ -211,6 +212,7 @@ ul#timer-tray li {
 
 input[type='text'],
 input[type='password'],
+input[type='file'],
 input[type='email'] {
     height: 24px;
     border-radius: 3px;
@@ -220,6 +222,7 @@ input[type='email'] {
 
 input[type='text']:focus,
 input[type='password']:focus,
+input[type='file']:focus,
 input[type='email']:focus {
     box-shadow: 4px 4px 2px rgba(30, 130, 90, 0.85);
 }
@@ -238,6 +241,7 @@ input[type='email']:invalid {
 
 input[type='text']:required,
 input[type='password']:required,
+input[type='file']:required,
 input[type='email']:required {
     box-shadow: 4px 4px 2px rgba(100, 30, 90, 0.85);
 }
@@ -275,6 +279,7 @@ input[type='email']:required {
 
 .form-section input[type='text'],
 .form-section input[type='password'],
+.form-section input[type='file'],
 .form-section input[type='email'],
 .form-section textarea {
     width: 96%;

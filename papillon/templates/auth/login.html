@@ -2,6 +2,8 @@
 
 {% block content %}
 
+    {{ form.errors }}
+
     {% if form.username.errors %}
         <ul>
             {% for error in form.username.errors %}

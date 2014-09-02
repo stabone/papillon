@@ -28,11 +28,22 @@ class Tuts(models.Model):
         (MEDIUM,   'Vidējs'),
         (ADVANCED, 'Grūts'),
     )
+
+    VIDEO = 1
+    EMBEDED = 2
+    FILE = 3
+    MAT_TYPE = (
+        (VIDEO, 'Video fails'),
+        (EMBEDED, 'Ievietotais'),
+        (FILE, 'Fails'),
+    )
+
     category = models.ForeignKey(Categories, db_index=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=255)
     description = models.TextField()
     level = models.CharField(max_length=1, choices=LEVELS, default=BEGINNER)
+    material_type = models.CharField(max_length=1, choices=MAT_TYPE)
     tags = models.CharField(max_length=255)
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
