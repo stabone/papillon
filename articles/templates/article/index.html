@@ -13,9 +13,11 @@
         {% for article in articles %}
             <li class="section">
                 <div class="article-title">
-                    <a href="{% url 'article_item' article.id %}">
-                        {{ article.title|title }}
-                    </a>
+                    <h1>
+                        <a href="{% url 'article_item' article.id %}">
+                            {{ article.title|title }}
+                        </a>
+                    </h1>
                 </div>
 
                 <div class="description">
@@ -28,13 +30,14 @@
                 </div>
 
                 {% if user.is_superuser %}
-                <div class="meta-edit">
-                    <a href="{% url 'article_edit' article.id %}">Labot</a>
-                </div>
-
-                <div class="meta-delete">
-                    {% include 'article/delete.html' %}
-                </div>
+                    <ul class="action-menu">
+                        <li class="edit-action">
+                            <a class="edit button" href="{% url 'article_edit' article.id %}">Labot</a>
+                        </li>
+                        <li class="delete-action">
+                            {% include 'article/delete.html' %}
+                        </li>
+                    </ul>
                 {% endif %}
 
                 <div class="line-separator"></div>

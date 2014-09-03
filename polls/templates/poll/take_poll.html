@@ -15,13 +15,16 @@
 
         {% for question in questions %}
             -> {{ question.question }}
-            <a href="{% url 'add_choise' poll.id question.id %}"><i class="add icon"></i></a>
+
+            <a href="{% url 'add_choise' poll.id question.id %}">
+                <i class="add icon"></i>
+            </a>
 
             <ul>
                 {% for choise in question.choises %}
                     <li>
-                        <input type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
-                        <lable>{{ choise.option }}</lable>
+                        <input id="question_{{ choise.id }}" type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
+                        <label for="question_{{ choise.id }}">{{ choise.option }}</label>
                         {% if choise.correct and user.is_staff %}
                             [OK]
                         {% endif %}
@@ -30,11 +33,11 @@
             </ul>
 
         {% empty %}
-            <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+            <div class="warning message">Neviens ieraksts netika atrasts</div>
         {% endfor %}
 
         {% if questions %}
-            <input type="submit" value="Saglabāt" class="ui button green" />
+            <input type="submit" value="Saglabāt" class="submit button" />
         {% endif %}
     </form>
 

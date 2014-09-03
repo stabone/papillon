@@ -7,10 +7,11 @@
 
     <div>
         <a href="{% url 'user_statistic' %}">Statistika</a>
+
         {% if user.is_staff %}
-        <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
-            <i class="add icon"></i> Pievienot aptauju
-        </a>
+            <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
+                <i class="add icon"></i> Pievienot aptauju
+            </a>
         {% endif %}
     </div>
 
@@ -20,38 +21,42 @@
             <div class="content">
                 <div class="header">
 
-                    <a href="{% url 'take_poll' rec.id %}">{{ rec.poll }}</a>
+                    <a href="{% url 'take_poll' rec.id %}">
+                        {{ rec.poll }}
+                    </a>
 
-                    <ul class="action">
-
-                        <li class="action-add"></li>
-
-                        {% if user.is_staff %}
-                        <li class="action-edit">
-                            <a href="{% url 'edit_poll' rec.id %}"><i class="edit icon"></i></a>
-                        </li>
-
-                        <li class="action-delete">
-                            <form method="POST" action="{% url 'delete_poll' %}">
-                                {% csrf_token %}
-                                <input type="hidden" value="{{ rec.id }}" name="pollID" />
-                                <input type="submit" value="Dzēst" />
-                            </form>
-                        </li>
-                        {% endif %}
-
-                        <span class="created-at">{{ rec.created_at }}</span>
-
-                    </ul>
                 </div>
+
                 <div class="description">
                     {{ rec.description }}
                 </div>
-                <div>{{ rec.created_at }}</div>
+
+                <div class="">
+                    {{ rec.created_at }}
+                </div>
+
+                {% if user.is_staff %}
+                    <ul class="action-menu">
+
+                        <li class="action-add"></li>
+
+                        <li class="edit-action">
+                            <a class="edit button" href="{% url 'edit_poll' rec.id %}">
+                                <i class="edit icon"></i>
+                            </a>
+                        </li>
+
+                        <li class="delete-action">
+                            {% include "poll/delete_poll.html" %}
+                        </li>
+
+                    </ul>
+                {% endif %}
+
             </div>
         </div>
     {% empty %}
-        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+        <div class="warning message">Neviens ieraksts netika atrasts</div>
     {% endfor %}
     </div>
 
@@ -72,4 +77,5 @@
             {% endif %}
         </div>
     {% endif %}
+
 {% endblock content %}

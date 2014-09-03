@@ -1,0 +1,44 @@
+
+{% if form.title.errors %}
+        <div class="error message">
+            {{ form.title.label }}
+            <ul class="list">
+                {% for error in form.title.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.description.errors %}
+        <div class="error message">
+            {{ form.description.label }}
+            <ul class="list">
+                {% for error in form.description.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.article.errors %}
+        <div class="error message">
+            {{ form.article.label }}
+            <ul class="list">
+                {% for error in form.article.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if form.embeded.errors %}
+        <div class="error message">
+            {{ form.embeded.label }}
+            <ul class="list">
+                {% for error in form.embeded.errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}

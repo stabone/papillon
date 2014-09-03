@@ -1,0 +1,8 @@
+
+<form method="POST" action="{% url 'delete_categorie' %}">
+    {% csrf_token %}
+
+    <input type="hidden" value="{{ rec.id }}" name="categoryID"/>
+    <input type="submit" class="trash icon" value="Dzēst"/>
+
+</form>

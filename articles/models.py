@@ -21,24 +21,11 @@ class Attachment(models.Model):
 
 
 class Articles(models.Model):
-    VIDEO = 1
-    EMBEDED = 2
-    FILE = 3
-    MAT_TYPE = (
-        (VIDEO, 'Video fails'),
-        (EMBEDED, 'Ievietotais'),
-        (FILE, 'Fails'),
-    )
-
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=255,blank=False)
     description = models.CharField(max_length=255,blank=False)
-    # article = models.FileField(upload=handle_file_upload, )
-    # attachment = models.ForeignKey(Attachment)
-    attachment = models.FileField(upload_to=handle_file)
-    material_type = models.CharField(max_length=1, choices=MAT_TYPE)
-    embeded = models.TextField()
-    article = models.TextField()
+    embeded = models.TextField(blank=True)
+    article = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -8,18 +8,19 @@
         <a href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
     </div>
 
+    {% if form.question.errors %}
+        <div class="ui error message">
+            {{ form.question.label }}
+            <ul class="list">
+                <li>{{ form.question.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
     <form method="POST" action="{% url 'add_question' %}">
         {% csrf_token %}
 
         <input type="hidden" name="poll" value="{{ poll.id }}" />
-
-        <!-- <div class="form-section">
-            <label for="id_poll">
-                {{ form.poll.label }}
-            </label>
-
-            {{ form.poll }}
-        </div> -->
 
         <div class="form-section">
             <label for="id_question">
@@ -29,7 +30,7 @@
             {{ form.question }}
         </div>
 
-        <input type="submit" value="Saglabāt" class="ui green button" />
+        <input type="submit" value="Saglabāt" class="submit button" />
     </form>
 
     <ul>
@@ -44,26 +45,25 @@
             <ul>
                 {% for choise in question.choises %}
                     <li>
-                        {{ choise.option }}
-                        <a href="{% url 'edit_choise' poll.id question.id %}" alt="Labot" title="Labot">
-                            <i class="edit icon"></i>
-                        </a>
+                        <span class="title-option">
+                            {{ choise.option }}
+                        </span>
 
-                        {% include "poll/delete_choise.html" %}
+                        <ul class="action-menu">
+                            <li class="edit-action">
+                                <a href="{% url 'edit_choise' poll.id question.id %}" alt="Labot" title="Labot">
+                                    <i class="edit icon"></i>
+                                </a>
+                            </li>
+                            <li class="delete-action">
+                                {% include "poll/delete_choise.html" %}
+                            </li>
+                        </ul>
                     </li>
                 {% endfor %}
             </ul>
         </li>
     {% endfor %}
     </ul>
-
-    {% if form.question.errors %}
-        <div class="ui error message">
-            {{ form.question.label }}
-            <ul class="list">
-                <li>{{ form.question.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
 
 {% endblock content %}

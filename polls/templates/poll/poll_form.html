@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if form.poll.errors %}
-        <div class="ui error message">
+        <div class="error message">
             {{ form.poll.label }}
             <ul class="list">
                 <li>{{ form.poll.errors|striptags }}</li>
@@ -12,7 +12,7 @@
     {% endif %}
 
     {% if form.description.errors %}
-        <div class="ui error message">
+        <div class="error message">
             {{ form.description.label }}
             <ul class="list">
                 <li>{{ form.description.errors|striptags }}</li>
@@ -22,7 +22,7 @@
 
 
     {% if form.public.errors %}
-        <div class="ui error message">
+        <div class="error message">
             {{ form.public.label }}
             <ul class="list">
                 <li>{{ form.public.errors|striptags }}</li>

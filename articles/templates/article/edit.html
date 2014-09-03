@@ -4,6 +4,8 @@
 
 {% block content %}
 
+    {% include "article/error_check.html" %}
+
     <form method="POST" action="{% url 'article_update' article_id %}">
         {% csrf_token %}
 
@@ -26,6 +28,13 @@
                 {{ form.article.label }}
             </label>
             {{ form.article }}
+        </div>
+
+        <div class="form-section">
+            <label for="id_embeded">
+                {{ form.embeded.label }}
+            </label>
+            {{ form.embeded }}
         </div>
 
         <input type="submit" value="Saglabāt" />

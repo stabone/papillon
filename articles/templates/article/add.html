@@ -3,54 +3,16 @@
 
 {% block content %}
 
-    {% if form.title.errors %}
-        <div class="ui error message">
-            {{ form.title.label }}
-            <ul class="list">
-                {% for error in form.title.errors %}
-                    <li>{{ error|escape }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
-    {% if form.description.errors %}
-        <div class="ui error message">
-            {{ form.description.label }}
-            <ul class="list">
-                {% for error in form.description.errors %}
-                    <li>{{ error|escape }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
-
-    {% if form.article.errors %}
-        <div class="ui error message">
-            {{ form.article.label }}
-            <ul class="list">
-                {% for error in form.article.errors %}
-                    <li>{{ error|escape }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    {% endif %}
+    {% include "article/error_check.html" %}
 
     <form method="POST" action="{% url 'article_add' %}">
         {% csrf_token %}
 
         <div class="form-section">
-            <lable for="id_title">
+            <label for="id_title">
                 {{ form.title.label }}
-            </lable>
+            </label>
             {{ form.title }}
-        </div>
-
-        <div class="form-section">
-            <lable for="id_attachment">
-                {{ form.attachment.label }}
-            </lable>
-            {{ form.attachment }}
         </div>
 
         <div class="form-section">
@@ -61,13 +23,20 @@
         </div>
 
         <div class="form-section">
-            <lable for="id_article">
+            <label for="id_article">
                 {{ form.article.label }}
-            </lable>
+            </label>
             {{ form.article }}
         </div>
 
-        <input type="submit" value="Saglabāt" />
+        <div class="form-section">
+            <label for="id_embeded">
+                {{ form.embeded.label }}
+            </label>
+            {{ form.embeded }}
+        </div>
+
+        <input class="submit button" type="submit" value="Saglabāt" />
     </form>
 
 {% endblock content %}

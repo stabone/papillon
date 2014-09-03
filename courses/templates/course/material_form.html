@@ -49,28 +49,37 @@
 
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="ui form">
-            <div class="field">
-                <label>{{ form.tut.label }}</label>
-                {{ form.tut }}
-            </div>
-            <div class="field">
-                <label>{{ form.title.label }}</label>
-                {{ form.title }}
-            </div>
-            <div class="field">
-                <label>{{ form.video.label }}</label>
-                {{ form.video }}
-            </div>
-            <div class="field">
-                <label>{{ form.description.label }}</label>
-                {{ form.description }}
-            </div>
-            <div class="field">
-                <label>{{ form.post.label }}</label>
-                {{ form.post }}
-            </div>
-            <input type="submit" value="Saglabāt" class="ui green button" />
+
+        <div class="form-section">
+            <label>{{ form.tut.label }}</label>
+
+            {{ form.tut }}
         </div>
+
+        <div class="form-section">
+            <label>{{ form.title.label }}</label>
+
+            {{ form.title }}
+        </div>
+
+        <div class="form-section">
+            <label>{{ form.video.label }}</label>
+
+            {{ form.video }}
+        </div>
+
+        <div class="form-section">
+            <label>{{ form.description.label }}</label>
+
+            {{ form.description }}
+        </div>
+
+        <div class="form-section">
+            <label>{{ form.post.label }}</label>
+
+            {{ form.post }}
+        </div>
+
+        <input type="submit" value="Saglabāt" class="submit button" />
     </form>
 {% endblock content %}

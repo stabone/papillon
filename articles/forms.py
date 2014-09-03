@@ -25,10 +25,12 @@ class ArticleForm(forms.ModelForm):
             'title': 'Virsraksts',
             'description': 'Apraksts',
             'article': 'Raksts',
+            'embeded': 'embeded',
         }
 
         widgets = {
             'title': forms.TextInput(attrs={'autofocus': '', 'required': ''}),
+            'embeded': forms.TextInput(),
             'description': forms.Textarea(),
             'article': forms.Textarea(),
         }

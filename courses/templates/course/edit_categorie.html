@@ -2,25 +2,21 @@
 
 {% block content %}
 
-    {% if form.course.errors %}
-        <div class="ui error message">
-            {{ form.course.label }}
-            <ul class="list">
-                <li>{{ form.course.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
+    {% include "course/error_check_categorie.html" %}
 
     <div class="ui form">
         <form method="POST" action="">
             {% csrf_token %}
 
             <div class="field">
-                <label>{{ form.course.label }}</label>
+                <label for="id_course">
+                    {{ form.course.label }}
+                </label>
+
                 {{ form.course }}
             </div>
 
-            <input type="submit" value="Saglabāt" class="ui green button" />
+            <input type="submit" value="Saglabāt" class="submit button" />
         </form>
     </div>
 {% endblock content %}

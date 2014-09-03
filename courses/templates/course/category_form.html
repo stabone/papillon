@@ -16,11 +16,14 @@
             {% csrf_token %}
 
             <div class="field">
-                <label>{{ form.course.label }}</label>
+                <label for="id_course">
+                    {{ form.course.label }}
+                </label>
+
                 {{ form.course }}
             </div>
 
-            <input type="submit" value="Saglabāt" class="ui green button" />
+            <input type="submit" value="Saglabāt" class="submit button" />
         </form>
     </div>
 {% endblock content %}

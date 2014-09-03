@@ -23,12 +23,7 @@
                 <i class="edit icon"></i>
             </a>
 
-            <form method="POST" action="{% url 'delete_tut' %}">
-                {% csrf_token %}
-                <input type="hidden" value="{{ course }}" name="categoryID" />
-                <input type="hidden" value="{{ rec.id }}" name="tutID" />
-                <input type="submit" value="Dzēst" />
-            </form>
+                {% include "course/delete_tut.html" %}
             {% endif %}
 
             <span>{{ rec.created_at|date:"Y.m.d H:i:s" }}</span>
@@ -47,7 +42,7 @@
             <div class="ui clearing divider"></div>
         </div>
     {% empty %}
-        <div class="ui warning message">
+        <div class="warning message">
             <p>Pagaidām nekas vēl nav pievienots</p>
         </div>
     {% endfor %}

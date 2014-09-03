@@ -8,15 +8,30 @@
         <a href="{% url 'article_base' %}">Raksti</a>
     </div>
 
-    <ul>
-        <li class=""><a href="{% url 'article_edit' article.id %}">Labot</a></li>
-        <li class="">{% include 'article/delete.html' %}</li>
+    <ul class="action-menu">
+
+        <li class="edit-action">
+            <a class="edit button" href="{% url 'article_edit' article.id %}">Labot</a>
+        </li>
+
+        <li class="delete-action">
+            {% include 'article/delete.html' %}
+        </li>
+
     </ul>
 
     <h3>{{ article.title }}</h3>
 
-    <div class="article">
-        {{ article.article|markdown }}
-    </div>
+    {% if article.article %}
+        <div class="article">
+            {{ article.article|markdown }}
+        </div>
+    {% endif %}
+
+    {% if article.embeded %}
+        <div class="article-video">
+            {{ article.embeded|safe|escape }}
+        </div>
+    {% endif %}
 
 {% endblock content %}

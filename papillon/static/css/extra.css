@@ -45,7 +45,7 @@ input, select, button {
     padding-bottom: 8px;
 }
 
-label:after {
+label::after {
     content: ":";
 }
 
@@ -154,6 +154,7 @@ nav ul#menu li.menu-item > a {
 
 nav ul#menu li.menu-item:hover {
     background-color: #374452;
+    color: #1abc9c;
     box-shadow: 0px 3px 0px teal;
 }
 
@@ -162,6 +163,25 @@ nav ul#menu li.menu-item ul#timer-tray {
 }
 
 /* MENU */
+
+/*ACTION MENU*/
+.action-menu {
+    list-style: none;
+    display: inline;
+}
+
+.action-menu li {
+    display: inline;
+}
+
+.action-menu .edit-action {
+
+}
+
+.action-menu .delete-action form {
+    display: inline;
+}
+/*ACTION MENU*/
 
 /** LIBRARY **/
 ul#library {
@@ -215,7 +235,8 @@ input[type='password'],
 input[type='file'],
 input[type='email'] {
     height: 24px;
-    border-radius: 3px;
+    border-radius: 5px;
+    border-width: 2px;
     margin: 7px;
     padding: 3px;
 }
@@ -224,26 +245,57 @@ input[type='text']:focus,
 input[type='password']:focus,
 input[type='file']:focus,
 input[type='email']:focus {
-    box-shadow: 4px 4px 2px rgba(30, 130, 90, 0.85);
+    /*box-shadow: 4px 4px 2px rgba(30, 130, 90, 0.85);*/
+    border-color: #2ecc71;
 }
 
+/*
 input[type='text']:valid,
 input[type='password']:valid,
 input[type='email']:valid {
-    border-color: green;
+    color: #2ecc71;
+    border-color: #2ecc71;
 }
+*/
 
 input[type='text']:invalid,
 input[type='password']:invalid,
 input[type='email']:invalid {
+    color: #e74c3c;
+    border-color: #e74c3c;
     box-shadow: 4px 4px 2px rgba(200, 0, 0, 0.85);
 }
 
-input[type='text']:required,
-input[type='password']:required,
-input[type='file']:required,
-input[type='email']:required {
-    box-shadow: 4px 4px 2px rgba(100, 30, 90, 0.85);
+input[type='text']:required::after,
+input[type='password']:required::after,
+input[type='file']:required::after,
+input[type='email']:required::after {
+    /*box-shadow: 4px 4px 2px rgba(100, 30, 90, 0.85);*/
+    content: "*";
+}
+
+input[disabled] {
+    background-color: #f4f6f6;
+    border-color: #d5dbdb;
+    color: #d5dbdb;
+    cursor: default;
+    opacity: 0.7;
+}
+
+.submit.button {
+    background-color: #1abc9c;
+}
+
+.edit.button {
+    background-color: #3498db;
+}
+
+.delete.button {
+    background-color: #e74c3c;
+}
+
+.warning.message {
+    background-color: #f1c40f;
 }
 
 .context {

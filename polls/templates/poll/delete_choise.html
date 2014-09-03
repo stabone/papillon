@@ -1,8 +1,8 @@
 <form method="POST" action="{% url 'delete_choise' %}">
     {% csrf_token %}
 
-    <input type="hidden" name="pollID" value="{{ poll.id }}" />
-    <input type="hidden" name="choiseID" value="{{ choise.id }}" />
+    <input type="hidden" name="pollID" value="{{ poll.id }}">
+    <input type="hidden" name="choiseID" value="{{ choise.id }}">
 
-    <input type="submit" value="Dzēst" />
+    <input class="delete button" type="submit" value="Dzēst">
 </form>
