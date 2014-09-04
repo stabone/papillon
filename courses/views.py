@@ -58,6 +58,7 @@ def add_tut(request, categorie_id):
     form = TutForm()
     if request.method == "POST":
         form = TutForm(request.POST)
+        form.author = request.user
         if form.is_valid():
             rec = form.save(commit=False)
             rec.author = request.user
