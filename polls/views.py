@@ -5,6 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.http import Http404
 
 
 from polls.models import Polls, Questions, Choises, Results
@@ -272,7 +273,7 @@ def save_poll_results(request):
                 obj_list.append(Results(user=request.user, poll=1, question=questiond, answer=value))
             except ValueError:
                 print("Cound't convert '{0}' to integer".format(please_int))
-                return HttpResponseRedirect('404')
+                raise Http404
 
         if obj_list:
             """ bulk create will perfor save """
