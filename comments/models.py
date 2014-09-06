@@ -12,6 +12,10 @@ class MaterialComments(models.Model):
 
     class Meta:
 	ordering = ['-created_at']
+        permissions = (
+            ('add_video_comments', 'Komentārs materiālam'),
+            ('get_video_comments', 'Materiālu komentāri'),
+        )
 
 
 class PollComments(models.Model):
@@ -23,4 +27,8 @@ class PollComments(models.Model):
 
     class Meta:
 	ordering = ['-created_at']
+        permissions = (
+            ('add_poll_comments', 'Komentārs aptauja'),
+            ('get_poll_comments', 'Aptaujas  komentāri'),
+        )
 

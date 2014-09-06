@@ -14,6 +14,14 @@ class Polls(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        permissions = (
+            ('add_poll', 'Pievienot aptauju'),
+            ('edit_poll', 'Labot aptauju'),
+            ('edit_poll_content', 'Labot aptauju saturu'),
+            ('delete_poll', 'Dzēst aptauju'),
+            ('save_poll_results', 'Saglabāt aptaujas rezultātus'),
+            ('take_poll', 'Aptauja'),
+        )
 
     def __unicode__(self):
         return self.poll
@@ -24,6 +32,13 @@ class Questions(models.Model):
     question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        permissions = (
+            ('add_question', 'Pievienot jautājumu'),
+            ('edit_question', 'Labot jautājumu'),
+            ('delete_question', 'Dzēst jautājumu'),
+        )
 
     def __unicode__(self):
         return self.question
@@ -36,6 +51,13 @@ class Choises(models.Model):
     correct = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        permissions = (
+            ('add_choise', 'Pievienot izvēli'),
+            ('edit_choise', 'Labot izvēli'),
+            ('delete_choise', 'Dzēst izvēli'),
+        )
 
     def __unicode__(self):
         return self.option

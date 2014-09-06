@@ -31,4 +31,13 @@ class Articles(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        permissions = (
+            ('index', 'Raksti'),
+            ('add', 'Pievienot rakstu'),
+            ('edit', 'Labot rakstu'),
+            ('update', 'Atjaunot rakstu'),
+            ('item', 'Apskatīt rakstu'),
+            ('delete', 'Dzēst rakstu'),
+        )
+
 

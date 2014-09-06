@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_list_or_404, get_object_or_40
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.db.models import Q
+from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -10,33 +11,32 @@ from messaging.models import Contacts, Messages
 from messaging.forms import ContactForm, MessagingForm
 
 
+# python methods
 def unred_message_count(user_obj):
-    message_count = Messages.objects.filter(
-                        Q(user_to=user_obj) &
-                        Q(red=False) &
-                        ~Q(trash=True)).count()
+    message_count = Messages.objects.filter( Q(user_to=user_obj) &
+                                            Q(red=False) & ~Q(trash=True))
 
-    return message_count
+    return message_count.count()
 
 
 def red_message_count(user_obj):
-    message_count = Messages.objects.filter(
-                        Q(user_to=user_obj) &
-                        Q(red=True) &
-                        ~Q(trash=True)).count()
+    message_count = Messages.objects.filter( Q(user_to=user_obj) &
+                                            Q(red=True) & ~Q(trash=True))
 
-    return message_count
+    return message_count.count()
 
 
 def total_message_count(user_obj):
-    message_count = Messages.objects.filter(user_to=user_obj).count()
+    message_count = Messages.objects.filter(user_to=user_obj)
 
-    return message_count
+    return message_count.count()
 
 def trash_message_count(user_obj):
-    message_count = Messages.objects.filter(Q(user_to=user_obj) & Q(trash=True)).count()
+    message_count = Messages.objects.filter(Q(user_to=user_obj) & Q(trash=True))
 
-    return message_count
+    return message_count.count()
+# python methods
+
 
 
 @login_required
@@ -194,6 +194,7 @@ def delete_message_list(request):
             pk_list = [int(msg_id) for msg_id in message_id_list]
         except ValueError:
             print('Varbūt izmest 404???')
+            raise Http404
 
         messages = Messages.objects.in_bulk(pk_list)
 
@@ -213,6 +214,7 @@ def delete_contact(request):
             pk_list = [int(contact_id) for contact_id in contact_id_list]
         except ValueError:
             print('Varātu izmest 404 !!!')
+            raise Http404
 
         contacts = Contacts.objects.in_bulk(pk_list)
 
@@ -220,3 +222,4 @@ def delete_contact(request):
             contact.delete()
 
     return redirect(reverse('contact_list'))
+

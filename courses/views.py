@@ -11,6 +11,7 @@ from courses.models import Categories, Tuts, Materials, Rating
 from courses.forms import CategoryForm, TutForm, MaterialForm
 
 
+# python function
 def parser_categories(record_objects):
 
     data = {}
@@ -26,6 +27,7 @@ def parser_categories(record_objects):
             data[first_char] = [data_rec]
 
     return data
+# python function
 
 
 def index(request):

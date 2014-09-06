@@ -15,6 +15,13 @@ class Categories(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        permissions = (
+            ('add_categorie', 'Pievienot kategoriju'),
+            ('edit_categorie', 'Labot kategoriju'),
+            ('delete_categorie', 'Dzēst kategoriju'),
+        )
+
     def __unicode__(self):
         return self.course
 
@@ -39,6 +46,13 @@ class Tuts(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        permissions = (
+            ('add_tut', 'Pievienot apmācību'),
+            ('edit_tut', 'Labot apmācību'),
+            ('delete_tut', 'Dzēst apmācība'),
+        )
+
     def __unicode__(self):
         return self.title
 
@@ -46,6 +60,11 @@ class Tuts(models.Model):
 class Rating(models.Model):
     tutorial = models.PositiveIntegerField() # for Tut table reference
     rating = models.PositiveSmallIntegerField()
+
+    class Meta:
+        permissions = (
+            ('rate_tut', 'Apmāvību vērtēšana'),
+        )
 
 
 def get_file_extention(filename):
@@ -75,4 +94,11 @@ class Materials(models.Model):
     video = models.FileField(upload_to=handle_file_upload, max_length=255, validators=[verify_format])
     post = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        permissions = (
+            ('add_material', 'Pievienot materiālu'),
+            ('edit_material', 'Labot materiālu'),
+            ('delete_material', 'Dzēst materiālu'),
+        )
 
