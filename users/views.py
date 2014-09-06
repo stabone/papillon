@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
+from django.http import Http404
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
@@ -97,6 +98,8 @@ def delete_group(request):
     return redirect(reverse('group_list'))
 
 
+@login_required
+@csrf_protect
 def add_group_perms(request,group_id=None):
     if request.method == "POST":
         group_id = request.POST.get('group_id')
@@ -104,6 +107,7 @@ def add_group_perms(request,group_id=None):
         try:
             pk_list = [int(perm_id) for perm_id in perms_list]
         except ValueError:
+            raise Http404
             print('cant convert value')
 
         group = get_object_or_404(Group, id=group_id)
@@ -173,6 +177,8 @@ def login_user(request):
         pass
 
 
+@login_required
+@csrf_protect
 def find_user(request):
     if request.method == 'POST':
         search_str = request.POST.get('user')
@@ -183,6 +189,8 @@ def find_user(request):
         return render(request, 'user/index.html', {'users': users})
 
 
+@login_required
+@csrf_protect
 def user_delete(request):
     if request.method == 'POST':
         user_id = request.POST.get('userID')

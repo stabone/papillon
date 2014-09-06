@@ -1,7 +1,6 @@
 from django.test import TestCase
 from polls.models import Polls, Questions, Choises
 from users.models import CustomUser
-from django.contrib.auth.models import User
 
 from helper.utils import random_string
 

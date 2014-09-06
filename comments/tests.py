@@ -2,7 +2,6 @@ from django.test import TestCase
 from comments.models import MaterialComments, PollComments
 from polls.models import Polls
 from users.models import CustomUser
-from django.contrib.auth.models import User
 
 from helper.utils import random_string
 
