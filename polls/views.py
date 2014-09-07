@@ -278,13 +278,19 @@ def delete_choise(request):
 def save_poll_results(request):
     if request.method == "POST":
         """ QueryDict converting to python dictionary """
+
         post_dict = request.POST.dict()
         obj_list = []
 
+        # delete csrfmiddlewaretoken key for index converting
+        if post_dict['csrfmiddlewaretoken']:
+            del post_dict['csrfmiddlewaretoken']
+
         for key, value in post_dict.iteritems():
             please_int = key[-1]
+
             try:
-                questiond = int(please_int,base=10)
+                questiond = int(please_int, base=10)
                 obj_list.append(Results(user=request.user, poll=1, question=questiond, answer=value))
             except ValueError:
                 print("Cound't convert '{0}' to integer".format(please_int))
@@ -301,9 +307,19 @@ def save_poll_results(request):
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
     question_list = []
+    result_list = []
 
     for rec in data:
-        choises = Choises.objects.filter(Q(question=rec.question) & Q(correct=True))
+        result_list.append({
+            'id': rec.id,
+            'poll': rec.poll,
+            'question': rec.question,
+            'answer': rec.answer,
+            'correct': False,
+        })
+
+    for result in result_list:
+        choises = Choises.objects.filter(Q(question=result.question) & Q(correct=True))
         for choise in choises:
             question_list.append({
                 'id': choise.id,
@@ -311,5 +327,8 @@ def get_user_statistic(request):
                 'option': choise.option,
             })
 
-    return render(request, 'poll/statistic.html', {'data': data, 'choises': question_list})
+            if result_list[choise.id]:
+                result_list[choise.id]['correct'] = True
+
+    return render(request, 'poll/statistic.html', {'data': result_list, 'choises': question_list})
 
