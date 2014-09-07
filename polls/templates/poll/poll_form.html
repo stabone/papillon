@@ -2,33 +2,7 @@
 
 {% block content %}
 
-    {% if form.poll.errors %}
-        <div class="error message">
-            {{ form.poll.label }}
-            <ul class="list">
-                <li>{{ form.poll.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
-
-    {% if form.description.errors %}
-        <div class="error message">
-            {{ form.description.label }}
-            <ul class="list">
-                <li>{{ form.description.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
-
-
-    {% if form.public.errors %}
-        <div class="error message">
-            {{ form.public.label }}
-            <ul class="list">
-                <li>{{ form.public.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
+    {% include "poll/error_check_poll.html" %}
 
     <form method="POST" action="">
         {% csrf_token %}
@@ -61,3 +35,4 @@
 
     </form>
 {% endblock content %}
+

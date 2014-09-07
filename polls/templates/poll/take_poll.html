@@ -7,7 +7,14 @@
     <h2>{{ poll.name }}</h2>
 
     {% if user.is_staff %}
-    <div><a href="{% url 'edit_poll_content' poll.id %}">Pievienot jautājumu</a></div>
+        <div>
+            <a href="{% url 'edit_poll_content' poll.id %}">
+                Labot aptauju
+            </a>
+            <a href="{% url 'add_question_for_poll' poll.id %}">
+                Pievienot jautājumu
+            </a>
+        </div>
     {% endif %}
 
     <form action="{% url 'save_poll_results' %}" method="POST">

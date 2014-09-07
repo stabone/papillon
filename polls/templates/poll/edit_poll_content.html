@@ -37,21 +37,33 @@
     {% for question in questions %}
 
         <li>
-            {{ question.id }} -> {{ question.question }}
-            <a href="{% url 'add_choise' poll.id question.id %}" alt="Pievienot" title="Pievienot">
-                <i class="add icon"></i>
-            </a>
+            ({{ question.id }}) {{ question.question }}
+            <ul class="action-menu">
+                <li class="add-action">
+                    <a href="{% url 'add_choise' poll.id question.id %}" alt="Pievienot" title="Pievienot">
+                        <i class="add icon"></i>
+                    </a>
+                </li>
+                <li class="edit-action">
+                    <a href="{% url 'edit_question' question.id %}">
+                        Labot
+                    </a>
+                </li>
+                <li class="delete-action">
+                    {% include "poll/delete_poll.html" %}
+                </li>
+            </ul>
 
             <ul>
                 {% for choise in question.choises %}
                     <li>
                         <span class="title-option">
-                            {{ choise.option }}
+                            {{ choise.id }}:{{ choise.option }}
                         </span>
 
                         <ul class="action-menu">
                             <li class="edit-action">
-                                <a href="{% url 'edit_choise' poll.id question.id %}" alt="Labot" title="Labot">
+                                <a href="{% url 'edit_choise' poll.id choise.id %}" alt="Labot" title="Labot">
                                     <i class="edit icon"></i>
                                 </a>
                             </li>

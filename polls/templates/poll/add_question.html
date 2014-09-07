@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>{{ poll.poll }}</h2>
+
+    <div>
+        <a href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
+    </div>
+
+    {% if form.question.errors %}
+        <div class="ui error message">
+            {{ form.question.label }}
+            <ul class="list">
+                <li>{{ form.question.errors|striptags }}</li>
+            </ul>
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'add_question' %}">
+        {% csrf_token %}
+
+        <input type="hidden" name="poll" value="{{ poll.id }}" />
+
+        <div class="form-section">
+            <label for="id_question">
+                {{ form.question.label }}
+            </label>
+
+            {{ form.question }}
+        </div>
+
+        <input type="submit" value="Saglabāt" class="submit button" />
+    </form>
+
+{% endblock content %}

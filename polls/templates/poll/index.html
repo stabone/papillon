@@ -38,11 +38,15 @@
                 {% if user.is_staff %}
                     <ul class="action-menu">
 
-                        <li class="action-add"></li>
+                        <li class="action-add">
+                            <a href="{% url 'edit_poll_content' rec.id %}">
+                                Pievienot jautājumu
+                            </a>
+                        </li>
 
                         <li class="edit-action">
                             <a class="edit button" href="{% url 'edit_poll' rec.id %}">
-                                <i class="edit icon"></i>
+                                Labot
                             </a>
                         </li>
 

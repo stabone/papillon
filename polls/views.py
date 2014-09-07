@@ -85,13 +85,15 @@ def add_poll(request):
 def add_question(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
+
         if form.is_valid():
             poll = get_object_or_404(Polls, id=request.POST.get('poll'))
 
             all_form = form.save(commit=False)
             all_form.poll = poll
             all_form.save()
-            return redirect(reverse('take_poll',args=[poll.id]))
+
+            return redirect(reverse('take_poll', args=[poll.id]))
     else:
         form = QuestionForm()
 
@@ -100,12 +102,25 @@ def add_question(request):
 
 @login_required
 @csrf_protect
-def add_choise(request,poll_id,question_id):
+def add_question_for_poll(request, poll_id):
+
+    poll = get_object_or_404(Polls, id=poll_id)
+
+    form = QuestionForm()
+
+    return render(request, 'poll/add_question.html', {'form': form, 'poll': poll})
+
+
+@login_required
+@csrf_protect
+def add_choise(request, poll_id, question_id):
     if request.method == "POST":
         form = ChoiseForm(request.POST)
+
         if form.is_valid():
             form.save()
-            return redirect(reverse('edit_poll_content',args=[poll_id]))
+
+            return redirect(reverse('edit_poll_content', args=[poll_id]))
     else:
         data = get_object_or_404(Questions,id=question_id)
         choise = Choises(question=data)
