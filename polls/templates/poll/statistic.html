@@ -5,11 +5,11 @@
 	some 3D.js magic
 
 	{% for choise in choises %}
-		{{ choise.id }}
+		{{ choise.id }} -> {{ choise.option }}
 	{% endfor %}
 
 	{% for i in data %}
-		<div>{{ i.poll }} -> {{ i.question }} -> {{ i.answer }}</div>
+		<div>{{ i.poll }} -> {{ i.question }} -> {{ i.answer }} -> {{ i.correct }}</div>
 	{% endfor %}
 
 {% endblock content %}

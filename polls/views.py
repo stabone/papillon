@@ -303,23 +303,31 @@ def save_poll_results(request):
     return redirect(reverse('base_poll'))
 
 
+def parse_result_object(result_obj):
+    result_list = []
+
+    for result in result_obj:
+        result_list.append({
+            'id': result.id,
+            'poll': result.poll,
+            'question': result.question,
+            'answer': result.answer,
+            'correct': False,
+        })
+
+    return result_list
+
+
 @login_required
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
     question_list = []
-    result_list = []
 
-    for rec in data:
-        result_list.append({
-            'id': rec.id,
-            'poll': rec.poll,
-            'question': rec.question,
-            'answer': rec.answer,
-            'correct': False,
-        })
+    result_list = parse_result_object(data)
 
     for result in result_list:
-        choises = Choises.objects.filter(Q(question=result.question) & Q(correct=True))
+        # choises = Choises.objects.filter(Q(question=result['question']) & Q(correct=True))
+        choises = Choises.objects.filter(question=result['question'])
         for choise in choises:
             question_list.append({
                 'id': choise.id,
@@ -327,8 +335,9 @@ def get_user_statistic(request):
                 'option': choise.option,
             })
 
-            if result_list[choise.id]:
-                result_list[choise.id]['correct'] = True
+            for result in result_list:
+                if choise.id == result['answer']:
+                    result['correct'] = choise.correct
 
     return render(request, 'poll/statistic.html', {'data': result_list, 'choises': question_list})
 
