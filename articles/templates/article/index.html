@@ -12,7 +12,7 @@
 
         {% for article in articles %}
             <li class="section">
-                <div class="article-title">
+                <div class="article_title">
                     <h1>
                         <a href="{% url 'article_item' article.id %}">
                             {{ article.title|title }}
@@ -20,13 +20,20 @@
                     </h1>
                 </div>
 
-                <div class="description">
-                    <p>{{ article.description }}</p>
-                    <a class="meta-more" href="{% url 'article_item' article.id %}">Vairāk...</a>
+                <div class="article_details">
+                    <span class="article_details-author">
+                        {{ article.user.get_full_name }}
+                    </span>
+                    <span></span>
+                    <span class="article_details-time">
+                        {{ article.created_at|date:"Y.m.d H:i:s" }}
+                    </span>
                 </div>
 
-                <div class="meta-time">
-                    {{ article.created_at|date:"Y.m.d H:i:s" }}
+                <div class="article-summary">
+                    <img alt="Preview image@2x" class="article_img-preview" src="https://cms-assets.tutsplus.com/uploads/users/41/posts/21880/preview_image/preview-image@2x.jpg">
+                    {{ article.description }}
+                    <a class="article_read-more-link" href="{% url 'article_item' article.id %}">Vairāk...</a>
                 </div>
 
                 {% if user.is_superuser %}
