@@ -20,31 +20,42 @@
 
     </ul>
 
-    <h3>{{ article.title }}</h3>
+    <div class="article">
+        <div class="article_details">
+            <span class="article_details-author">
+                {{ article.user.get_full_name }}
+            </span>
 
-    <div class="article_details">
-        <span class="article_details-author">
-            {{ article.user.get_full_name }}
-        </span>
-        <span class="article_details-comments" alt="Komentāru skaits" title="Komentāru skaits">
-            <img src="" alt="Message icon" title="Message icon">
-            9 Komentāri
-        </span>
-        <span class="article_details-time">
-            {{ article.created_at|date:"Y.m.d H:i:s" }}
-        </span>
+            <span class="article_details-comments"
+                    alt="Komentāru skaits"
+                    title="Komentāru skaits">
+                <img src="" alt="Message icon" title="Message icon">
+                <a href="#article-comments">komentāri</a>
+            </span>
+
+            <span class="article_details-time">
+                {{ article.created_at|date:"Y.m.d H:i:s" }}
+            </span>
+        </div>
+
+        <h3>{{ article.title }}</h3>
+
+        {% if article.article %}
+            <div class="article">
+                {{ article.article|markdown }}
+            </div>
+        {% endif %}
+
+        {% if article.embeded %}
+            <div class="article-video">
+                {{ article.embeded|safe|escape }}
+            </div>
+        {% endif %}
     </div>
 
-    {% if article.article %}
-        <div class="article">
-            {{ article.article|markdown }}
-        </div>
-    {% endif %}
-
-    {% if article.embeded %}
-        <div class="article-video">
-            {{ article.embeded|safe|escape }}
-        </div>
-    {% endif %}
+    <div id="article-comments">
+        Komentāri šeit
+        {% include "comment/add_article_comment.html" %}
+    </div>
 
 {% endblock content %}

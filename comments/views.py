@@ -1,6 +1,6 @@
 #-*- coding: utf-8 -*-
 import json
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from courses.models import Materials
 from polls.models import Polls
 from comments.models import MaterialComments, PollComments
+from articles.models import Articles
 
 
 # plaing pythond fuctions
@@ -107,6 +108,38 @@ def add_poll_comments(request):
         obj.save()
 
         response_data.append({'success': 'Komentārs pievienots'})
+
+    return HttpResponse(response_data, content_type='application/json')
+
+@login_required
+def add_article_comment(request):
+    response_data = []
+    if request.method == 'POST':
+
+        try:
+            aricle_id = request.POST.get('articleID')
+            comment = request.POST.get('comment')
+        except ValueError:
+            response_data.append({'error': 'Raksts netika atrast'})
+            return HttpResponse(response_data, content_type='application/json')
+
+        article = get_object_or_404(Articles, id=article_id)
+        obj = ArticleComments(article=article, comment=comment)
+        obj.save()
+
+        response_data.append({'success': 'Komentārs pievienots'})
+    return HttpResponse(response_data, content_type='application/json')
+
+
+@login_required
+def delete_article_comment(request):
+    response_data = []
+    if request.method == 'POST':
+        comment_id = request.POST.get('commentID', '')
+        comment = get_object_or_404(ArticleComments, id=comment_id)
+
+        comment.delete()
+        response_data.append({'success': 'Komentārs izdzēst'})
 
     return HttpResponse(response_data, content_type='application/json')
 

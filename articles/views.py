@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from articles.models import Articles
 from articles.forms import ArticleForm
+from comments.models import ArticleComments
 
 
 ## TODO
@@ -73,8 +74,11 @@ def update(request, article_id):
 @login_required
 def item(request, article_id):
     article = get_object_or_404(Articles, id=article_id)
+    comments = ArticleComments.objects.filter(article=article_id)
 
-    return render(request, 'article/item.html', {'article': article})
+    return render(request, 'article/item.html', {
+            'article': article,
+            'comments': comments})
 
 
 @login_required
