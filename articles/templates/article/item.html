@@ -58,4 +58,16 @@
         {% include "comment/add_article_comment.html" %}
     </div>
 
+    <a href="https://mostlyerlang.files.wordpress.com/2014/09/mostly_erlang_44_pheonix.mp3">Erlang</a>
+
+    <div>
+        {% for comment in comments %}
+            <ul>
+                <li>{{ comment.user }}</li>
+                <li>{{ comment.comment }}</li>
+                <li>{{ comment.created_at|date:"Y.m.d H:i:s" }}</li>
+            </ul>
+        {% endfor %}
+    </div>
+
 {% endblock content %}

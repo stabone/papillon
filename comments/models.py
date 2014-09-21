@@ -36,6 +36,7 @@ class PollComments(models.Model):
 
 
 class ArticleComments(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     article = models.ForeignKey(Articles)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

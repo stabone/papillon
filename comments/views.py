@@ -7,11 +7,11 @@ from django.http import HttpResponse
 
 from courses.models import Materials
 from polls.models import Polls
-from comments.models import MaterialComments, PollComments
+from comments.models import MaterialComments, PollComments, ArticleComments
 from articles.models import Articles
 
 
-# plaing pythond fuctions
+# plain pythond fuctions
 def get_latvian_date(date_obj):
     return date_obj.strftime('%Y.%M.%d %H:%m:%s')
 
@@ -27,7 +27,7 @@ def parse_comments(comment_dict):
             })
 
     return comments
-# plaing pythond fuctions
+# plain pythond fuctions
 
 
 def index(request):
@@ -117,14 +117,14 @@ def add_article_comment(request):
     if request.method == 'POST':
 
         try:
-            aricle_id = request.POST.get('articleID')
+            article_id = request.POST.get('articleID')
             comment = request.POST.get('comment')
         except ValueError:
             response_data.append({'error': 'Raksts netika atrast'})
             return HttpResponse(response_data, content_type='application/json')
 
         article = get_object_or_404(Articles, id=article_id)
-        obj = ArticleComments(article=article, comment=comment)
+        obj = ArticleComments.objects.create(article=article, comment=comment)
         obj.save()
 
         response_data.append({'success': 'Komentārs pievienots'})

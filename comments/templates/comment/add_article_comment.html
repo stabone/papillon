@@ -1,0 +1,10 @@
+
+<form method="POST" action="{% url 'article_comment' %}">
+    {% csrf_token %}
+    <input type="hidden" name="articleID" value="{{ article.id }}">
+    <textarea name="comment">
+    </textarea>
+
+    <input type="submit" value="Saglabāt">
+</form>
+
