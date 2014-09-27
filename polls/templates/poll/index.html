@@ -3,17 +3,7 @@
 
 {% block content %}
 
-    <h3>Jautājumi</h3>
-
-    <div>
-        <a href="{% url 'user_statistic' %}">Statistika</a>
-
-        {% if user.is_staff %}
-            <a href="{% url 'add_poll' %}" alt="Pievienot" title="Pievienot">
-                <i class="add icon"></i> Pievienot aptauju
-            </a>
-        {% endif %}
-    </div>
+    {% include "poll/poll_actions.html" %}
 
     <div class="ui divided list">
     {% for rec in data %}
@@ -27,34 +17,23 @@
 
                 </div>
 
+                <div class="publication-meta">
+                    <span class="author">
+                        <a href="#">Autors</a>
+                    </span>
+
+                    <span class="publication-date" title="">
+                        {{ rec.created_at|date:"Y.m.d" }}
+                    </span>
+                </div>
+
+
                 <div class="description">
                     {{ rec.description }}
                 </div>
 
-                <div class="">
-                    {{ rec.created_at }}
-                </div>
-
                 {% if user.is_staff %}
-                    <ul class="action-menu">
-
-                        <li class="action-add">
-                            <a href="{% url 'edit_poll_content' rec.id %}">
-                                Pievienot jautājumu
-                            </a>
-                        </li>
-
-                        <li class="edit-action">
-                            <a class="edit button" href="{% url 'edit_poll' rec.id %}">
-                                Labot
-                            </a>
-                        </li>
-
-                        <li class="delete-action">
-                            {% include "poll/delete_poll.html" %}
-                        </li>
-
-                    </ul>
+                    {% include "poll/poll_controls.html" %}
                 {% endif %}
 
             </div>
@@ -67,15 +46,15 @@
     {% if data.paginator.num_pages > 1 %}
         <div class="ui pagination menu">
             {% if data.has_previous %}
-                <a class="item" href="/poll/{{ data.previous_page_number }}">
+                <a class="item" href="{% url 'base_poll' data.previous_page_number %}">
                     <i class="icon left arrow"></i>Iepriekšējais
                 </a>
             {% endif %}
 
-            <a class="item" href="/poll/{{ data.number }}">{{ data.number }}</a>
+            <a class="item" href="{% url 'base_poll' data.number %}">{{ data.number }}</a>
 
             {% if data.has_next %}
-                <a class="item" href="/poll/{{ data.next_page_number }}">
+                <a class="item" href="{% url 'base_poll' data.next_page_number %}">
                     <i class="icon right arrow"></i>Nākošais
                 </a>
             {% endif %}
@@ -83,3 +62,4 @@
     {% endif %}
 
 {% endblock content %}
+

@@ -111,6 +111,7 @@ def add_poll_comments(request):
 
     return HttpResponse(response_data, content_type='application/json')
 
+
 @login_required
 def add_article_comment(request):
     response_data = []
@@ -124,8 +125,14 @@ def add_article_comment(request):
             return HttpResponse(response_data, content_type='application/json')
 
         article = get_object_or_404(Articles, id=article_id)
-        obj = ArticleComments.objects.create(article=article, comment=comment)
+        obj = ArticleComments.objects.create(
+                                        user=request.user,
+                                        article=article,
+                                        comment=comment)
         obj.save()
+
+        if True:
+            return redirect(reverse('article_item', args=[article_id]))
 
         response_data.append({'success': 'Komentārs pievienots'})
     return HttpResponse(response_data, content_type='application/json')

@@ -21,21 +21,22 @@
     </ul>
 
     <div class="article">
-        <div class="article_details">
-            <span class="article_details-author">
-                {{ article.user.get_full_name }}
+        <div class="publication-meta">
+            <span class="author">
+                <a href="#">{{ article.user.get_full_name }}</a>
             </span>
 
-            <span class="article_details-comments"
+            <span class="publication-date" title="">
+                {{ article.created_at|date:"Y.m.d" }}
+            </span>
+
+            <span class="comment-count"
                     alt="Komentāru skaits"
                     title="Komentāru skaits">
                 <img src="" alt="Message icon" title="Message icon">
-                <a href="#article-comments">komentāri</a>
+                <a href="#article-comments">8 Komentāri</a>
             </span>
 
-            <span class="article_details-time">
-                {{ article.created_at|date:"Y.m.d H:i:s" }}
-            </span>
         </div>
 
         <h3>{{ article.title }}</h3>
@@ -54,20 +55,22 @@
     </div>
 
     <div id="article-comments">
-        Komentāri šeit
+        Komentāri!!!
         {% include "comment/add_article_comment.html" %}
     </div>
 
-    <a href="https://mostlyerlang.files.wordpress.com/2014/09/mostly_erlang_44_pheonix.mp3">Erlang</a>
-
     <div>
+        <ul>
         {% for comment in comments %}
-            <ul>
-                <li>{{ comment.user }}</li>
-                <li>{{ comment.comment }}</li>
-                <li>{{ comment.created_at|date:"Y.m.d H:i:s" }}</li>
-            </ul>
+            <li>
+                <ul>
+                    <li>{{ comment.user.user_name }} {{ comment.user.last_name }}</li>
+                    <li>{{ comment.comment }}</li>
+                    <li>{{ comment.created_at|date:"Y.m.d H:i:s" }}</li>
+                </ul>
+            </li>
         {% endfor %}
+        </ul>
     </div>
 
 {% endblock content %}

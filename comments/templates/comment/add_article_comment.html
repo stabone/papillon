@@ -1,9 +1,13 @@
 
 <form method="POST" action="{% url 'article_comment' %}">
     {% csrf_token %}
+
     <input type="hidden" name="articleID" value="{{ article.id }}">
-    <textarea name="comment">
-    </textarea>
+
+    <div class="form-section">
+        <textarea name="comment">
+        </textarea>
+    </div>
 
     <input type="submit" value="Saglabāt">
 </form>

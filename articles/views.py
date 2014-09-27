@@ -74,7 +74,7 @@ def update(request, article_id):
 @login_required
 def item(request, article_id):
     article = get_object_or_404(Articles, id=article_id)
-    comments = ArticleComments.objects.filter(article=article_id)
+    comments = ArticleComments.objects.select_related('user').filter(article=article_id)
 
     return render(request, 'article/item.html', {
             'article': article,

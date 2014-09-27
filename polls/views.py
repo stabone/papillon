@@ -50,7 +50,7 @@ def pop_done_polls(poll_list,user_obj):
 @login_required
 def index(request,page_numb=None):
     poll_list = Polls.objects.all()
-    poll_dict = pop_done_polls(poll_list,request.user)
+    poll_dict = pop_done_polls(poll_list, request.user)
 
     paginator = Paginator(poll_dict, 5)
 

@@ -53,6 +53,7 @@ class Choises(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['-id']
         permissions = (
             ('add_choise', 'Pievienot izvēli'),
             ('edit_choise', 'Labot izvēli'),
