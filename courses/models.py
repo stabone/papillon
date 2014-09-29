@@ -16,6 +16,8 @@ class Categories(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['course']
+
         permissions = (
             ('add_categorie', 'Pievienot kategoriju'),
             ('edit_categorie', 'Labot kategoriju'),
@@ -47,6 +49,8 @@ class Tuts(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        ordering = ['title']
+
         permissions = (
             ('add_tut', 'Pievienot apmācību'),
             ('edit_tut', 'Labot apmācību'),
@@ -67,6 +71,7 @@ class Rating(models.Model):
         )
 
 
+""" Gets file extenstion by splitting string """
 def get_file_extention(filename):
     extentio = filename.split('.')[-1].lower()
     return extentio
@@ -85,6 +90,7 @@ class Materials(models.Model):
     def verify_format(file):
         extension = get_file_extention(file.name)
         allowed_formats = ['mkv', 'webm', 'mp4']
+
         if extension not in allowed_formats:
             raise ValidationError('Atļautie formāti: %s' % ', '.join(allowed_formats))
 

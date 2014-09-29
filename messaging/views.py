@@ -108,7 +108,10 @@ def respond_message(request, msg_id):
 @csrf_protect
 def restore_message(request):
     if request.method == 'POST':
-        message_id = request.POST.get('messageID')
+        try:
+            message_id = request.POST.get('messageID')
+        except KeyError:
+            raise Http404
 
         message = Messages.objects.get(id=message_id)
         message.trash = False
@@ -145,9 +148,13 @@ def to_trash_message(request):
     Message moving to trash
     """
     if request.method == "POST":
-        messageID = request.POST.get('messageID')
 
-        message = get_object_or_404(Messages, id=messageID)
+        try:
+            message_id = request.POST.get('messageID')
+        except KeyError:
+            raise Http404
+
+        message = get_object_or_404(Messages, id=message_id)
 
         message.trash = True
         message.save()
@@ -177,7 +184,11 @@ def add_contact(request):
 @csrf_protect
 def delete_message(request):
     if request.method == "POST":
-        message_id = request.POST.get('messageID')
+        try:
+            message_id = request.POST.get('messageID')
+        except KeyError:
+            raise Http404
+
         message = get_object_or_404(Messages, id=message_id)
         message.delete()
 
@@ -189,6 +200,9 @@ def delete_message(request):
 def delete_message_list(request):
     if request.method == "POST":
         message_id_list = request.POST.getlist('indices[]')
+
+        if not message_id_list:
+            raise Http404
 
         try:
             pk_list = [int(msg_id) for msg_id in message_id_list]
@@ -209,6 +223,9 @@ def delete_message_list(request):
 def delete_contact(request):
     if request.method == "POST":
         contact_id_list = request.POST.getlist('indices')
+
+        if not contact_id_list:
+            raise Http404
 
         try:
             pk_list = [int(contact_id) for contact_id in contact_id_list]

@@ -1,7 +1,7 @@
 import json
 
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -31,7 +31,7 @@ def parser_categories(record_objects):
 
 
 def index(request):
-    records = Categories.objects.all().order_by('course')
+    records = Categories.objects.all()
     data = parser_categories(records)
     new_materials = Materials.objects.order_by('-created_at')[:5]
 
@@ -61,6 +61,7 @@ def add_tut(request, categorie_id):
     if request.method == "POST":
         form = TutForm(request.POST)
         form.author = request.user
+
         if form.is_valid():
             rec = form.save(commit=False)
             rec.author = request.user
@@ -111,7 +112,7 @@ def edit_categorie(request, categorie_id):
 @login_required
 @csrf_protect
 def edit_tut(request, tut_id):
-    data = Tuts.objects.select_related().get(id=tut_id)
+    data = Tuts.objects.get(id=tut_id)
 
     if request.method == "POST":
         form = TutForm(request.POST, instance=data)
@@ -169,7 +170,11 @@ def show_video(request, material_id):
 @csrf_protect
 def delete_categorie(request):
     if request.method == "POST":
-        category_id = request.POST.get('categoryID');
+
+        try:
+            category_id = request.POST.get('categoryID');
+        except KeyError:
+            raise Http404
 
         record = Categories.objects.filter(id=category_id)
         record.delete()
@@ -183,10 +188,14 @@ def delete_categorie(request):
 def delete_tut(request):
     """ child (material) records should be delete to """
     if request.method == "POST":
-        category_id = request.POST.get('categoryID')
-        tut_id = request.POST.get('tutID')
 
-        record = get_object_or_404(Tuts,id=tut_id)
+        try:
+            category_id = request.POST.get('categoryID')
+            tut_id = request.POST.get('tutID')
+        except KeyError:
+            raise Http404
+
+        record = get_object_or_404(Tuts, id=tut_id)
         record.delete()
 
         return redirect(reverse('show_tut', args=[category_id]))
@@ -198,7 +207,11 @@ def delete_tut(request):
 @csrf_protect
 def delete_material(request):
     if request.method == "POST":
-        material_id = request.POST.get('materialID')
+        try:
+            material_id = request.POST.get('materialID')
+        except KeyError:
+            raise Http404
+
         record = Materials.objects.get(id=material_id)
         record.video.delete()
         record.delete()
@@ -209,7 +222,8 @@ def delete_material(request):
 
 
 def rate_tut(request, tut_id, rating):
-    tut = Tuts.objects.get(id=tut_id)
+    """ Check if tutorial exists """
+    get_object_or_404(Tuts, id=tut_id)
 
     obj = Rating.objects.create(tutorial=tut_id, rating=rating)
     obj.save()
@@ -219,8 +233,11 @@ def rate_tut(request, tut_id, rating):
 
 def publish_video(request):
     if request.method == "POST":
-        video_id = request.POST.get('videoID')
-        action = request.POST.get('action')
+        try:
+            video_id = request.POST.get('videoID')
+            action = request.POST.get('action')
+        except KeyError:
+            raise Http404
 
         video = get_object_or_404(Materials, id=video_id)
         video.post = True if action == 'False' else False
