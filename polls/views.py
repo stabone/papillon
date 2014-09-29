@@ -33,7 +33,7 @@ def create_poll_dict(poll_list):
 
 def pop_done_polls(poll_list,user_obj):
     poll_dict = create_poll_dict(poll_list)
-    done_polls = Results.objects.filter(user=user_obj)
+    done_polls = Results.objects.select_related('user').filter(user=user_obj)
     valid_polls = []
 
     for record in done_polls:
