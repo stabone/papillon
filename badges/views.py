@@ -43,7 +43,7 @@ def edit_badge(request, rec_id):
 def update_badge(request):
     if request.method == 'POST':
 
-        badge = get_object_or_404(Badges, id=request.POST.get('badge_id'))
+        badge = get_object_or_404(Badges, id=request.POST.get('badge_id', ''))
 
         form = BadgeForm(request.POST, instance=badge)
 

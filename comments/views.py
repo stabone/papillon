@@ -3,7 +3,7 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from courses.models import Materials
 from polls.models import Polls
@@ -56,13 +56,16 @@ def add_video_comments(request):
 
 def get_poll_comments(request):
     if request.method == 'POST':
-        poll_id = request.POST.get('pollID')
+        try:
+            poll_id = request.POST.get('pollID')
+        except KeyError:
+            raise Http404
 
         try:
             poll_comments = PollComments.objects.filter(poll=poll_id)
             poll_data = parse_comments(poll_comments)
         except ValueError:
-            response_data.append({'error': 'Komentāri netika atrasti'})
+            poll_data.append({'error': 'Komentāri netika atrasti'})
 
     return HttpResponse(json.dumps(poll_data), content_type='application/json')
 
@@ -70,7 +73,11 @@ def get_poll_comments(request):
 def get_video_comments(request):
 
     if request.method == 'POST':
-        video_id = request.POST.get('videoID')
+        try:
+            video_id = request.POST.get('videoID')
+        except KeyError:
+            raise Http404
+
         response_data = []
 
         try:
@@ -96,7 +103,9 @@ def add_poll_comments(request):
     if request.method == "POST":
 
         try:
-            poll_id = request.POST.get('pollID')
+            poll_id = int(request.POST.get('pollID'))
+        except KeyError:
+            raise Http404
         except ValueError:
             response_data.append({'error': 'Nepareiz identifikātors'})
             return HttpResponse(response_data, content_type='application/json')
@@ -120,6 +129,8 @@ def add_article_comment(request):
         try:
             article_id = request.POST.get('articleID')
             comment = request.POST.get('comment')
+        except KeyError:
+            raise Http404
         except ValueError:
             response_data.append({'error': 'Raksts netika atrast'})
             return HttpResponse(response_data, content_type='application/json')

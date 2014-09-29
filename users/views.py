@@ -56,7 +56,7 @@ def create_group(request):
 @csrf_protect
 def add_group(request):
     if request.method == "POST":
-        group_id = request.POST.get('group_id')
+        group_id = request.POST.get('group_id', '')
 
         group = get_object_or_404(Group, id=group_id)
         request.user.groups.add(group)
@@ -75,8 +75,8 @@ def edit_group(request, group_id):
 @csrf_protect
 def update_group(request):
     if request.method == "POST":
-        group_id = request.POST.get('group_id')
-        group_name = request.POST.get('group_name')
+        group_id = request.POST.get('group_id', '')
+        group_name = request.POST.get('group_name', '')
 
         group = get_object_or_404(Group, id=group_id)
         group.name = group_name
@@ -90,7 +90,7 @@ def update_group(request):
 @csrf_protect
 def delete_group(request):
     if request.method == "POST":
-        group_id = request.POST.get('group_id')
+        group_id = request.POST.get('group_id', '')
 
         group = get_object_or_404(Group, id=group_id)
         group.delete()
@@ -102,8 +102,12 @@ def delete_group(request):
 @csrf_protect
 def add_group_perms(request,group_id=None):
     if request.method == "POST":
-        group_id = request.POST.get('group_id')
-        perms_list = request.POST.getlist('permissions')
+        try:
+            group_id = request.POST.get('group_id')
+            perms_list = request.POST.getlist('permissions')
+        except KeyError:
+            raise Http404
+
         try:
             pk_list = [int(perm_id) for perm_id in perms_list]
         except ValueError:
@@ -181,7 +185,11 @@ def login_user(request):
 @csrf_protect
 def find_user(request):
     if request.method == 'POST':
-        search_str = request.POST.get('user')
+        try:
+            search_str = request.POST.get('user')
+        except KeyError:
+            raise Http404
+
         users = CustomUser.objects.filter(
                 Q(user_name__contains=search_str) |
                 Q(last_name__contains=search_str))

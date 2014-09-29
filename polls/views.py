@@ -122,7 +122,7 @@ def add_choise(request, poll_id, question_id):
 
             return redirect(reverse('edit_poll_content', args=[poll_id]))
     else:
-        data = get_object_or_404(Questions,id=question_id)
+        data = get_object_or_404(Questions, id=question_id)
         choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
@@ -132,10 +132,10 @@ def add_choise(request, poll_id, question_id):
 @login_required
 @csrf_protect
 def edit_poll(request,poll_id):
-    record = get_object_or_404(Polls,id=poll_id)
+    record = get_object_or_404(Polls, id=poll_id)
 
     if request.method == "POST":
-        form = PollForm(request.POST,instance=record)
+        form = PollForm(request.POST, instance=record)
         if(form.is_valid()):
             form.save()
             return redirect(reverse('base_poll'))
@@ -148,10 +148,11 @@ def edit_poll(request,poll_id):
 @login_required
 @csrf_protect
 def edit_question(request,question_id):
-    data = get_object_or_404(Questions,id=question_id)
+    data = get_object_or_404(Questions, id=question_id)
 
     if request.method == "POST":
-        form = QuestionForm(request.POST,instance=data)
+        form = QuestionForm(request.POST, instance=data)
+
         if form.is_valid():
             form.save()
             return redirect(reverse('base_poll'))
@@ -164,10 +165,11 @@ def edit_question(request,question_id):
 @login_required
 @csrf_protect
 def edit_choise(request,poll_id,choise_id):
-    data = get_object_or_404(Choises,id=choise_id)
+    data = get_object_or_404(Choises, id=choise_id)
 
     if request.method == "POST":
-        form = ChoiseForm(request.POST,instance=data)
+        form = ChoiseForm(request.POST, instance=data)
+
         if(form.is_valid()):
             form.save()
             return redirect(reverse('edit_poll_content',args=[poll_id]))
@@ -209,6 +211,7 @@ def edit_poll_content(request,poll_id):
 
     if request.method == "POST":
         form = QuestionForm(request.POST, poll)
+
         if(form.is_valid()):
             form.save()
             return redirect(reverse('take_poll',args=[poll.id]))
@@ -219,6 +222,7 @@ def edit_poll_content(request,poll_id):
         form = QuestionForm()
 
     return render(request, 'poll/edit_poll_content.html', {'form': form, 'questions': data, 'poll': poll})
+
 
 @login_required
 def take_poll(request, poll_id):
@@ -236,8 +240,8 @@ def take_poll(request, poll_id):
 def delete_poll(request):
 
     if request.method == "POST":
-        poll_id = request.POST.get('pollID')
-        record = get_object_or_404(Polls,id=poll_id)
+        poll_id = request.POST.get('pollID', '') # let's hope that selecting will
+        record = get_object_or_404(Polls, id=poll_id) # throw 404
         record.delete()
         return redirect(reverse('base_poll'))
 
@@ -249,7 +253,7 @@ def delete_poll(request):
 def delete_question(request):
 
     if request.method == "POST":
-        question_id = request.POST.get('questionID')
+        question_id = request.POST.get('questionID', '')
         record = get_object_or_404(Questions,id=question_id)
         poll_id = record.poll.id
         record.delete()
