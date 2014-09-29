@@ -107,8 +107,8 @@ def add_group_perms(request,group_id=None):
         try:
             pk_list = [int(perm_id) for perm_id in perms_list]
         except ValueError:
-            raise Http404
             print('cant convert value')
+            raise Http404
 
         group = get_object_or_404(Group, id=group_id)
         perms = Permission.objects.in_bulk(pk_list)

@@ -5,8 +5,8 @@ from helper.utils import random_string
 
 
 def handle_file_upload(instance, filename):
-    filename = "/badges/{1}.{2}".format(
-                            random_string(max=10), file_format)
+    filename = "/badges/{1}-{2}".format(
+                            random_string(max=10), filename)
 
     return filename
 

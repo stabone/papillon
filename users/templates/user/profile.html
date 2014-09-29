@@ -44,6 +44,15 @@
             </tr>
         </table>
 
+        Badgle list
+        {% if badges %}
+            <ul>
+                {% for badge in badges %}
+                    <li alt="{% badge.name %}" title="{% badge.name %}">{% badge.name %}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
         <!-- {% if groups %}
         <div>
             Grupas:

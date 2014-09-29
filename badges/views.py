@@ -1,4 +1,5 @@
 #-*- coding: utf-8 -*-
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
@@ -29,8 +30,7 @@ def edit_badge(request, rec_id):
     try:
         badge_id = int(rec_id)
     except ValueError:
-        # izmests 404
-        pass
+        raise Http404
 
     badge = get_object_or_404(Badges, id=badge_id)
     form = BadgeForm(instance=badge)
