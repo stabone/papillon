@@ -322,26 +322,46 @@ def parse_result_object(result_obj):
     return result_list
 
 
+def get_question_list(question_set):
+    id_list = list(question_set)
+    question_list = Questions.objects.in_bulk(id_list)
+
+    print(question_list)
+
+    return question_list
+
+
 @login_required
 def get_user_statistic(request):
     data = Results.objects.filter(user=request.user)
     question_list = []
+    choise_list = []
+    question_set = set()
 
     result_list = parse_result_object(data)
 
     for result in result_list:
         # choises = Choises.objects.filter(Q(question=result['question']) & Q(correct=True))
-        choises = Choises.objects.filter(question=result['question'])
+        choises = Choises.objects.select_related('question').filter(question=result['question'])
+
         for choise in choises:
-            question_list.append({
+            choise_list.append({
                 'id': choise.id,
                 'question_id': choise.question.id,
                 'option': choise.option,
             })
 
+            question_set.add(choise.question.id)
+
             for result in result_list:
                 if choise.id == result['answer']:
                     result['correct'] = choise.correct
 
-    return render(request, 'poll/statistic.html', {'data': result_list, 'choises': question_list})
+    """ get All questions """
+    question_list = get_question_list(question_set)
+
+    return render(request, 'poll/statistic.html',
+                                {'data': result_list,
+                                    'choises': choise_list,
+                                    'questions': question_list})
 

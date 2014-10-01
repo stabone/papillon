@@ -39,6 +39,25 @@
                 </li>
 
                 {% if user.is_authenticated %}
+                    <li class="menu-item" id="timer-icon">
+                        <ul>
+                            <li id="timer-start">
+                                Sākt
+                            </li>
+                            <li id="timer-end">
+                                Beigt
+                            </li>
+                            <li id="timer-reset">
+                                Atjaunot
+                            </li>
+                            <li>Laika intervāls: <input id="pomo-time" type="range" value="25" min="25" max="35"/>
+                                <div id="pomo-time-value"></div>
+                            </li>
+                            <li>Pauze: <input id="timeout" type="range" value="5" min="5" max="10"/>
+                                <div id="timeout-value"></div>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="menu-item">
                         <a href="{% url 'user_profile' %}">
                             {{ user.get_full_name }}
@@ -61,19 +80,6 @@
                         </a>
                     </li>
                 {% endif %}
-            </ul>
-
-            <i class="green time icon" id="timer-icon"></i>
-            <ul id="timer-tray" class="hide">
-                <li id="timer-start">Start</li>
-                <li id="timer-end">End</li>
-                <li id="timer-reset">Reset</li>
-                <li>Pomodoro: <input id="pomo-time" type="range" value="25" min="25" max="35"/>
-                    <div id="pomo-time-value"></div>
-                </li>
-                <li>Pauze: <input id="timeout" type="range" value="5" min="5" max="10"/>
-                    <div id="timeout-value"></div>
-                </li>
             </ul>
 
         </nav>
