@@ -1,6 +1,8 @@
 
 <form method="POST" action="{% url 'delete_material' %}">
     {% csrf_token %}
+
     <input type="hidden" name="materialID" value="{{ rec.id }}" />
     <input type="submit" value="Dzēst" />
 </form>
+

@@ -7,15 +7,26 @@
         <div class="ui form">
 
             <div class="field">
-                <label>{{ form.user_to.label }}</label>
+                <label for="{{ form.user_to.id_for_label }}">
+                    {{ form.user_to.label }}
+                </label>
+
                 {{ form.user_to }}
             </div>
+
             <div class="field">
-                <label>{{ form.title.label }}</label>
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                </label>
+
                 {{ form.title }}
             </div>
+
             <div class="field">
-                <label>{{ form.message.label }}</label>
+                <label for="{{ form.message.id_for_label }}">
+                    {{ form.message.label }}
+                </label>
+
                 {{ form.message }}
             </div>
 

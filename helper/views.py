@@ -6,8 +6,7 @@ from django.http import HttpResponseRedirect
 
 
 def index(request):
-	return redirect(reverse('article_base'))
-	# return render(request, 'index.html')
+    return redirect(reverse('article_base'))
 
 
 def handler400(request):

@@ -1,24 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <div>
+        <a href="{% url 'messaging_inbox' %}">Ziņas</a>
+    </div>
+
     <form method="POST" action="{% url 'messaging_add' %}">
         {% csrf_token %}
 
-        <div class="ui form">
-            <div class="field">
-                <label>{{ form.user_to.label }}</label>
-                {{ form.user_to }}
-            </div>
-            <div class="field">
-                <label>{{ form.title.label }}</label>
-                {{ form.title }}
-            </div>
-            <div class="field">
-                <label>{{ form.message.label }}</label>
-                {{ form.message }}
-            </div>
+        <div class="form-section">
+            <label for="{{ form.user_to.id_for_label }}">
+                {{ form.user_to.label }}
+            </label>
 
-            <input type="submit" value="Sūtīt" class="ui green button" />
+            {{ form.user_to }}
         </div>
+
+        <div class="form-section">
+            <label for="{{ form.title.id_for_label }}">
+                {{ form.title.label }}
+            </label>
+
+            {{ form.title }}
+        </div>
+
+        <div class="form-section">
+            <label for="{{ form.message.id_for_label }}">
+                {{ form.message.label }}
+            </label>
+
+            {{ form.message }}
+        </div>
+
+        <input type="submit" value="Sūtīt" class="submit button" />
     </form>
+
 {% endblock content %}
+

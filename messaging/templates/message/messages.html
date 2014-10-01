@@ -65,6 +65,13 @@
                     </a>
                 </td>
             </tr>
+        {% empty %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
         {% endfor %}
 
     </table>
@@ -72,3 +79,4 @@
     </form>
 
 {% endblock content %}
+

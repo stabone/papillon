@@ -88,7 +88,7 @@
             {% csrf_token %}
 
             <div class="field">
-                <label for="id_category">
+                <label for="{{ form.category.id_for_label }}">
                     {{ form.category.label }}
                 </label>
 
@@ -96,7 +96,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_author">
+                <label for="{{ form.author.id_for_label }}">
                     {{ form.author.label }}
                 </label>
 
@@ -104,7 +104,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_title">
+                <label for="{{ form.title.id_for_label }}">
                     {{ form.title.label }}
                 </label>
 
@@ -112,7 +112,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_description">
+                <label for="{{ form.description.id_for_label }}">
                     {{ form.description.label }}
                 </label>
 
@@ -120,7 +120,7 @@
             <div>
 
             <div class="form-section">
-                <label for="id_level">
+                <label for="{{ form.level.id_for_label }}">
                     {{ form.level.label }}
                 </label>
 
@@ -128,7 +128,7 @@
             <div>
 
             <div class="form-section">
-                <label for="id_rating">
+                <label for="{{ form.rating.id_for_label }}">
                     {{ form.rating.label }}
                 </label>
 
@@ -136,7 +136,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_times_rated">
+                <label for="{{ form.times_rated.id_for_label }}">
                     {{ form.times_rated.label }}
                 </label>
 
@@ -144,7 +144,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_tags">
+                <label for="{{ form.tags.id_for_label }}">
                     {{ form.tags.label }}
                 </label>
 
@@ -152,7 +152,7 @@
             </div>
 
             <div class="form-section">
-                <label for="id_post">
+                <label for="{{ form.post.id_for_label }}">
                     {{ form.post.label }}
                 </label>
 
@@ -162,4 +162,6 @@
             <input type="submit" value="Saglabāt" class="submit button" />
         </form>
     </div>
+
 {% endblock content %}
+

@@ -2,6 +2,7 @@
 import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 
@@ -29,9 +30,15 @@ def parse_comments(comment_dict):
     return comments
 # plain pythond fuctions
 
+""" varbūt ir nepieciešams flags priekš Javascript'a???"""
+
 
 def index(request):
     return render(request, '', {})
+
+
+def go_to_orig_video(video_id):
+    return redirect(reverse('show_material', args=[video_id]))
 
 
 def add_video_comments(request):
@@ -39,9 +46,14 @@ def add_video_comments(request):
     if request.method == "POST":
         video_id = request.POST.get('videoID')
         comment = request.POST.get('comment')
+        is_js = request.POST.get('isJS', '')
 
-        material = Materials.objects.get(id=video_id)
-        obj = MaterialComments.objects.create(user=request.user, material=material, comment=comment)
+        if not comment: # if empty
+            return go_to_orig_video(video_id)
+
+        material = get_object_or_404(Materials, id=video_id)
+        obj = MaterialComments.objects.create(user=request.user,
+                                        material=material, comment=comment)
         obj.save()
 
         response_data = parse_comments({
@@ -50,8 +62,10 @@ def add_video_comments(request):
             'added': get_latvian_date(obj.created_at)
         })
 
-        return HttpResponse(json.dumps(response_data), content_type='application/json')
-        # return redirect(reverse('show_material',args=[video_id]))
+        if is_js:
+            return HttpResponse(json.dumps(response_data), content_type='application/json')
+        else:
+            return go_to_orig_video(video_id)
 
 
 def get_poll_comments(request):
@@ -117,8 +131,9 @@ def add_poll_comments(request):
         obj.save()
 
         response_data.append({'success': 'Komentārs pievienots'})
+        messages.success(request, 'Komentārs pievienots')
 
-    return HttpResponse(response_data, content_type='application/json')
+    return redirect(reverse('base_poll')) # uz poll
 
 
 @login_required
@@ -132,8 +147,7 @@ def add_article_comment(request):
         except KeyError:
             raise Http404
         except ValueError:
-            response_data.append({'error': 'Raksts netika atrast'})
-            return HttpResponse(response_data, content_type='application/json')
+            raise Http404
 
         article = get_object_or_404(Articles, id=article_id)
         obj = ArticleComments.objects.create(
@@ -143,6 +157,7 @@ def add_article_comment(request):
         obj.save()
 
         if True:
+            messages.error(request, 'Komentārs tika pievienots')
             return redirect(reverse('article_item', args=[article_id]))
 
         response_data.append({'success': 'Komentārs pievienots'})

@@ -9,7 +9,10 @@
         {% csrf_token %}
 
         <div class="form-section">
-            <label for="id_course">{{ form.course.label }}</label>
+            <label for="{{ form.course.id_for_label }}">
+                {{ form.course.label }}
+            </label>
+
             {{ form.course }}
         </div>
 

@@ -33,7 +33,7 @@
         {% csrf_token %}
 
         <div class="form-section">
-            <label for="id_question">
+            <label for="{{ form.question.id_for_label }}">
                 {{ form.question.label }}
             </label>
 
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-section">
-            <label for="id_option">
+            <label for="{{ form.option.id_for_label }}">
                 {{ form.option.label }}
             </label>
 
@@ -49,7 +49,7 @@
         </div>
 
         <div class="form-section">
-            <label for="id_correct">
+            <label for="{{ form.correct.id_for_label }}">
                 {{ form.correct.label }}
             </label>
 
@@ -60,3 +60,4 @@
     </form>
 
 {% endblock content %}
+

@@ -10,7 +10,11 @@
         <li>
             <ul class="context">
                 <li>{{ group.name }}</li>
-                <li class="edit"><a href="{% url 'group_edit' group.id %}">Labot</a></li>
+                <li class="edit button">
+                    <a href="{% url 'group_edit' group.id %}">
+                        Labot
+                    </a>
+                </li>
 
                 <li class="delete">
                     <form class="form-delete" method="POST" action="{% url 'group_delete' %}">

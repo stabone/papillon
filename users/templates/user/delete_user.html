@@ -1,6 +1,6 @@
 
 <form method="POST" action="{% url 'user_delete' %}">
-   	{% csrf_token %}
+    {% csrf_token %}
 
     <div class="form-section">
      <input type="hidden" name="userID" value="{{ user.id }}" />
@@ -8,3 +8,4 @@
 
     <input class="delete button" type="submit" value="Dzēst" />
 </form>
+

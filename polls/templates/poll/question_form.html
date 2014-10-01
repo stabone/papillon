@@ -24,14 +24,14 @@
         {% csrf_token %}
 
         <div class="form-section">
-            <label for="id_poll">
+            <label for="{{ form.poll.id_for_label }}">
                 {{ form.poll.label }}
             </label>
             {{ form.poll }}
         </div>
 
         <div class="form-section">
-            <label for="id_question">
+            <label for="{{ form.question.id_for_label }}">
                 {{ form.question.label }}
             </label>
             {{ form.question }}

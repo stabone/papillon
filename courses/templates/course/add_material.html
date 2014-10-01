@@ -43,25 +43,38 @@
         {% csrf_token %}
 
         <div class="form-section">
-            <label for="id_tut">{{ form.tut.label }}</label>
+            <label for="{{ form.tut.id_for_label }}">
+                {{ form.tut.label }}
+            </label>
+
             {{ form.tut }}
         </div>
 
         <div class="form-section">
-            <label for="id_title">{{ form.title.label }}</label>
+            <label for="{{ form.title.id_for_label }}">
+                {{ form.title.label }}
+            </label>
+
             {{ form.title }}
         </div>
 
         <div class="form-section">
-            <label for="id_video">{{ form.video.label }}</label>
+            <label for="{{ form.video.id_for_label }}">
+                {{ form.video.label }}
+            </label>
+
             {{ form.video }}
         </div>
 
         <div class="form-section">
-            <label for="id_description">{{ form.description.label }}</label>
+            <label for="{{ form.description.id_for_label }}">
+                {{ form.description.label }}
+            </label>
+
             {{ form.description }}
         </div>
 
         <input type="submit" value="Saglabāt" class="submit button" />
     </form>
 {% endblock content %}
+

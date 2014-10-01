@@ -1,11 +1,11 @@
 
 <form method="POST" action="{% url 'user_find' %}">
-	{% csrf_token %}
+    {% csrf_token %}
 
-	<div class="form-section">
-		<input type="search" placeholder="Lietotājs" name="user" />
-	</div>
+    <div class="form-section">
+        <input type="search" placeholder="Lietotājs" name="user" />
+    </div>
 
-	<input class="submit button" type="submit" value="Meklēt" />
+    <input class="submit button" type="submit" value="Meklēt" />
 </form>
 

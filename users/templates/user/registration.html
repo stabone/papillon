@@ -61,40 +61,47 @@
         {% csrf_token %}
 
         <div class="form-section">
-            <label for="id_email">
+            <label for="{{ form.email.id_for_label }}">
                 {{ form.email.label }}
             </label>
+
             {{ form.email }}
         </div>
 
         <div class="form-section">
-            <label for="id_user_name">
+            <label for="{{ form.user_name.id_for_label }}">
                 {{ form.user_name.label }}
             </label>
+
             {{ form.user_name }}
         </div>
 
         <div class="form-section">
-            <label for="id_last_name">
+            <label for="{{ form.last_name.id_for_label }}">
                 {{ form.last_name.label }}
             </label>
+
             {{ form.last_name }}
         </div>
 
         <div class="form-section">
-            <label for="id_password1">
+            <label for="{{ form.password1.id_for_label }}">
                 {{ form.password1.label }}
             </label>
+
             {{ form.password1 }}
         </div>
 
         <div class="form-section">
-            <label for="id_password2">
+            <label for="{{ form.password2.id_for_label }}">
                 {{ form.password2.label }}
             </label>
+
             {{ form.password2 }}
         </div>
 
         <input type="submit" value="Reģistrēties" class="green button" />
     </form>
+
 {% endblock content %}
+

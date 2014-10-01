@@ -1,9 +1,10 @@
 
-	{% if form.course.errors %}
-        <div class="error message">
-            {{ form.course.label }}
-            <ul class="list">
-                <li>{{ form.course.errors|striptags }}</li>
-            </ul>
-        </div>
-    {% endif %}
+{% if form.course.errors %}
+    <div class="error message">
+        {{ form.course.label }}
+        <ul class="list">
+            <li>{{ form.course.errors|striptags }}</li>
+        </ul>
+    </div>
+{% endif %}
+
