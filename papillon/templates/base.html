@@ -84,12 +84,13 @@
 
         </nav>
 
-        <div id="container">
+        <div id="container" ng-app="papillon-app">
             {% block content %}
 
             {% endblock content %}
         </div>
 
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
         <script type="text/javascript" src="{% static "javascript/jquery.min.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/semantic.min.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/interactive.js" %}"></script>

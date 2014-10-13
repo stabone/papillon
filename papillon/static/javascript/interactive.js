@@ -24,7 +24,7 @@ window.addEventListener("online", function(e) {
 
 function getCookie(name) {
     var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
+    if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
@@ -58,7 +58,7 @@ function populateComments(id) {
             if(typeof lastCommentID === 'undefined') {
                 lastCommentID = 0;
             }
-            consolepopulateComments.log(lastCommentID);
+            // consolepopulateComments.log(lastCommentID);
 
             commentList.empty();
 
@@ -256,4 +256,23 @@ $(document).on('click', '.ui.error.message', function() {
     $(this).closest('.message').fadeOut();
 });
 
+
+
+
+/**
+ * AngularJS logic
+ *
+ **/
+var app = angular.module('papillon-app', []);
+
+app.controler('ArticleComment', function($scope, $document, $http) {
+    // logic here
+    $scope.comment; /// comment for article
+
+    // https://docs.angularjs.org/api/ng/function/angular.element
+    var articleID = angular.element($document.querySelector('articleID')).val();
+
+    $http({});
+
+});
 
