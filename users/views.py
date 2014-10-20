@@ -103,8 +103,8 @@ def delete_group(request):
 def add_group_perms(request,group_id=None):
     if request.method == "POST":
         try:
-            group_id = request.POST.get('group_id')
-            perms_list = request.POST.getlist('permissions')
+            group_id = request.POST.get('group_id', '')
+            perms_list = request.POST.getlist('permissions', '')
         except KeyError:
             raise Http404
 
@@ -165,8 +165,8 @@ def user_edit(request):
 """
 @csrf_protect
 def login_user(request):
-    username = request.POST.get('username')
-    password = request.POST.get('password')
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
@@ -186,7 +186,7 @@ def login_user(request):
 def find_user(request):
     if request.method == 'POST':
         try:
-            search_str = request.POST.get('user')
+            search_str = request.POST.get('user', '')
         except KeyError:
             raise Http404
 
@@ -201,7 +201,7 @@ def find_user(request):
 @csrf_protect
 def user_delete(request):
     if request.method == 'POST':
-        user_id = request.POST.get('userID')
+        user_id = request.POST.get('userID', '')
         user = CustomUser.objects.get(id=user_id)
         user.delete()
 
