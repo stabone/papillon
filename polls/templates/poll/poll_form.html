@@ -23,13 +23,15 @@
             {{ form.description }}
         </div>
 
-        <div class="form-section">
-            <label for="{{ form.public.id_for_label }}">
-                {{ form.public.label }}
-            </label>
+        {% if user.is_admin %}
+            <div class="form-section">
+                <label for="{{ form.public.id_for_label }}">
+                    {{ form.public.label }}
+                </label>
 
-            {{ form.public }}
-        </div>
+                {{ form.public }}
+            </div>
+        {% endif %}
 
         <input type="submit" value="Saglabāt" class="submit button" />
 

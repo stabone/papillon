@@ -2,12 +2,12 @@
 <form method="POST" action="{% url 'article_comment' %}">
     {% csrf_token %}
 
-    <input type="hidden" name="articleID" value="{{ article.id }}">
+    <input id="articleID" type="hidden" name="articleID" value="{{ article.id }}">
 
     <div class="form-section">
         <label>Komentārs:</label>
 
-        <textarea name="comment"> </textarea>
+        <textarea name="comment" ng-model="{{ comment }}"> </textarea>
     </div>
 
     <input type="submit" value="Saglabāt">

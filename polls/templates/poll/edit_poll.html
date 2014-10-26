@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <h3>Forma aptaujas labošanai</h3>
+    <h3>Aptaujas labošana</h3>
 
     {% if data %}
         {{ data.poll.poll}}
@@ -13,7 +13,7 @@
             <a href="{% url 'edit_poll' rec.id %}">
                 <i class="edit icon"></i>
             </a>
-                <ul>
+            <ul>
                 {% for answer_id, answer_list in answers %}
                     {% ifequal answer_id rec.id %}
                         {% for id, option in answer_list %}
@@ -24,7 +24,7 @@
                         {% endfor %}
                     {% endifequal %}
                 {% endfor %}
-                </ul>
+            </ul>
         </div>
     {% endfor %}
 

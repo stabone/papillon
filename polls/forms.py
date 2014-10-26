@@ -9,7 +9,7 @@ class PollForm(ModelForm):
         model = Polls
         exclude = ('user',)
         labels = {
-            'public': 'Publisks?',
+            'public': 'Publicēt?',
             'poll': 'Virsraksts',
             'description': 'Apraksts'
         }

@@ -181,3 +181,16 @@ def delete_article_comment(request):
 
     return HttpResponse(response_data, content_type='application/json')
 
+
+@login_required
+def delete_video_comment(request):
+    response_data = []
+
+    if request.method == 'POST':
+        video_id = request.POST.get('videoID', '')
+        comment = get_object_or_404(VideoComments, id=video_id)
+
+        comment.delete()
+
+    return HttpResponse(response_data, content_type='application/json')
+
