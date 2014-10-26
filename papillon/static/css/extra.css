@@ -195,6 +195,7 @@ nav ul#menu li.menu-item {
     border: 1px solid #2c3e50;
     border-radius: 3px;
     padding: 4px;
+    color: #ffffff;
 }
 
 nav ul#menu li.menu-item > a {
@@ -212,6 +213,10 @@ nav ul#menu li.menu-item:hover {
 
 nav ul#menu li.menu-item ul#timer-tray {
     position: relative;
+}
+
+nav ul#menu li.menu-item ul.sub {
+    display: none;
 }
 
 /* MENU */
@@ -232,6 +237,11 @@ nav ul#menu li.menu-item ul#timer-tray {
 
 .action-menu .delete-action form {
     display: inline;
+}
+
+span.meta a {
+    padding: 4px;
+    color: #9e9e9e;
 }
 /*ACTION MENU*/
 
@@ -417,6 +427,14 @@ ul#timer-tray li {
 
 .message-list tr:first-child {
     background-color: #ef7d7d;
+    border: 1px solid black;
+    border-radius: 6px 6px 0px 0px;
+}
+
+.message-list tr:last-child {
+    /* varbū border raius ir jāpiešķir */
+    height: 14px;
+    border-radius: 0px 0px 6px 6px;
 }
 
 #group_list, #permission_list {

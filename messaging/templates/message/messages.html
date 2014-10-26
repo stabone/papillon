@@ -8,11 +8,7 @@
         <li><a href="{% url 'contact_list' %}">Kontakti</a></li>
     </ul>
 
-    <div class="table-title">
-        Ziņas:
-    </div>
-
-    <span>
+    <span class="meta">
         <a href="#">Kopā: {{ msg_info.total_count }}</a>
         <a href="#">Nelasītas: {{ msg_info.msg_unred }}</a>
         <a href="#">Lasītas: {{ msg_info.msg_red }}</a>

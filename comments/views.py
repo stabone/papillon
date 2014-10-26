@@ -116,6 +116,8 @@ def add_poll_comments(request):
 
     if request.method == "POST":
 
+        is_js = request.POST.get('isJS', '')
+
         try:
             poll_id = int(request.POST.get('pollID'))
         except KeyError:
@@ -130,10 +132,12 @@ def add_poll_comments(request):
         obj = PollComments.objecs.create(user=request.user, poll=poll_obj, comment=comment)
         obj.save()
 
+    if is_js:
         response_data.append({'success': 'Komentārs pievienots'})
+        return HttpResponse(response_data, content_type='application/json')
+    else:
         messages.success(request, 'Komentārs pievienots')
-
-    return redirect(reverse('base_poll')) # uz poll
+        return redirect(reverse('base_poll')) # uz poll
 
 
 @login_required
@@ -144,6 +148,7 @@ def add_article_comment(request):
         try:
             article_id = request.POST.get('articleID')
             comment = request.POST.get('comment')
+            is_js = request.POST.get('isJS', '')
         except KeyError:
             raise Http404
         except ValueError:
@@ -156,12 +161,12 @@ def add_article_comment(request):
                                         comment=comment)
         obj.save()
 
-        if True:
-            messages.error(request, 'Komentārs tika pievienots')
-            return redirect(reverse('article_item', args=[article_id]))
-
+    if is_js:
         response_data.append({'success': 'Komentārs pievienots'})
-    return HttpResponse(response_data, content_type='application/json')
+        return HttpResponse(response_data, content_type='application/json')
+    else:
+        messages.error(request, 'Komentārs tika pievienots')
+        return redirect(reverse('article_item', args=[article_id]))
 
 
 @login_required

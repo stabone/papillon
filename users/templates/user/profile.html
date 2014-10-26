@@ -48,30 +48,10 @@
         {% if badges %}
             <ul>
                 {% for badge in badges %}
-                    <li alt="{% badge.name %}" title="{% badge.name %}">{% badge.name %}</li>
+                    <li alt="{{ badge.name }}" title="{{ badge.name }}">{{ badge.name }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-
-        <!-- {% if groups %}
-        <div>
-            Grupas:
-            <ul>
-                {% for group in user.groups.all %}
-                    <li>{{ group.name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %} -->
-
-        <!-- <div>
-            Lietotāja atļaujas:
-            <ul>
-                {% for permission in user.get_all_permissions %}
-                    <li>{{ permission }}</li>
-                {% endfor %}
-            </ul>
-        </div> -->
 
     </div>
 {% endblock content %}

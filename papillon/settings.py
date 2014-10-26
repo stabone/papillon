@@ -76,7 +76,13 @@ TEMPLATE_DIRS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'ENGINE': 'django.db.backends.mysql',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': 'papillon',
+        # 'USER': 'root',
+        # 'PASSWORD': 'lamp',
+        # 'HOST': '127.0.0.1',
     }
 }
 
