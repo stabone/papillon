@@ -207,3 +207,7 @@ def user_delete(request):
 
     return redirect(reverse('user_base'))
 
+def instructor_list(request):
+    authors = CustomUser.objects.filter(user_type=2)
+
+    return render(request, 'instructors/instructors.html', {'authors': authors})

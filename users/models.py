@@ -41,8 +41,8 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    user_name = models.CharField(verbose_name='Vārds',max_length=128)
-    last_name = models.CharField(verbose_name='Uzvārds',max_length=128)
+    user_name = models.CharField(verbose_name='Vārds', max_length=128)
+    last_name = models.CharField(verbose_name='Uzvārds', max_length=128)
 
     email = models.EmailField(
             verbose_name='Epasts',
@@ -58,6 +58,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    # 1 => basic user, 2 => author, 3 => adminstrator
+    user_type = models.SmallIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
