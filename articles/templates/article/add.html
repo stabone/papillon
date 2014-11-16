@@ -8,35 +8,37 @@
     <form method="POST" action="{% url 'article_add' %}">
         {% csrf_token %}
 
-        <div class="form-section">
-            <label for="{{ form.title.id_for_label }}">
-                {{ form.title.label }}
-            </label>
-            {{ form.title }}
+        <div class="ui form segment">
+            <div class="field">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                </label>
+                {{ form.title }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}
+                </label>
+                {{ form.description }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.article.id_for_label }}">
+                    {{ form.article.label }}
+                </label>
+                {{ form.article }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.embeded.id_for_label }}">
+                    {{ form.embeded.label }}
+                </label>
+                {{ form.embeded }}
+            </div>
         </div>
 
-        <div class="form-section">
-            <label for="{{ form.description.id_for_label }}">
-                {{ form.description.label }}
-            </label>
-            {{ form.description }}
-        </div>
-
-        <div class="form-section">
-            <label for="{{ form.article.id_for_label }}">
-                {{ form.article.label }}
-            </label>
-            {{ form.article }}
-        </div>
-
-        <div class="form-section">
-            <label for="{{ form.embeded.id_for_label }}">
-                {{ form.embeded.label }}
-            </label>
-            {{ form.embeded }}
-        </div>
-
-        <input class="submit button" type="submit" value="Saglabāt" />
+        <input class="positive ui button" type="submit" value="Saglabāt" />
     </form>
 
 {% endblock content %}

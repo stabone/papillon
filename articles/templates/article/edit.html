@@ -9,32 +9,35 @@
     <form method="POST" action="{% url 'article_update' article_id %}">
         {% csrf_token %}
 
-        <div class="form-section">
-            <label for="{{ form.title.id_for_label }}">
-                {{ form.title.label }}
-            </label>
-            {{ form.title }}
-        </div>
+        <div class="ui form segment">
 
-        <div class="form-section">
-            <label for="{{ form.description.id_for_label }}">
-                {{ form.description.label }}
-            </label>
-            {{ form.description }}
-        </div>
+            <div class="form-section">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                </label>
+                {{ form.title }}
+            </div>
 
-        <div class="form-section">
-            <label for="{{ form.article.id_for_label }}">
-                {{ form.article.label }}
-            </label>
-            {{ form.article }}
-        </div>
+            <div class="form-section">
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}
+                </label>
+                {{ form.description }}
+            </div>
 
-        <div class="form-section">
-            <label for="{{ form.embeded.id_for_label }}">
-                {{ form.embeded.label }}
-            </label>
-            {{ form.embeded }}
+            <div class="form-section">
+                <label for="{{ form.article.id_for_label }}">
+                    {{ form.article.label }}
+                </label>
+                {{ form.article }}
+            </div>
+
+            <div class="form-section">
+                <label for="{{ form.embeded.id_for_label }}">
+                    {{ form.embeded.label }}
+                </label>
+                {{ form.embeded }}
+            </div>
         </div>
 
         <input type="submit" value="Saglabāt" />
