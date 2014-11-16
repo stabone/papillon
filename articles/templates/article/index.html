@@ -8,17 +8,20 @@
         <a href="{% url 'article_add' %}">Pievienot ierakstu</a>
     {% endif %}
 
-    <ul id="articles">
 
         {% for article in articles %}
-            <li class="section">
-                <div class="article_title">
-                    <h1>
-                        <a href="{% url 'article_item' article.id %}">
-                            {{ article.title|title }}
-                        </a>
-                    </h1>
-                </div>
+            <div class="ui blue segment">
+                <h3 class="ui dividing large header">
+                    <a href="{% url 'article_item' article.id %}">
+                        {{ article.title|title }}
+                    </a>
+                </h3>
+
+                <p>
+                    {{ article.description }}
+                    <a href="{% url 'article_item' article.id %}">Vairāk...</a>
+                    <!-- <img alt="Preview image" src="http://dummyimage.com/250x250/ecf0f1/8e44ad&text=Title'"> -->
+                </p>
 
                 <div class="article_details">
                     <span class="article_details-author">
@@ -30,29 +33,15 @@
                     </span>
                 </div>
 
-                <div class="article-summary">
-                    <img alt="Preview image" src="http://dummyimage.com/250x250/ecf0f1/8e44ad&text=Title'">
-                    {{ article.description }}
-                    <a class="article_read-more-link" href="{% url 'article_item' article.id %}">Vairāk...</a>
-                </div>
-
                 {% if user.is_superuser %}
-                    <ul class="action-menu">
-                        <li class="edit-action">
-                            <a class="edit button" href="{% url 'article_edit' article.id %}">Labot</a>
-                        </li>
-                        <li class="delete-action">
-                            {% include 'article/delete.html' %}
-                        </li>
-                    </ul>
+                    <a class="ui teal button" href="{% url 'article_edit' article.id %}">Labot</a>
+
+                    {% include 'article/delete.html' %}
                 {% endif %}
 
-                <div class="line-separator"></div>
-
-            </li>
+            </div>
         {% endfor %}
 
-    </ul>
 
     {% if articles.paginator.num_pages > 1 %}
         <div class="ui pagination menu">

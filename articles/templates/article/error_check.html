@@ -1,6 +1,6 @@
 
 {% if form.title.errors %}
-    <div class="error message">
+    <div class="ui error message">
         {{ form.title.label }}
         <ul class="list">
             {% for error in form.title.errors %}
@@ -11,7 +11,7 @@
 {% endif %}
 
 {% if form.description.errors %}
-    <div class="error message">
+    <div class="ui error message">
         {{ form.description.label }}
         <ul class="list">
             {% for error in form.description.errors %}
@@ -22,7 +22,7 @@
 {% endif %}
 
 {% if form.article.errors %}
-    <div class="error message">
+    <div class="ui error message">
         {{ form.article.label }}
         <ul class="list">
             {% for error in form.article.errors %}
@@ -33,7 +33,7 @@
 {% endif %}
 
 {% if form.embeded.errors %}
-    <div class="error message">
+    <div class="ui error message">
         {{ form.embeded.label }}
         <ul class="list">
             {% for error in form.embeded.errors %}

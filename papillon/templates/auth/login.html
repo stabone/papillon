@@ -2,46 +2,52 @@
 
 {% block content %}
 
-    {{ form.errors }}
-
     {% if form.username.errors %}
-        <ul>
+        <ul class="ui error message">
             {% for error in form.username.errors %}
                 <li>{{ error|escape }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 
-
     {% if form.password.errors %}
-        <ul>
+        <ul class="ui error message">
             {% for error in form.password.errors %}
                 <li>{{ error|escape }}</li>
             {% endfor %}
         </ul>
     {% endif %}
 
-    <div class="">
-        <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-            {% csrf_token %}
+    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <div class="ui form segment">
 
-            <div class="form-section">
-                <label for="id_email">
-                    {{ form.username.label }}
-                </label>
-                {{ form.username }}
+            <div class="field">
+                <label>{{ form.username.label }}</label>
+                <div class="ui left labeled icon input">
+                    {{ form.username }}
+                    <i class="user icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
-            <div class="form-section">
-                <label for="id_password">
-                    {{ form.password.label }}
-                </label>
-                {{ form.password }}
+            <div class="field">
+                <label>{{ form.password.label }}</label>
+                <div class="ui left labeled icon input">
+                    {{ form.password }}
+                    <i class="lock icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
-            <input type="submit" value="Ienākt" class="submit button" />
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
-    </div>
+        </div>
+
+        <input type="submit" value="Ienākt" class="ui blue submit button" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
 
 {% endblock content %}

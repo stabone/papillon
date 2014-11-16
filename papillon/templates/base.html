@@ -6,8 +6,7 @@
     <head>
         <title>Papillon "Monarch"</title>
         <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}" />
-        <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.19.3/css/semantic.css" type="text/css" />
-        <!--<link rel="stylesheet" type="text/css" href="{% static "css/semantic.min.css" %}" />-->
+        <link rel="stylesheet" href="{% static "css/semantic.css" %}" type="text/css" />
         <link rel="stylesheet" type="text/css" href="{% static "css/extra.css" %}">
         <meta charset="utf-8" />
     </head>
@@ -17,73 +16,38 @@
         </header>
 
         <nav>
-            <ul id="menu">
-
-                <li class="menu-item">
-                    <a href="/" >Sākums</a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="{% url 'base_poll' %}">Aptauja</a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="{% url 'user_statistic' %}">Statistika</a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="{% url 'base_categorie' %}">Kursi</a>
-                </li>
-
-                <li class="menu-item">
-                    <a href="{% url 'article_base' %}">Raksti</a>
-                </li>
-
+            <div class="ui purple menu">
+                <a href="/" class="active item">
+                    Sākums
+                </a>
+                <a href="{% url 'base_poll' %}" class="item">
+                    Aptauja
+                </a>
+                <a href="{% url 'user_statistic' %}" class="item">
+                    Statistika
+                </a>
+                <a href="{% url 'base_categorie' %}" class="item">
+                    Kursi
+                </a>
+                <a href="{% url 'article_base' %}" class="item">
+                    Raksti
+                </a>
                 {% if user.is_authenticated %}
-                    <li class="menu-item" id="timer-icon">
-                        Pomodor
-                        <ul class="sub">
-                            <li id="timer-start">
-                                Sākt
-                            </li>
-                            <li id="timer-end">
-                                Beigt
-                            </li>
-                            <li id="timer-reset">
-                                Atjaunot
-                            </li>
-                            <li>Laika intervāls: <input id="pomo-time" type="range" value="25" min="25" max="35"/>
-                                <div id="pomo-time-value"></div>
-                            </li>
-                            <li>Pauze: <input id="timeout" type="range" value="5" min="5" max="10"/>
-                                <div id="timeout-value"></div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{% url 'user_profile' %}">
-                            {{ user.get_full_name }}
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{% url 'user_logout' %}">
-                            Iziet
-                        </a>
-                    </li>
+                    <a href="{% url 'user_profile' %}" class="item">
+                        {{ user.get_full_name }}
+                    </a>
+                    <a href="{% url 'user_logout' %}" class="item">
+                        Iziet
+                    </a>
                 {% else %}
-                    <li class="menu-item">
-                        <a href="{% url 'user_registration' %}">
-                            Reģistrēties
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{% url 'user_login' %}">
-                            Ieiet
-                        </a>
-                    </li>
+                    <a href="{% url 'user_registration' %}" class="item">
+                        Reģistrēties
+                    </a>
+                    <a href="{% url 'user_login' %}" class="item">
+                        Ieiet
+                    </a>
                 {% endif %}
-            </ul>
-
+            </div>
         </nav>
 
         <div id="container" ng-app="papillon-app">
@@ -93,9 +57,8 @@
         </div>
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.js"></script>
-        <script type="text/javascript" src="cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.19.3/javascript/semantic.js"></script>
         <script type="text/javascript" src="{% static "javascript/jquery.min.js" %}"></script>
-        <!--<script type="text/javascript" src="{% static "javascript/semantic.min.js" %}"></script>-->
+        <script type="text/javascript" src="{% static "javascript/semantic.js" %}"></script>
         <script type="text/javascript" src="{% static "javascript/interactive.js" %}"></script>
 
         {% block extra_scripts %}

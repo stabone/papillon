@@ -13,7 +13,13 @@
                 <label for="{{ form.title.id_for_label }}">
                     {{ form.title.label }}
                 </label>
-                {{ form.title }}
+
+                <div class="ui labeled icon input">
+                    {{ form.title }}
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="field">
