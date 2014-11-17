@@ -5,43 +5,32 @@
 
     {% include "poll/poll_actions.html" %}
 
-    <div class="ui divided list">
     {% for rec in data %}
-        <div class="item">
-            <div class="content">
-                <div class="header">
+        <div class="ui segment">
 
-                    <a href="{% url 'take_poll' rec.id %}">
-                        {{ rec.poll }}
-                    </a>
+            <h3 class="ui header">
+                <a href="{% url 'take_poll' rec.id %}">
+                    {{ rec.poll }}
+                </a>
+            </h3>
 
-                </div>
+            <a href="#">Vārds Uzvārds</a>
+            {{ rec.created_at|date:"Y.m.d" }}
 
-                <div class="publication-meta">
-                    <span class="author">
-                        <a href="#">Autors</a>
-                    </span>
-
-                    <span class="publication-date" title="">
-                        {{ rec.created_at|date:"Y.m.d" }}
-                    </span>
-                </div>
-
-
-                <div class="description">
-                    {{ rec.description }}
-                </div>
-
-                {% if user.is_staff %}
-                    {% include "poll/poll_controls.html" %}
-                {% endif %}
-
+            <div class="ui raised segment">
+                {{ rec.description }}
             </div>
+
+            {% if user.is_staff %}
+                {% include "poll/poll_controls.html" %}
+            {% endif %}
         </div>
+
     {% empty %}
-        <div class="warning message">Neviens ieraksts netika atrasts</div>
+        <div class="ui warning message">
+            Neviens ieraksts netika atrasts
+        </div>
     {% endfor %}
-    </div>
 
     {% if data.paginator.num_pages > 1 %}
         <div class="ui pagination menu">
@@ -62,4 +51,3 @@
     {% endif %}
 
 {% endblock content %}
-

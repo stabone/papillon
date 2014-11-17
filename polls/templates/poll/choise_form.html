@@ -2,6 +2,11 @@
 
 {% block content %}
 
+
+    {% for error in form.errors %}
+        {{ error }}
+    {% endfor %}
+
     {% if form.question.errors %}
         <div class="ui error message">
             {{ form.question.label }}
@@ -29,34 +34,38 @@
         </div>
     {% endif %}
 
-    <form method="POST" action="">
+    <form method="POST" action="{% url 'add_choise' args.poll_id args.question_id %}">
         {% csrf_token %}
 
-        <div class="form-section">
-            <label for="{{ form.question.id_for_label }}">
-                {{ form.question.label }}
-            </label>
+        <div class="ui form segment">
 
-            {{ form.question }}
+            <div class="field">
+                <label for="{{ form.question.id_for_label }}">
+                    {{ form.question.label }}
+                </label>
+
+                {{ form.question }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.option.id_for_label }}">
+                    {{ form.option.label }}
+                </label>
+
+                {{ form.option }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.correct.id_for_label }}">
+                    {{ form.correct.label }}
+                </label>
+
+                {{ form.correct }}
+            </div>
+
         </div>
 
-        <div class="form-section">
-            <label for="{{ form.option.id_for_label }}">
-                {{ form.option.label }}
-            </label>
-
-            {{ form.option }}
-        </div>
-
-        <div class="form-section">
-            <label for="{{ form.correct.id_for_label }}">
-                {{ form.correct.label }}
-            </label>
-
-            {{ form.correct }}
-        </div>
-
-        <input type="submit" value="Saglabāt" class="submit button" />
+        <input type="submit" value="Saglabāt" class="positive ui button" />
     </form>
 
 {% endblock content %}

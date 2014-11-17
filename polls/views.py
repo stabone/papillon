@@ -114,6 +114,8 @@ def add_question_for_poll(request, poll_id):
 @login_required
 @csrf_protect
 def add_choise(request, poll_id, question_id):
+    print('lik a cat')
+
     if request.method == "POST":
         form = ChoiseForm(request.POST)
 
@@ -126,7 +128,11 @@ def add_choise(request, poll_id, question_id):
         choise = Choises(question=data)
         form = ChoiseForm(instance=choise)
 
-    return render(request, 'poll/choise_form.html', {'form': form, 'poll': data.poll})
+    return render(request, 'poll/choise_form.html', {
+                                'form': form,
+                                'args': {
+                                    'poll_id': poll_id,
+                                    'question_id': question_id} })
 
 
 @login_required
@@ -164,7 +170,7 @@ def edit_question(request,question_id):
 
 @login_required
 @csrf_protect
-def edit_choise(request,poll_id,choise_id):
+def edit_choise(request, poll_id, choise_id):
     data = get_object_or_404(Choises, id=choise_id)
 
     if request.method == "POST":

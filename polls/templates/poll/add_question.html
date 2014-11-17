@@ -2,10 +2,12 @@
 
 {% block content %}
 
-    <h2>{{ poll.poll }}</h2>
+    <h2 class="ui large">{{ poll.poll }}</h2>
 
-    <div>
-        <a href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'take_poll' poll.id %}">
+            Atpakaļ
+        </a>
     </div>
 
     {% if form.question.errors %}
@@ -20,17 +22,19 @@
     <form method="POST" action="{% url 'add_question' %}">
         {% csrf_token %}
 
-        <input type="hidden" name="poll" value="{{ poll.id }}" />
+        <div class="ui form segment">
+            <input type="hidden" name="poll" value="{{ poll.id }}" />
 
-        <div class="form-section">
-            <label for="{{ form.question.id_for_label }}">
-                {{ form.question.label }}
-            </label>
+            <div class="field">
+                <label for="{{ form.question.id_for_label }}">
+                    {{ form.question.label }}
+                </label>
 
-            {{ form.question }}
+                {{ form.question }}
+            </div>
         </div>
 
-        <input type="submit" value="Saglabāt" class="submit button" />
+        <input type="submit" value="Saglabāt" class="positive ui button" />
     </form>
 
 {% endblock content %}

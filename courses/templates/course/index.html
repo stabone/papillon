@@ -2,47 +2,46 @@
 
 
 {% block content %}
-    <div>
-        Kategoriju saraksts
-    </div>
+
+    <h3 class="ui header">Kategoriju saraksts</h3>
 
     {% if user.is_staff %}
-    <div>
-        <a href="{% url 'add_categorie' %}">Pievienot kategoriju</a>
-    </div>
+        <a class="ui blue button" href="{% url 'add_categorie' %}">
+            Pievienot
+        </a>
     {% endif %}
 
-    <ul id="library">
-        {% for key, value in data.items %}
-            <li class="item">
-                {{ key }}
-                <ul class="library-section">
-                    {% for rec in value %}
-                        <li>
-                            <a href="{% url 'show_tut' rec.id %}">
-                                {{ rec.course }}
-                            </a>
+    {% for key, value in data.items %}
 
-                            {% if user.is_staff %}
+        <div class="ui raised segment">
+        <div class="ui purple ribbon label">{{ key }}</div>
 
-                            <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu">
-                                <i class="add icon"></i>
-                            </a>
+        {% for rec in value %}
 
-                            <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot">
-                                <i class="edit icon"></i>
-                            </a>
+            <p>
+                <a href="{% url 'show_tut' rec.id %}">
+                    {{ rec.course }}
+                </a>
 
-                            {% include "course/delete_categorie.html" %}
+                    {% if user.is_staff %}
 
-                            {% endif %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </li>
+                        <a href="{% url 'add_tut' rec.id %}" alt="Pievienot tutorialu" title="Pievienot tutorialu">
+                            <i class="add icon"></i>
+                        </a>
 
-        {% empty %}
-            <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+                        <a href="{% url 'edit_categorie' rec.id %}" alt="Labot" title="Labot">
+                            <i class="edit icon"></i>
+                        </a>
+
+                        {% include "course/delete_categorie.html" %}
+
+                    {% endif %}
+            </p>
         {% endfor %}
-    </ul>
+        </div>
+
+    {% empty %}
+        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+    {% endfor %}
+
 {% endblock content %}

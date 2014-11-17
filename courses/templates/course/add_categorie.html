@@ -5,18 +5,22 @@
 
     {% include "course/error_check_categorie.html" %}
 
-    <form method="POST" action="">
+    <form method="POST" action="{% url 'add_categorie' %}">
         {% csrf_token %}
 
-        <div class="form-section">
-            <label for="{{ form.course.id_for_label }}">
-                {{ form.course.label }}
-            </label>
+        <div class="ui form segment">
 
-            {{ form.course }}
+            <div class="field">
+                <label for="{{ form.course.id_for_label }}">
+                    {{ form.course.label }}
+                </label>
+
+                {{ form.course }}
+            </div>
+
         </div>
 
-        <input type="submit" value="Saglabāt" class="submit button" />
+        <input type="submit" value="Saglabāt" class="positive ui button" />
     </form>
 
 {% endblock content %}

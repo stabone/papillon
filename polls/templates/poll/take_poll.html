@@ -2,49 +2,50 @@
 
 {% block content %}
 
-    <h2>Aptauja - '{{ poll.name }}'</h2>
+    <h2 class="ui header">Aptauja - '{{ poll.name }}'</h2>
 
     {% if user.is_staff %}
-        <div>
-            <a href="{% url 'edit_poll_content' poll.id %}">
-                Labot aptauju
-            </a>
-            <a href="{% url 'add_question_for_poll' poll.id %}">
-                Pievienot jautājumu
-            </a>
-        </div>
+        <a class="ui blue button" href="{% url 'edit_poll_content' poll.id %}">
+            Labot
+        </a>
+        <a class="ui teal button" href="{% url 'add_question_for_poll' poll.id %}">
+            Pievienot
+        </a>
     {% endif %}
 
-    <form action="{% url 'save_poll_results' %}" method="POST">
-        {% csrf_token %}
+    {% if questions %}
+        <form action="{% url 'save_poll_results' %}" method="POST">
+            {% csrf_token %}
 
-        {% for question in questions %}
-            -> {{ question.question }}
+            {% for question in questions %}
+                <h3 class="ui small header">{{ question.question }}</h3>
 
-            <a href="{% url 'add_choise' poll.id question.id %}">
-                <i class="add icon"></i>
-            </a>
+                <a href="{% url 'add_choise' poll.id question.id %}">
+                    <i class="add icon"></i>
+                </a>
 
-            <ul>
-                {% for choise in question.choises %}
-                    <li>
-                        <input id="question_{{ choise.id }}" type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
-                        <label for="question_{{ choise.id }}">{{ choise.option }}</label>
-                        {% if choise.correct and user.is_staff %}
-                            [OK]
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+                <ul>
+                    {% for choise in question.choises %}
+                        <li>
+                            <input id="question_{{ choise.id }}" type="radio" name="answer_grp_{{ question.id }}" value="{{ choise.id }}" />
 
-        {% empty %}
-            <div class="warning message">Neviens ieraksts netika atrasts</div>
-        {% endfor %}
+                            <label for="question_{{ choise.id }}">
+                                {{ choise.option }}
+                            </label>
 
-        {% if questions %}
+                            {% if choise.correct and user.is_staff %}
+                                [OK]
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+
             <input type="submit" value="Saglabāt" class="submit button" />
-        {% endif %}
-    </form>
+        </form>
+    {% else %}
+        <div class="ui warning message">Neviens ieraksts netika atrasts</div>
+    {% endif %}
 
 {% endblock content %}
 

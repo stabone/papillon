@@ -6,7 +6,7 @@
     {{ form.erros }}
 
     {% if form.category.errors %}
-        <div class="error message">
+        <div class="ui error message">
             {{ form.category.label }}
             <ul class="list">
                 <li>{{ form.category.errors|striptags }}</li>
@@ -15,7 +15,7 @@
     {% endif %}
 
     {% if form.title.errors %}
-        <div class="error message">
+        <div class="ui error message">
             {{ form.title.label }}
             <ul class="list">
                 <li>{{ form.title.errors|striptags }}</li>
@@ -24,7 +24,7 @@
     {% endif %}
 
     {% if form.description.errors %}
-        <div class="error message">
+        <div class="ui error message">
             {{ form.description.label }}
             <ul class="list">
                 <li>{{ form.description.errors|striptags }}</li>
@@ -33,7 +33,7 @@
     {% endif %}
 
     {% if form.level.errors %}
-        <div class="error message">
+        <div class="ui error message">
             {{ form.level.label }}
             <ul class="list">
                 <li>{{ form.level.errors|striptags }}</li>
@@ -42,7 +42,7 @@
     {% endif %}
 
     {% if form.tags.errors %}
-        <div class="error message">
+        <div class="ui error message">
             {{ form.tags.label }}
             <ul class="list">
                 <li>{{ form.tags.errors|striptags }}</li>
@@ -52,47 +52,51 @@
 
     <form method="POST" action="">
         {% csrf_token %}
-        <div class="form-section">
-            <label for="{{ form.category.id_for_label }}">
-                {{ form.category.label }}
-            </label>
 
-            {{ form.category }}
+        <div class="ui form segment">
+
+            <div class="field">
+                <label for="{{ form.category.id_for_label }}">
+                    {{ form.category.label }}
+                </label>
+
+                {{ form.category }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.title.id_for_label }}">
+                    {{ form.title.label }}
+                </label>
+
+                {{ form.title }}
+            </div>
+
+            <div class="field">
+                <label for="{{ form.description.id_for_label }}">
+                    {{ form.description.label }}
+                </label>
+
+                {{ form.description }}
+            <div>
+
+            <div class="field">
+                <label for="{{ form.level.id_for_label }}">
+                    {{ form.level.label }}
+                </label>
+
+                {{ form.level }}
+            <div>
+
+            <div class="field">
+                <label for="{{ form.tags.id_for_label }}">
+                    {{ form.tags.label }}
+                </label>
+
+                {{ form.tags }}
+            </div>
         </div>
 
-        <div class="form-section">
-            <label for="{{ form.title.id_for_label }}">
-                {{ form.title.label }}
-            </label>
-
-            {{ form.title }}
-        </div>
-
-        <div class="form-section">
-            <label for="{{ form.description.id_for_label }}">
-                {{ form.description.label }}
-            </label>
-
-            {{ form.description }}
-        <div>
-
-        <div class="form-section">
-            <label for="{{ form.level.id_for_label }}">
-                {{ form.level.label }}
-            </label>
-
-            {{ form.level }}
-        <div>
-
-        <div class="form-section">
-            <label for="{{ form.tags.id_for_label }}">
-                {{ form.tags.label }}
-            </label>
-
-            {{ form.tags }}
-        </div>
-
-        <input type="submit" value="Saglabāt" class="submit button" />
+        <input type="submit" value="Saglabāt" class="positive ui button" />
     </form>
 
 {% endblock content %}

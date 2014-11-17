@@ -3,10 +3,10 @@
 
 {% block content %}
 
-    <h2>Materiālu saraksts</h2>
+    <h2 class="ui header">Materiālu saraksts</h2>
 
     {% for rec in data %}
-        <h3 class="">
+        <h3 class="ui large header">
             <a href="{% url 'show_material' rec.id %}">
                 {{ rec.title }}
             </a>
@@ -49,11 +49,11 @@
                 <span>{{ rec.created_at|date:"Y.m.d H:i:s" }}</span>
             </div>
 
-            <div class="ui clearing divider"></div>
         </div>
     {% empty %}
-        <div class="warning message">
+        <div class="ui warning message">
             <p>Pagaidām nekas vēl nav pievienots</p>
         </div>
     {% endfor %}
+
 {% endblock content %}

@@ -7,7 +7,7 @@ from polls.models import Polls, Questions, Choises
 class PollForm(ModelForm):
     class Meta:
         model = Polls
-        exclude = ('user',)
+        fields = ('public', 'poll', 'description',)
         labels = {
             'public': 'Publicēt?',
             'poll': 'Virsraksts',
@@ -21,20 +21,20 @@ class PollForm(ModelForm):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Questions
-        exclude = ('poll',)
+        fields = ('question',)
         labels = {
             # 'poll': 'Aptauja',
             'question': 'Jautājums',
         }
         widgets = {
-                'question': forms.TextInput(attrs={'class': '', 'autofocus': ''}),
+            'question': forms.TextInput(attrs={'class': '', 'autofocus': ''}),
         }
 
 
 class ChoiseForm(ModelForm):
     class Meta:
         model = Choises
-        exclude = ('choise_type',)
+        fields = ('question', 'option', 'correct',)
         labels = {
             'question': 'Jautājums',
             'option': 'Atbilde',

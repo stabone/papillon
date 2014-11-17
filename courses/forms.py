@@ -17,6 +17,7 @@ class CategoryForm(forms.ModelForm):
             'course': forms.TextInput(attrs={'class': 'editor', 'autofocus': ''}),
         }
 
+
 class TutForm(forms.ModelForm):
 
     class Meta:
@@ -36,6 +37,7 @@ class TutForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'autofocus': ''})
         }
+
 
 class MaterialForm(forms.ModelForm):
 
