@@ -1,0 +1,40 @@
+
+<ul>
+{% for question in questions %}
+
+    {# question.id #}
+
+    <li>
+        {{ question.question }}
+
+        <a href="{% url 'add_choise' poll.id question.id %}">
+            <i class="add icon"></i>
+        </a>
+
+        <a href="{% url 'edit_question' question.id %}">
+            <i class="edit icon"></i>
+        </a>
+
+        {% include "poll/delete_poll.html" %}
+
+        {% if question.choises %}
+            <ul>
+                {% for choise in question.choises %}
+                    <li>
+                        {{ choise.id }}:{{ choise.option }}
+
+                        <a href="{% url 'edit_choise' poll.id choise.id %}">
+                            <i class="edit icon"></i>
+                        </a>
+
+                        {% include "poll/delete_choise.html" %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+    </li>
+
+{% endfor %}
+</li>
+

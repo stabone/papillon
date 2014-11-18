@@ -17,11 +17,16 @@
             <a href="#">Vārds Uzvārds</a>
             {{ rec.created_at|date:"Y.m.d" }}
 
-            <div class="ui raised segment">
-                {{ rec.description }}
-            </div>
+            {% if rec.description %}
+                <div class="ui raised segment">
+                    {{ rec.description }}
+                </div>
+            {% endif %}
 
             {% if user.is_staff %}
+                <div class="ui horizontal icon divider">
+                    <i class="circular settings icon"></i>
+                </div>
                 {% include "poll/poll_controls.html" %}
             {% endif %}
         </div>

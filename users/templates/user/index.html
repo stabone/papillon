@@ -15,6 +15,7 @@
                 <th>Uzvārds</th>
                 <th>Status</th>
                 <th>Dzēst</th>
+                <th>Bloķēt</th>
             </tr>
         </thead>
         <tbody>
@@ -34,8 +35,20 @@
                     <td>
                         {% include 'user/delete_user.html' %}
                     </td>
+                    <td>
+                        <input type="checkbox" value="{{ user.id }}" />
+                    </td>
                 </tr>
             {% endfor %}
+            <tfoot>
+                <tr>
+                    <th>kautkas</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </tfoot>
         </tbody>
     </table>
 {% endblock content %}

@@ -2,10 +2,16 @@
 <form method="POST" action="{% url 'user_find' %}">
     {% csrf_token %}
 
-    <div class="form-section">
-        <input type="search" placeholder="Lietotājs" name="user" />
+    <div class="ui form segment">
+        <div class="field">
+            <div class="ui left labeled icon input">
+                <input type="search" placeholder="Meklēt" name="user" />
+                <i class="search icon"></i>
+            </div>
+        </div>
+
+        <input class="positive ui button" type="submit" value="Meklēt" />
     </div>
 
-    <input class="submit button" type="submit" value="Meklēt" />
 </form>
 

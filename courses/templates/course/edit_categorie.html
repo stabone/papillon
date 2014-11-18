@@ -4,10 +4,10 @@
 
     {% include "course/error_check_categorie.html" %}
 
-    <div class="ui form">
-        <form method="POST" action="">
-            {% csrf_token %}
+    <form method="POST" action="{% url 'update_categorie' %}">
+        {% csrf_token %}
 
+        <div class="ui form segment">
             <div class="field">
                 <label for="{{ form.course.id_for_label }}">
                     {{ form.course.label }}
@@ -15,10 +15,10 @@
 
                 {{ form.course }}
             </div>
+        </div>
 
-            <input type="submit" value="Saglabāt" class="submit button" />
-        </form>
-    </div>
+        <input type="submit" value="Saglabāt" class="positive ui button" />
+    </form>
 
 {% endblock content %}
 

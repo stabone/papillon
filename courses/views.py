@@ -106,7 +106,22 @@ def edit_categorie(request, categorie_id):
     else:
         form = CategoryForm(instance=data)
 
+    print(form)
+
     return render(request, 'course/edit_categorie.html', {'form': form})
+
+@login_required
+@csrf_protect
+def update_categorie(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=data)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse('base_categorie'))
+
+    return redirect(reverse('base_categorie')
 
 
 @login_required

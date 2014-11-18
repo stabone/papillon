@@ -2,11 +2,11 @@
 
 {% block content %}
 
-    <h2>{{ poll.poll }}</h2>
-
-    <div>
-        <a href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
+    <div class="ui breadcrumb">
+        <a class="section" href="{% url 'take_poll' poll.id %}">Atpakaļ</a>
     </div>
+
+    <h3 class="ui header">{{ poll.poll }}</h3>
 
     {% if form.question.errors %}
         <div class="ui error message">
@@ -20,63 +20,30 @@
     <form method="POST" action="{% url 'add_question' %}">
         {% csrf_token %}
 
-        <input type="hidden" name="poll" value="{{ poll.id }}" />
+        <div class="ui form segment">
+            <input type="hidden" name="poll" value="{{ poll.id }}" />
 
-        <div class="form-section">
-            <label for="{{ form.question.id_for_label }}">
-                {{ form.question.label }}
-            </label>
+            <div class="field">
+                <label for="{{ form.question.id_for_label }}">
+                    {{ form.question.label }}
+                </label>
 
-            {{ form.question }}
+                <div class="ui left labeled icon input">
+                    {{ form.question }}
+                    <i class="question icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Saglabāt" class="positive ui button" />
         </div>
-
-        <input type="submit" value="Saglabāt" class="submit button" />
     </form>
 
-    <ul>
-    {% for question in questions %}
-
-        <li>
-            ({{ question.id }}) {{ question.question }}
-            <ul class="action-menu">
-                <li class="add-action">
-                    <a href="{% url 'add_choise' poll.id question.id %}" alt="Pievienot" title="Pievienot">
-                        <i class="add icon"></i>
-                    </a>
-                </li>
-                <li class="edit-action">
-                    <a href="{% url 'edit_question' question.id %}">
-                        Labot
-                    </a>
-                </li>
-                <li class="delete-action">
-                    {% include "poll/delete_poll.html" %}
-                </li>
-            </ul>
-
-            <ul>
-                {% for choise in question.choises %}
-                    <li>
-                        <span class="title-option">
-                            {{ choise.id }}:{{ choise.option }}
-                        </span>
-
-                        <ul class="action-menu">
-                            <li class="edit-action">
-                                <a href="{% url 'edit_choise' poll.id choise.id %}" alt="Labot" title="Labot">
-                                    <i class="edit icon"></i>
-                                </a>
-                            </li>
-                            <li class="delete-action">
-                                {% include "poll/delete_choise.html" %}
-                            </li>
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
-        </li>
-    {% endfor %}
-    </ul>
+    {% if questions %}
+        {% include "poll/display_poll_content.html" %}
+    {% endif %}
 
 {% endblock content %}
 

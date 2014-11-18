@@ -18,11 +18,13 @@
             {% csrf_token %}
 
             {% for question in questions %}
-                <h3 class="ui small header">{{ question.question }}</h3>
+                <h3 class="ui small header">
+                    {{ question.question }}
 
-                <a href="{% url 'add_choise' poll.id question.id %}">
-                    <i class="add icon"></i>
-                </a>
+                    <a href="{% url 'add_choise' poll.id question.id %}">
+                        <i class="add icon"></i>
+                    </a>
+                </h3>
 
                 <ul>
                     {% for choise in question.choises %}
@@ -41,7 +43,7 @@
                 </ul>
             {% endfor %}
 
-            <input type="submit" value="Saglabāt" class="submit button" />
+            <input type="submit" value="Saglabāt" class="positive ui button" />
         </form>
     {% else %}
         <div class="ui warning message">Neviens ieraksts netika atrasts</div>
