@@ -5,10 +5,13 @@ from messaging.models import Messages, Contacts
 
 
 class MessagingForm(ModelForm):
+
     class Meta:
         model = Messages
-        exclude = ('user_from', 'red', 'trash', 'sent_at',)
-        # fields = ('user_to', 'title', 'message', 'red', 'trash', 'sent_at')
+
+        fields = ('user_to', 'title', 'message',
+                    'red', 'trash',)# 'sent_at',)
+
         labels = {
             'user_to': 'Saņēmējs',
             'title': 'Virsraksts',
@@ -22,3 +25,11 @@ class MessagingForm(ModelForm):
 class ContactForm(ModelForm):
     class Meta:
         model = Contacts
+
+        fields = ('user', 'contact_user',)
+
+        labels = {
+            'user': 'Es',
+            'contact_user': 'Lietotājs',
+        }
+

@@ -8,7 +8,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Articles
-        exclude = ('user',)
+        fields = ('title', 'description', 'article', 'embeded',)
 
         error_messages = {
             'title': {
@@ -34,3 +34,4 @@ class ArticleForm(forms.ModelForm):
             'description': forms.Textarea(),
             'article': forms.Textarea(),
         }
+

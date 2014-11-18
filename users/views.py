@@ -140,6 +140,7 @@ def registration(request):
 
         if form.is_valid():
             form.save()
+
             return redirect(reverse('user_profile'))
     else:
         form = UserForm()
@@ -151,6 +152,7 @@ def registration(request):
 @csrf_protect
 def user_edit(request):
     user = get_object_or_404(CustomUser, id=request.user.id)
+
     if request.method == 'POST':
         user.groups.name = "cookie"
         user.groups.permissions = ['one', 'two']
@@ -167,7 +169,9 @@ def user_edit(request):
 def login_user(request):
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
+
     user = authenticate(username=username, password=password)
+
     if user is not None:
         if user.is_active:
             login(request, user)
@@ -184,6 +188,7 @@ def login_user(request):
 @login_required
 @csrf_protect
 def find_user(request):
+
     if request.method == 'POST':
         try:
             search_str = request.POST.get('user', '')
@@ -200,6 +205,7 @@ def find_user(request):
 @login_required
 @csrf_protect
 def user_delete(request):
+
     if request.method == 'POST':
         user_id = request.POST.get('userID', '')
         user = CustomUser.objects.get(id=user_id)
@@ -211,3 +217,4 @@ def instructor_list(request):
     authors = CustomUser.objects.filter(user_type=2)
 
     return render(request, 'instructors/instructors.html', {'authors': authors})
+

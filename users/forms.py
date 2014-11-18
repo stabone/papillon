@@ -26,13 +26,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = CustomUser
 
-        exclude = (
-            'password', 'last_login',
-            'is_superuser', 'image',
-            'bio', 'is_active',
-            'is_admin', 'groups',
-            'user_permissions'
-        )
+        fields = ('user_name', 'last_name', 'email',)
 
         min_length = {
             'email': 10,
@@ -90,3 +84,4 @@ class UserForm(forms.ModelForm):
             user.save()
 
         return user
+

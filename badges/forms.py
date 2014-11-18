@@ -7,14 +7,14 @@ class BadgeForm(forms.ModelForm):
     class Meta:
         model = Badges
 
-        exclude = ('user',)
+        fields = ('badge',)
 
         lables = {
-            'title': 'Nosaukums',
+            'badge': 'Nosaukums',
         }
 
         widgets = {
-            'title': forms.TextInput(attrs={'autofocus': ''})
+            'badge': forms.TextInput(attrs={'autofocus': ''})
         }
 
 
@@ -22,6 +22,7 @@ class BadgeTypeForm(forms.ModelForm):
 
     class Meta:
         model = BadgeTypes
+        fields = ('title', 'description',)
 
         lables = {
             'title': 'Nosaukums',

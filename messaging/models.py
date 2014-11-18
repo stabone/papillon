@@ -14,6 +14,7 @@ class Messages(models.Model):
 
     class Meta:
         ordering = ['-sent_at']
+
         permissions = (
             ('inbox', 'Ziņas'),
             ('add_message', 'Sūtīt ziņas'),
@@ -32,3 +33,4 @@ class Contacts(models.Model):
             ('add_contact', 'Pievienot kontaktu'),
             ('delete_contact', 'Dzēst kontaktu'),
         )
+

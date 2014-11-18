@@ -57,17 +57,23 @@
         </div>
     {% endif %}
 
-    <form action="" method="POST">
+    <form action="{% url 'user_registration' %}" method="POST">
         {% csrf_token %}
 
-        <div class="ui form segment">>
+        <div class="ui form segment">
 
             <div class="field">
                 <label for="{{ form.email.id_for_label }}">
                     {{ form.email.label }}
                 </label>
 
-                {{ form.email }}
+                <div class="ui left labeled icon input">
+                    {{ form.email }}
+                    <i class="mail icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="field">
@@ -75,7 +81,13 @@
                     {{ form.user_name.label }}
                 </label>
 
-                {{ form.user_name }}
+                <div class="ui left labeled icon input">
+                    {{ form.user_name }}
+                    <i class="user icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="field">
@@ -83,7 +95,13 @@
                     {{ form.last_name.label }}
                 </label>
 
-                {{ form.last_name }}
+                <div class="ui left labeled icon input">
+                    {{ form.last_name }}
+                    <i class="user icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="field">
@@ -91,7 +109,13 @@
                     {{ form.password1.label }}
                 </label>
 
-                {{ form.password1 }}
+                <div class="ui left labeled icon input">
+                    {{ form.password1 }}
+                    <i class="lock icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="field">
@@ -99,7 +123,13 @@
                     {{ form.password2.label }}
                 </label>
 
-                {{ form.password2 }}
+                <div class="ui left labeled icon input">
+                    {{ form.password2 }}
+                    <i class="lock icon"></i>
+                    <div class="ui corner label">
+                        <i class="icon asterisk"></i>
+                    </div>
+                </div>
             </div>
         </div>
 
