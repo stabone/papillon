@@ -6,8 +6,8 @@
     <head>
         <title>Papillon "Monarch"</title>
         <link rel="stylesheet" type="text/css" href="{% static "css/normalize.css" %}" />
-        <link rel="stylesheet" href="{% static "css/semantic.css" %}" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="{% static "css/extra.css" %}">
+        <link rel="stylesheet" type="text/css" href="{% static "css/semantic.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "css/extra.css" %}" />
         <meta charset="utf-8" />
     </head>
     <body>
@@ -18,7 +18,7 @@
         <nav>
             <div class="ui purple menu">
                 <a href="/" class="active item">
-                    Sākums
+                    <i class="home icon"></i>Sākums
                 </a>
                 <a href="{% url 'base_poll' %}" class="item">
                     Aptauja
@@ -32,21 +32,23 @@
                 <a href="{% url 'article_base' %}" class="item">
                     Raksti
                 </a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'user_profile' %}" class="item">
-                        {{ user.get_full_name }}
-                    </a>
-                    <a href="{% url 'user_logout' %}" class="item">
-                        Iziet
-                    </a>
-                {% else %}
-                    <a href="{% url 'user_registration' %}" class="item">
-                        Reģistrēties
-                    </a>
-                    <a href="{% url 'user_login' %}" class="item">
-                        Ieiet
-                    </a>
-                {% endif %}
+                <div class="right menu">
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'user_profile' %}" class="item">
+                            <i class="user icon"></i>{{ user.get_full_name }}
+                        </a>
+                        <a href="{% url 'user_logout' %}" class="item">
+                            Iziet
+                        </a>
+                    {% else %}
+                        <a href="{% url 'user_registration' %}" class="item">
+                            Reģistrēties
+                        </a>
+                        <a href="{% url 'user_login' %}" class="item">
+                            Ieiet
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         </nav>
 

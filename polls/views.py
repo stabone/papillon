@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.models import Q
 from django.http import Http404
 
@@ -137,18 +137,32 @@ def add_choise(request, poll_id, question_id):
 
 @login_required
 @csrf_protect
-def edit_poll(request,poll_id):
+def edit_poll(request, poll_id):
     record = get_object_or_404(Polls, id=poll_id)
 
-    if request.method == "POST":
-        form = PollForm(request.POST, instance=record)
-        if(form.is_valid()):
-            form.save()
-            return redirect(reverse('base_poll'))
-    else:
-        form = PollForm(instance=record)
+    form = PollForm(instance=record)
 
-    return render(request, 'poll/poll_form.html', {'form': form})
+    return render(request, 'poll/poll_form.html', {
+                                        'form': form,
+                                        'poll_id': poll_id})
+
+
+@login_required
+@csrf_protect
+def update_poll(request):
+
+    if request.method == "POST":
+        poll_id = request.POST.get('id', '')
+
+        record = get_object_or_404(Polls, id=poll_id)
+        form = PollForm(request.POST, instance=record)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect(reverse('base_poll'))
+
+    return redirect(reverse_lazy('base_poll'))
 
 
 @login_required
@@ -227,7 +241,10 @@ def edit_poll_content(request,poll_id):
 
         form = QuestionForm()
 
-    return render(request, 'poll/edit_poll_content.html', {'form': form, 'questions': data, 'poll': poll})
+    return render(request, 'poll/edit_poll_content.html', {
+                                                'form': form, 
+                                                'questions': data, 
+                                                'poll': poll})
 
 
 @login_required

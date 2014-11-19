@@ -121,7 +121,7 @@ def update_categorie(request):
 
             return redirect(reverse('base_categorie'))
 
-    return redirect(reverse('base_categorie')
+    return redirect(reverse('base_categorie'))
 
 
 @login_required

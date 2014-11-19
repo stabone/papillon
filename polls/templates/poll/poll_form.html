@@ -4,8 +4,10 @@
 
     {% include "poll/error_check_poll.html" %}
 
-    <form method="POST" action="{% url 'add_poll' %}">
+    <form method="POST" action="{% url 'update_poll' %}">
         {% csrf_token %}
+
+        <input type="hidden" value="{{ poll_id }}" name="id" />
 
         <div class="ui form segment">
             <div class="field">
@@ -35,7 +37,7 @@
             {% endif %}
         </div>
 
-        <input type="submit" value="Saglabāt" class="ui green submit button" />
+        <input type="submit" value="Saglabāt" class="positive ui button" />
 
     </form>
 {% endblock content %}
