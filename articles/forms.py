@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django import forms
 # from django_markdown.widgets import MarkdownWidget
-from articles.models import Articles
+from articles.models import Articles, Reviews
 
 
 class ArticleForm(forms.ModelForm):
@@ -33,5 +33,13 @@ class ArticleForm(forms.ModelForm):
             'embeded': forms.TextInput(),
             'description': forms.Textarea(),
             'article': forms.Textarea(),
+        }
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Reviews
+        fields = ('accept', 'notes',)
+
+        widgets = {
+            'notes': forms.TextInput(attrs={'autofocus': '', 'required': ''}),
         }
 

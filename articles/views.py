@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -91,4 +91,22 @@ def delete(request):
         article.delete()
 
     return redirect(reverse('article_base'))
+
+
+def add_review(request):
+    if reqeuest.method == "GET":
+        return redirect(reverse_lazy('uz review lapu'))
+
+    # check data
+    # find article
+    # send notification to author
+    pass
+
+
+def update_review(request):
+    pass
+
+
+def show_review(request):
+    pass
 
