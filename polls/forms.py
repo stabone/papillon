@@ -2,7 +2,7 @@
 from django.forms import ModelForm
 from django import forms
 
-from polls.models import Polls, Questions, Choises
+from polls.models import (Polls, Questions, Choises, Answers, CorrectAnswers)
 
 class PollForm(ModelForm):
     class Meta:
@@ -44,3 +44,20 @@ class ChoiseForm(ModelForm):
             'option': forms.TextInput(attrs={'autofocus': ''}),
             'correct': forms.CheckboxInput(attrs={'class': 'flag'})
         }
+
+
+class AnswerForm(ModelForm):
+    class Meta:
+        model = Answers
+
+        fields = ('question', 'answer',)
+
+        labels = {
+            'question': 'Jautājums',
+            'answer': 'Atbilde',
+        }
+
+        widgets = {
+            'answer': forms.TextInput(attrs={'autofocus': ''})
+        }
+

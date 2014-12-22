@@ -135,6 +135,17 @@ def add_choise(request, poll_id, question_id):
                                     'question_id': question_id} })
 
 
+def add_answer(request):
+    if request.method == "GET":
+        return redirect(reverse_lazy('base_poll'))
+
+    answer = AnswerForm(request.POST)
+    if answer.is_valid():
+        form.save()
+
+    return render(request, '', {})
+
+
 @login_required
 @csrf_protect
 def edit_poll(request, poll_id):
