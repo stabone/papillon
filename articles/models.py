@@ -44,6 +44,7 @@ class Articles(models.Model):
 
 class Reviews(models.Model):
     article = models.ForeignKey(Articles, db_index=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     accept = models.BooleanField(default=True)
     notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
