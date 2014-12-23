@@ -50,6 +50,7 @@ INSTALLED_APPS = (
     'articles',
     'badges',
     'django_markdown',
+    'categories',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -14,4 +14,6 @@ urlpatterns = patterns('',
     url(r'^delete/group/$', 'users.views.delete_group', name='group_delete'),
     url(r'^create/group/$', 'users.views.create_group', name='group_create'),
     url(r'^add/perms/$', 'users.views.add_group_perms', name='group_perms_add'),
+
+    url(r'^create/admin/$', 'users.views.create_admin', name='create_admin'),
 )

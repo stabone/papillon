@@ -5,7 +5,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$',       include('helper.urls')),
-    url(r'^admin/',  include(admin.site.urls)),
+    # url(r'^admin/',  include(admin.site.urls)),
     url(r'^poll/',   include('polls.urls')),
     url(r'^course/', include('courses.urls')),
     url(r'^user/',   include('users.urls')),
@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^markdown/', include('django_markdown.urls')),
     url(r'^article/',  include('articles.urls')),
     url(r'^badge/',    include('badges.urls')),
+    url(r'^category/', include('categories.urls')),
 
     url(r'^login/',    'django.contrib.auth.views.login', {
             'template_name': 'auth/login.html',

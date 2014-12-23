@@ -8,13 +8,16 @@
 
     <ul>
         <li>
-            <a href="{% url 'messaging_inbox' %}">Zinas</a>
+            <a href="{% url 'messaging_inbox' %}">Ziņas</a>
         </li>
         <li>
             <a href="{% url 'user_base' %}">Lietotāji</a>
         </li>
         <li>
             <a href="{% url 'user_edit' %}">Labot profilu</a>
+        </li>
+        <li>
+            <a href="{% url 'create_admin' %}">Admin. tiesības</a>
         </li>
 
         {% if user.is_superuser %}

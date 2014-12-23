@@ -4,7 +4,7 @@ from django.http import Http404
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
@@ -217,4 +217,14 @@ def instructor_list(request):
     authors = CustomUser.objects.filter(user_type=2)
 
     return render(request, 'instructors/instructors.html', {'authors': authors})
+
+
+def create_admin(request):
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    user.is_admin = True
+
+    user.save()
+
+    return redirect(reverse_lazy('user_profile'))
+
 

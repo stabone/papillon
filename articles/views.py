@@ -11,7 +11,6 @@ from comments.models import ArticleComments
 
 ## TODO
 # for articles > markdown file would be nice
-
 def index(request, page_numb=None):
     article_list = Articles.objects.all()
 
@@ -59,6 +58,7 @@ def edit(request, article_id):
 @login_required
 @csrf_protect
 def update(request, article_id):
+
     if request.method == "POST":
         articleData = get_object_or_404(Articles, id=article_id)
         article = ArticleForm(request.POST, instance=articleData)
@@ -73,12 +73,11 @@ def update(request, article_id):
 
 @login_required
 def item(request, article_id):
+
     article = get_object_or_404(Articles, id=article_id)
     comments = ArticleComments.objects.select_related('user').filter(article=article_id)
 
-    return render(request, 'article/item.html', {
-            'article': article,
-            'comments': comments})
+    return render(request, 'article/item.html', {'article': article, 'comments': comments})
 
 
 @login_required
