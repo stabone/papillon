@@ -23,6 +23,16 @@
             </div>
 
             <div class="field">
+                <label for="{{ form.category.id_for_label }}">
+                    {{ form.category.label }}
+                </label>
+
+                <div class="ui labeled input">
+                    {{ form.category }}
+                </div>
+            </div>
+
+            <div class="field">
                 <label for="{{ form.description.id_for_label }}">
                     {{ form.description.label }}
                 </label>

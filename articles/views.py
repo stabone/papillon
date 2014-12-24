@@ -60,8 +60,9 @@ def edit(request, article_id):
 def update(request, article_id):
 
     if request.method == "POST":
-        articleData = get_object_or_404(Articles, id=article_id)
-        article = ArticleForm(request.POST, instance=articleData)
+        category_id = reqeuest.POST.get('id', '')
+        info = get_object_or_404(Articles, id=category_id)
+        article = CategoryForm(request.POST, instance=info)
 
         if article.is_valid():
             article.save()

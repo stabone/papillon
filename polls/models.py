@@ -7,7 +7,7 @@ from django.conf import settings
 class Polls(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     public = models.BooleanField(default=True)
-    poll = models.CharField(max_length=255, min_length=3, db_index=True)
+    poll = models.CharField(max_length=255, db_index=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -29,7 +29,7 @@ class Polls(models.Model):
 
 class Questions(models.Model):
     poll = models.ForeignKey(Polls, db_index=True)
-    question = models.CharField(max_length=255, min_length=5)
+    question = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -46,7 +46,7 @@ class Questions(models.Model):
 
 class Answers(models.Model):
     question = models.ForeignKey(Questions)
-    answer = models.CharField(max_length=255, min_length=5)
+    answer = models.CharField(max_length=255)
 
 
 class CorrectAnswers(models.Model):

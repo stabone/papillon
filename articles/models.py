@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*-
 from django.db import models
 from django.conf import settings
+from categories.models import Categories
 
 from time import time
 
@@ -22,6 +23,7 @@ class Attachment(models.Model):
 
 class Articles(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    category = models.ForeignKey(Categories, db_index=True)
     title = models.CharField(max_length=255, blank=False)
     description = models.CharField(max_length=255, blank=False)
     embeded = models.TextField(blank=True)

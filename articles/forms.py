@@ -8,7 +8,7 @@ class ArticleForm(forms.ModelForm):
 
     class Meta:
         model = Articles
-        fields = ('title', 'description', 'article', 'embeded',)
+        fields = ('title', 'category', 'description', 'article', 'embeded',)
 
         error_messages = {
             'title': {
@@ -23,6 +23,7 @@ class ArticleForm(forms.ModelForm):
 
         labels = {
             'title': 'Virsraksts',
+            'category': 'Kategorija',
             'description': 'Apraksts',
             'article': 'Raksts',
             'embeded': 'embeded',
@@ -34,6 +35,8 @@ class ArticleForm(forms.ModelForm):
             'description': forms.Textarea(),
             'article': forms.Textarea(),
         }
+
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Reviews

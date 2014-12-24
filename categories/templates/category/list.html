@@ -3,12 +3,18 @@
 {% block content %}
 
     <div>
-        <a href="{% url 'category_show' %}">Pievienot</a>
+        <a href="{% url 'category_form' %}">Pievienot</a>
     </div>
 
-    {% for category in categories %}
-        {{ category.title }}
-    {% endfor %}
+    <ul>
+        {% for category in categories %}
+            <li>
+                {{ category.title }}
+                |<a href="{% url 'category_edit' category.id %}">Labot</a>
+                |<a href="">Dzēst</a>
+            </li>
+        {% endfor %}
+    </ul>
 
     {% if is_paginated %}
     <div class="pagination">

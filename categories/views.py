@@ -7,44 +7,24 @@ from categories.models import Categories
 from categories.forms import CategoryForm
 
 
-# category list
-"""
-class CategoryList(ListView):
-    model = Categories
-    template_name = 'categories/list.html'
-    paginate_by = 5
-
-    def get_queryset(self):
-        queryset = Categories.objects.all().order_by('title')
-        return queryset
-
-
-# add category
-class CategoryCreate(CreateView):
-    model = Categories
-    template_name = ''
-
-# edit category
-# delete category
-"""
-
-
 def list(request):
     categories = Categories.objects.all().order_by('title')
 
     return render(request, 'category/list.html', {'categories': categories})
 
 
-def show_form(request):
+def form(request):
 
     categoryForm = CategoryForm()
 
-    return render(request, 'category/category_form.html', {'form': categoryForm})
+    return render(request, 'category/create.html', {
+                                    'form': categoryForm,
+                                    'url_post_to': reverse_lazy('category_create')})
 
 
-def add(request):
+def create(request):
     if request.method == "GET":
-        return redirect(redirect_lazy('category_show'))
+        return redirect(reverse_lazy('category_form'))
 
     categoryForm = CategoryForm(request.POST)
 
@@ -53,12 +33,34 @@ def add(request):
 
         return redirect(reverse_lazy('category_list'))
 
-    return render(request, 'category/category_form.html', {'form': categoryForm})
+    return render(request, 'category/create.html', {'form': categoryForm})
 
 
 def edit(request, rec_id):
     category = get_object_or_404(Categories, id=rec_id)
-    pass
+    form = CategoryForm(instance=category)
+
+    return render(request, 'category/create.html',
+                                    {'form': form,
+                                    'record_id': category.id,
+                                    'url_post_to': reverse_lazy('category_update')})
+
+
+def update(request):
+    if request.method == "POST":
+        category_id = request.POST.get('record', '')
+
+        info = get_object_or_404(Categories, id=category_id)
+        category = CategoryForm(request.POST, instance=info)
+
+        if category.is_valid():
+            category.save()
+
+            return redirect(reverse_lazy('category_list'))
+
+    return render(request, 'category/create.html', {'form': category})
+
+
 
 
 def item(request, rec_id):
