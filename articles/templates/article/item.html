@@ -17,17 +17,19 @@
         {% include 'article/delete.html' %}
     </div>
 
-    <div class="article">
-        <div class="publication-meta">
-            <span class="author">
-                <a href="#">{{ article.user.get_full_name }}</a>
+    <div class="">
+        <div class="">
+            <span class="">
+                <a href="#">
+                    {{ article.user.get_full_name }}
+                </a>
             </span>
 
-            <span class="publication-date" title="">
+            <span class="" title="">
                 {{ article.created_at|date:"Y.m.d" }}
             </span>
 
-            <span class="comment-count"
+            <span class=""
                     alt="Komentāru skaits"
                     title="Komentāru skaits">
                 <img src="" alt="Message icon" title="Message icon">

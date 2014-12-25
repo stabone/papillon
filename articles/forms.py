@@ -26,7 +26,7 @@ class ArticleForm(forms.ModelForm):
             'category': 'Kategorija',
             'description': 'Apraksts',
             'article': 'Raksts',
-            'embeded': 'embeded',
+            'embeded': 'Video',
         }
 
         widgets = {
@@ -38,6 +38,7 @@ class ArticleForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+
     class Meta:
         model = Reviews
         fields = ('accept', 'notes',)

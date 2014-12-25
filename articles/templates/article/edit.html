@@ -6,41 +6,47 @@
 
     {% include "article/error_check.html" %}
 
-    <form method="POST" action="{% url 'article_update' article_id %}">
+    <form method="POST" action="{% url 'article_update' article_id %}" class="ui form
+        segment">
         {% csrf_token %}
 
-        <div class="ui form segment">
-
-            <div class="form-section">
-                <label for="{{ form.title.id_for_label }}">
-                    {{ form.title.label }}
-                </label>
-                {{ form.title }}
-            </div>
-
-            <div class="form-section">
-                <label for="{{ form.description.id_for_label }}">
-                    {{ form.description.label }}
-                </label>
-                {{ form.description }}
-            </div>
-
-            <div class="form-section">
-                <label for="{{ form.article.id_for_label }}">
-                    {{ form.article.label }}
-                </label>
-                {{ form.article }}
-            </div>
-
-            <div class="form-section">
-                <label for="{{ form.embeded.id_for_label }}">
-                    {{ form.embeded.label }}
-                </label>
-                {{ form.embeded }}
-            </div>
+        <div class="field">
+            <label for="{{ form.title.id_for_label }}">
+                {{ form.title.label }}
+            </label>
+            {{ form.title }}
         </div>
 
-        <input type="submit" value="Saglabāt" />
+        <div class="field">
+            <label for="{{ form.category.id_for_label }}">
+                {{ form.category.label }}
+            </label>
+            {{ form.category }}
+        </div>
+
+
+        <div class="field">
+            <label for="{{ form.description.id_for_label }}">
+                {{ form.description.label }}
+            </label>
+            {{ form.description }}
+        </div>
+
+        <div class="field">
+            <label for="{{ form.article.id_for_label }}">
+                {{ form.article.label }}
+            </label>
+            {{ form.article }}
+        </div>
+
+        <div class="field">
+            <label for="{{ form.embeded.id_for_label }}">
+                {{ form.embeded.label }}
+            </label>
+            {{ form.embeded }}
+        </div>
+
+        <input type="submit" value="Saglabāt" class="ui submit button" />
     </form>
 
 {% endblock content %}

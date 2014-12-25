@@ -5,55 +5,53 @@
 
     {% include "article/error_check.html" %}
 
-    <form method="POST" action="{% url 'article_add' %}">
+    <form method="POST" action="{% url 'article_add' %}" class="ui form segment">
         {% csrf_token %}
 
-        <div class="ui form segment">
-            <div class="field">
-                <label for="{{ form.title.id_for_label }}">
-                    {{ form.title.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.title.id_for_label }}">
+                {{ form.title.label }}
+            </label>
 
-                <div class="ui labeled icon input">
-                    {{ form.title }}
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui icon input">
+                {{ form.title }}
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.category.id_for_label }}">
-                    {{ form.category.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.category.id_for_label }}">
+                {{ form.category.label }}
+            </label>
 
-                <div class="ui labeled input">
-                    {{ form.category }}
-                </div>
+            <div class="ui labeled input">
+                {{ form.category }}
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.description.id_for_label }}">
-                    {{ form.description.label }}
-                </label>
-                {{ form.description }}
-            </div>
+        <div class="field">
+            <label for="{{ form.description.id_for_label }}">
+                {{ form.description.label }}
+            </label>
+            {{ form.description }}
+        </div>
 
-            <div class="field">
-                <label for="{{ form.article.id_for_label }}">
-                    {{ form.article.label }}
-                </label>
-                {{ form.article }}
-            </div>
+        <div class="field">
+            <label for="{{ form.article.id_for_label }}">
+                {{ form.article.label }}
+            </label>
+            {{ form.article }}
+        </div>
 
-            <div class="field">
-                <label for="{{ form.embeded.id_for_label }}">
-                    {{ form.embeded.label }}
-                </label>
-                <div class="ui left labeled icon input">
-                    {{ form.embeded }}
-                    <i class="external url icon"></i>
-                </div>
+        <div class="field">
+            <label for="{{ form.embeded.id_for_label }}">
+                {{ form.embeded.label }}
+            </label>
+            <div class="ui icon input">
+                {{ form.embeded }}
+                <i class="external url icon"></i>
             </div>
         </div>
 
