@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from users.models import CustomUser
 from articles.models import Articles
+from categories.models import Categories
 
 
 class ArticleTest(TestCase):
@@ -18,9 +19,11 @@ class ArticleTest(TestCase):
                                             password='password',
                                             email='epasts@epasts.lv')
         self.user.save()
+        category = Categories.objects.create(title='abc')
 
         article = Articles.objects.create(
                                     user=self.user,
+                                    category=category,
                                     title=self.title,
                                     embeded=self.embeded,
                                     description=self.description)
@@ -31,3 +34,4 @@ class ArticleTest(TestCase):
         article = Articles.objects.get(id=1)
 
         self.assertEqual('Test Article', article.title)
+
