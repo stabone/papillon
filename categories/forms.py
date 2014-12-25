@@ -10,3 +10,7 @@ class CategoryForm(forms.ModelForm):
 
         fields = ('title',)
 
+        widgets = {
+            'title': forms.TextInput(attrs={'autofocus': '', 'required': ''}),
+        }
+

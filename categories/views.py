@@ -68,6 +68,13 @@ def item(request, rec_id):
 
 
 def delete(request):
-    pass
+    if request.method == 'GET':
+        return redirect(reverse_lazy('category_list'))
 
+    category_id = request.POST.get('record', '')
+    data = get_object_or_404(Categories, id=category_id)
+
+    data.delete()
+
+    return redirect(reverse_lazy('category_list'))
 
