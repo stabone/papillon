@@ -40,7 +40,7 @@ def edit(request, rec_id):
     category = get_object_or_404(Categories, id=rec_id)
     form = CategoryForm(instance=category)
 
-    return render(request, 'category/create.html',
+    return render(request, 'category/form.html',
                                     {'form': form,
                                     'record_id': category.id,
                                     'url_post_to': reverse_lazy('category_update')})
@@ -58,7 +58,7 @@ def update(request):
 
             return redirect(reverse_lazy('category_list'))
 
-    return render(request, 'category/create.html', {'form': category})
+    return render(request, 'category/form.html', {'form': category})
 
 
 def item(request, rec_id):
