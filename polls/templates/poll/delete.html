@@ -1,0 +1,10 @@
+
+<form method="POST" action="{% url 'poll_delete' %}">
+
+    {% csrf_token %}
+
+    <input type="hidden" name="record" value="{{ poll.id }}">
+
+    <input type="submit" value="Dzēst" class="negative ui button">
+</form>
+

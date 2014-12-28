@@ -61,8 +61,6 @@ def update(request):
     return render(request, 'category/create.html', {'form': category})
 
 
-
-
 def item(request, rec_id):
     pass
 

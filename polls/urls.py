@@ -1,21 +1,28 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
-    url(r'^([0-9])*$',            'polls.views.index', name='base_poll'),
-    url(r'^add/$',                'polls.views.add_poll', name='add_poll'),
-    url(r'^add/(\d+)/(\d+)/choise/$', 'polls.views.add_choise', name='add_choise'),
-    url(r'^add/question/$',       'polls.views.add_question', name='add_question'),
-    url(r'^add/(\d+)/question/$', 'polls.views.add_question_for_poll', name='add_question_for_poll'),
-    url(r'^add/answer/$',         'polls.views.add_answer', name='add_answer'),
-    url(r'^edit/(\d+)/$',         'polls.views.edit_poll', name='edit_poll'),
-    url(r'^edit/(\d+)/content/$', 'polls.views.edit_poll_content', name='edit_poll_content'),
-    url(r'^edit/(\d+)/(\d+)/choise/$', 'polls.views.edit_choise', name='edit_choise'),
-    url(r'^edit/(\d+)/question/$', 'polls.views.edit_question', name='edit_question'),
-    url(r'^update/$',             'polls.views.update_poll', name='update_poll'),
-    url(r'^take/(\d+)/$',         'polls.views.take_poll', name='take_poll'),
-    url(r'^statistic/$',          'polls.views.get_user_statistic', name='user_statistic'),
-    url(r'^delete/poll/$',        'polls.views.delete_poll', name='delete_poll'),
-    url(r'^delete/choise/$',      'polls.views.delete_choise', name='delete_choise'),
-    url(r'^delete/question/$',    'polls.views.delete_question', name='delete_question'),
-    url(r'^save/result/$',        'polls.views.save_poll_results', name='save_poll_results'),
+    url(r'^list/$',      'polls.views.poll_list',   name='poll_list'),
+    url(r'^form/$',      'polls.views.poll_form',   name='poll_form'),
+    url(r'^create/$',    'polls.views.poll_create', name='poll_create'),
+    url(r'^edit/(\d+)/$','polls.views.poll_edit',   name='poll_edit'),
+    url(r'^item/(\d+)/$','polls.views.poll_item',   name='poll_item'),
+    url(r'^update/$',    'polls.views.poll_update', name='poll_update'),
+    url(r'^delete/$',    'polls.views.poll_delete', name='poll_delete'),
+
+
+    url(r'^q/list/$',      'polls.views.question_list',   name='question_list'),
+    url(r'^q/form/(\d+)/$','polls.views.question_form',   name='question_form'),
+    url(r'^q/create/$',    'polls.views.question_create', name='question_create'),
+    url(r'^q/edit/(\d+)/$','polls.views.question_edit',   name='question_edit'),
+    url(r'^q/update/$',    'polls.views.question_update', name='question_update'),
+    url(r'^q/delete/$',    'polls.views.question_delete', name='question_delete'),
+
+
+    url(r'^a/list/$',      'polls.views.answer_list',   name='answer_list'),
+    url(r'^a/form/(\d+)/$','polls.views.answer_form',   name='answer_form'),
+    url(r'^a/create/$',    'polls.views.answer_create', name='answer_create'),
+    url(r'^a/edit/(\d+)/$','polls.views.answer_edit',   name='answer_edit'),
+    url(r'^a/update/$',    'polls.views.answer_update', name='answer_update'),
+    url(r'^a/delete/$',    'polls.views.answer_delete', name='answer_delete'),
+
 )

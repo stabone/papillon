@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <p>
+        {{ poll.poll }}
+        <a href="{% url 'question_form' poll.id %}">Pieviento Jautājumu</a>
+    </p>
+
+    <p>
+        {{ poll.description }}
+    </p>
+
+    <div class="ui divider"></div>
+
+    <ul>
+    {% for question in questions %}
+        <li>
+            {{ question.question }}
+            <a href="{% url 'question_edit' question.id %}">Labot</a>
+            <a href="{% url 'answer_form' question.id %}">Pieviento Atbildi</a>
+            {% include 'question/delete.html' %}
+
+            {% if question.answers %}
+                <ul>
+                {% for answer in question.answers %}
+                    <li>{{ answer.answer }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock content %}
+

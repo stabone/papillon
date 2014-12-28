@@ -1,0 +1,10 @@
+
+<form method="POST" action="{% url 'category_delete' %}">
+
+    {% csrf_token %}
+
+    <input type="hidden" name="record" value="{{ category.id }}">
+
+    <input type="submit" value="Dzēst">
+</form>
+

@@ -4,7 +4,7 @@ from django.http import Http404
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import authenticate, login, logout
@@ -12,7 +12,6 @@ from django.contrib.auth.decorators import login_required
 
 from users.models import CustomUser
 from users.forms import UserForm
-from polls.models import Results
 
 
 @login_required
@@ -45,7 +44,7 @@ def create_group(request):
         group = Group(name=group_name)
         group.save();
 
-        return redirect(reverse('group_list'))
+        return redirect(reverse_lazy('group_list'))
     else:
         groups = Group.objects.all()
 
@@ -61,7 +60,7 @@ def add_group(request):
         group = get_object_or_404(Group, id=group_id)
         request.user.groups.add(group)
 
-    return redirect(reverse('group_create'))
+    return redirect(reverse_lazy('group_create'))
 
 
 @login_required
@@ -83,7 +82,7 @@ def update_group(request):
 
         group.save()
 
-    return redirect(reverse('group_list'))
+    return redirect(reverse_lazy('group_list'))
 
 
 @login_required
@@ -95,7 +94,7 @@ def delete_group(request):
         group = get_object_or_404(Group, id=group_id)
         group.delete()
 
-    return redirect(reverse('group_list'))
+    return redirect(reverse_lazy('group_list'))
 
 
 @login_required
@@ -122,7 +121,7 @@ def add_group_perms(request,group_id=None):
         group.permissions = perms
         group.save()
 
-        return redirect(reverse('group_perms_add'))
+        return redirect(reverse_lazy('group_perms_add'))
 
     else:
         groups = Group.objects.all()
@@ -141,7 +140,7 @@ def registration(request):
         if form.is_valid():
             form.save()
 
-            return redirect(reverse('user_profile'))
+            return redirect(reverse_lazy('user_profile'))
     else:
         form = UserForm()
 
@@ -157,7 +156,7 @@ def user_edit(request):
         user.groups.name = "cookie"
         user.groups.permissions = ['one', 'two']
 
-        return redirect(reverse('user_edit'))
+        return redirect(reverse_lazy('user_edit'))
 
     return render(request, 'user/edit.html', {'user_data': user})
 
@@ -211,7 +210,7 @@ def user_delete(request):
         user = CustomUser.objects.get(id=user_id)
         user.delete()
 
-    return redirect(reverse('user_base'))
+    return redirect(reverse_lazy('user_base'))
 
 def instructor_list(request):
     authors = CustomUser.objects.filter(user_type=2)

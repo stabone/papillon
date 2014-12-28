@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div>
+        <a href="{% url 'poll_form' %}">Pievienot</a>
+    </div>
+
+    <ul>
+        {% for poll in polls %}
+            <li>
+                <a href="{% url 'poll_item' poll.id %}">{{ poll.poll}}</a>
+                {{ poll.description }}
+                <a href="{% url 'poll_edit' poll.id %}">Labot</a>
+                {% include 'poll/delete.html' %}
+            </li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
+

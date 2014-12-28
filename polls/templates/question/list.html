@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <ul>
+    {% for question in questions %}
+        <li>
+            {{ question.question }}
+            <a href="">Labot</a>
+            {% include 'question/delete.html' %}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}
+

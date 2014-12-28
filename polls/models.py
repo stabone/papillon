@@ -48,6 +48,9 @@ class Answers(models.Model):
     question = models.ForeignKey(Questions)
     answer = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return self.answer
+
 
 class CorrectAnswers(models.Model):
     question = models.ForeignKey(Questions)
@@ -60,38 +63,4 @@ class VotingHistory(models.Model):
     question = models.ForeignKey(Questions)
     answer = models.ForeignKey(Answers)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-
-
-class Choises(models.Model):
-    question = models.ForeignKey(Questions, db_index=True)
-    option = models.CharField(max_length=255)
-    choise_type = models.IntegerField(default=0)
-    correct = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ['-id']
-        permissions = (
-            ('add_choise', 'Pievienot izvēli'),
-            ('edit_choise', 'Labot izvēli'),
-            ('delete_choise', 'Dzēst izvēli'),
-        )
-
-    def __unicode__(self):
-        return self.option
-
-
-"""
-for now these fields will be integers
-"""
-class Results(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    #poll = models.ForeignKey(Polls)
-    poll = models.PositiveIntegerField()
-    #question = models.ForeignKey(Questions)
-    question = models.PositiveIntegerField()
-    #answer = models.ForeignKey(Choises)
-    answer = models.PositiveIntegerField()
-    correct = models.BooleanField(default=False)
 

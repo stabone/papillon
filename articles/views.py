@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -31,18 +31,18 @@ def index(request, page_numb=None):
 def add(request):
     if request.method == "POST":
         # save article
-        articleForm = ArticleForm(request.POST)
+        article_form = ArticleForm(request.POST)
 
-        if articleForm.is_valid():
-            article = articleForm.save(commit=False)
+        if article_form.is_valid():
+            article = article_form.save(commit=False)
             article.user = request.user
             article.save()
 
-            return redirect(reverse('article_item', args=[article.id]))
+            return redirect(reverse_lazy('article_item', args=[article.id]))
     else:
-        articleForm = ArticleForm()
+        article_form = ArticleForm()
 
-    return render(request, 'article/add.html', {'form': articleForm})
+    return render(request, 'article/add.html', {'form': article_form})
 
 
 @login_required
@@ -67,7 +67,7 @@ def update(request, article_id):
         if article.is_valid():
             article.save()
 
-            return redirect(reverse('article_item', args=[article_id]))
+            return redirect(reverse_lazy('article_item', args=[article_id]))
 
     return render(request, 'article/edit.html', {'form': article, 'article_id': article_id})
 
@@ -90,7 +90,7 @@ def delete(request):
         article = get_object_or_404(Articles, id=article_id)
         article.delete()
 
-    return redirect(reverse('article_base'))
+    return redirect(reverse_lazy('article_base'))
 
 
 def add_review(request):

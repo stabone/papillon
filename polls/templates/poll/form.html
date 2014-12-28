@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_post_to }}" class="ui form segment">
+
+    {% csrf_token %}
+
+    <input type="hidden" name="record" value="{{ record_id }}">
+
+    <div class="field">
+        {{ form.poll.label }}
+        {{ form.poll }}
+    </div>
+
+    <div class="field">
+        {{ form.description.label }}
+        {{ form.description }}
+    </div>
+
+    <div class="field">
+        {{ form.public.label }}
+        {{ form.public }}
+    </div>
+
+    <input type="submit" value="Saglabāt" class="ui submit button">
+</form>
+
+{% endblock content %}
+

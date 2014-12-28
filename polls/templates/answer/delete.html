@@ -1,8 +1,9 @@
-{% extends "base.html" %}
 
-{% block content %}
+<form method="POST" action="{% url 'answer_delete' %}">
+    {% csrf_token %}
 
+    <input type="hidden" name="record" value="{{ answer.id }}">
 
-
-{% endblock content %}
+    <input type="submit" value="Dzēst" class="negative ui button">
+</form>
 

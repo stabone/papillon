@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <ul>
+    {% for answer in answers %}
+        <li>
+            {{ answer.answer }}
+            <a href="{% url 'answer_edit' answer.id %}">Labot</a>
+            {% include 'answer/delete.html' %}
+        </li>
+    {% endfor %}
+    </ul>
+
+{% endblock content %}
+
