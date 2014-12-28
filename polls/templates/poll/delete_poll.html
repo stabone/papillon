@@ -1,9 +1,0 @@
-
-<form method="POST" action="{% url 'delete_poll' %}">
-    {% csrf_token %}
-
-    <input type="hidden" value="{{ rec.id }}" name="pollID" />
-    <input class="negative ui button" type="submit" value="Dzēst" />
-
-</form>
-

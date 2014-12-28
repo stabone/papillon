@@ -2,6 +2,18 @@
 
 {% block content %}
 
+{% if form.poll.errors %}
+    <div class="ui error message">
+        {{ form.poll.label }}
+        <ul class="list">
+            {% for error in form.poll.errors %}
+                <li>{{ error|striptags }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+
 <form method="POST" action="{{ url_post_to }}" class="ui form segment">
 
     {% csrf_token %}
