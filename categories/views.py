@@ -15,10 +15,10 @@ def list(request):
 
 def form(request):
 
-    categoryForm = CategoryForm()
+    category_form = CategoryForm()
 
-    return render(request, 'category/create.html', {
-                                    'form': categoryForm,
+    return render(request, 'category/form.html', {
+                                    'form': category_form,
                                     'url_post_to': reverse_lazy('category_create')})
 
 
@@ -26,14 +26,14 @@ def create(request):
     if request.method == "GET":
         return redirect(reverse_lazy('category_form'))
 
-    categoryForm = CategoryForm(request.POST)
+    category_form = CategoryForm(request.POST)
 
-    if categoryForm.is_valid():
-        categoryForm.save()
+    if category_form.is_valid():
+        category_form.save()
 
         return redirect(reverse_lazy('category_list'))
 
-    return render(request, 'category/create.html', {'form': categoryForm})
+    return render(request, 'category/form.html', {'form': category_form})
 
 
 def edit(request, rec_id):
