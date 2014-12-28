@@ -3,6 +3,10 @@
 {% block content %}
 
 
+<h1 class="ui header">Katergorija</h1>
+
+<div class="ui divider"></div>
+
 {% if form.title.errors %}
     <div class="ui error message">
         {{ form.title.label }}
@@ -19,7 +23,7 @@
     <input type="hidden" name="record" value="{{ record_id }}">
 
     <div class="field">
-        {{ form.title.lable }}
+        <label>{{ form.title.label }}</label>
         {{ form.title }}
     </div>
 
