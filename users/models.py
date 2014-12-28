@@ -82,7 +82,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def get_email(self):
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
+    def __unicode__(self):              # __unicode__ on Python 2
         return self.email
 
     @property

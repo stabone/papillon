@@ -11,6 +11,19 @@ class MyAuthenticationForm(AuthenticationForm):
     }
 
 
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('user_name', 'last_name', 'email', 'bio', )
+
+        labels = {
+            'user_name': 'Vārds',
+            'last_name': 'Uzvārds',
+            'email': 'E-pasts',
+            'bio': 'Apraksts',
+        }
+
+
 class UserForm(forms.ModelForm):
 
     password1 = forms.CharField(label='Parole',

@@ -3,7 +3,6 @@ from django.views.decorators.csrf import csrf_protect
 from django.http import Http404
 from django.db import IntegrityError
 from django.db.models import Q
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -11,7 +10,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 from users.models import CustomUser
-from users.forms import UserForm
+from users.forms import UserForm, UserInfoForm
 
 
 @login_required
@@ -146,19 +145,29 @@ def registration(request):
 
     return render(request, 'user/registration.html', {'form': form})
 
+@login_required
+def user_form(request):
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    user_form =  UserInfoForm(instance=user)
+
+    return render(request, 'user/edit.html', {'form': user_form})
+
 
 @login_required
 @csrf_protect
 def user_edit(request):
-    user = get_object_or_404(CustomUser, id=request.user.id)
+
+    if request.method == 'GET':
+        return redirect(reverse_lazy('user_profile'))
 
     if request.method == 'POST':
-        user.groups.name = "cookie"
-        user.groups.permissions = ['one', 'two']
+        user = get_object_or_404(CustomUser, id=request.user.id)
+        user_form =  UserInfoForm(request.POST, instance=user)
 
-        return redirect(reverse_lazy('user_edit'))
+        user_form.save()
 
-    return render(request, 'user/edit.html', {'user_data': user})
+        return redirect(reverse_lazy('user_profile'))
+        # return render(request, 'user/edit.html', {'form': user_form})
 
 
 """
