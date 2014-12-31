@@ -11,25 +11,22 @@ def handle_file_upload(instance, filename):
     return filename
 
 
-class BadgeTypes(models.Model):
+class Badges(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __unicode__(self):
+        return self.title
+
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-title']
 
 
-class Badges(models.Model):
+class BadgeUser(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    badge = models.ForeignKey(BadgeTypes)
+    badge = models.ForeignKey(Badges)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
-    # unique = user_id and badge
-    class Meta:
-
-        unique_together = ('user', 'badge',)
-        ordering = ['-created_at']
 
