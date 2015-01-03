@@ -148,7 +148,6 @@ def add_article_comment(request):
         try:
             article_id = request.POST.get('articleID')
             comment = request.POST.get('comment')
-            is_js = request.POST.get('isJS', '')
         except KeyError:
             raise Http404
         except ValueError:
@@ -156,17 +155,13 @@ def add_article_comment(request):
 
         article = get_object_or_404(Articles, id=article_id)
         obj = ArticleComments.objects.create(
-                                        user=request.user,
+                                        comment_author=request.user,
                                         article=article,
                                         comment=comment)
         obj.save()
 
-    if is_js:
-        response_data.append({'success': 'Komentārs pievienots'})
-        return HttpResponse(response_data, content_type='application/json')
-    else:
-        messages.error(request, 'Komentārs tika pievienots')
-        return redirect(reverse('article_item', args=[article_id]))
+    messages.error(request, 'Komentārs tika pievienots')
+    return redirect(reverse('article_item', args=[article_id]))
 
 
 @login_required

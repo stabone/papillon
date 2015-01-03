@@ -5,7 +5,12 @@
 <div>
     <p>
         {{ poll.poll }}
-        <a href="{% url 'question_form' poll.id %}">Pieviento Jautājumu</a>
+
+        <a href="{% url 'question_form' poll.id %}"
+            alt="Pievienot jautājumu"
+            title="Pievienot jautājumu">
+            <i class="plus icon"></i>
+        </a>
     </p>
 
     <p>
@@ -18,17 +23,34 @@
     {% for question in questions %}
         <li>
             {{ question.question }}
-            <a href="{% url 'question_edit' question.id %}">Labot</a>
-            <a href="{% url 'answer_form' question.id %}">Pieviento Atbildi</a>
+            <a href="{% url 'question_edit' question.id %}">
+                <i class="edit icon"></i>
+            </a>
+
+            <a href="{% url 'answer_form' question.id %}"
+                alt="Pievienot jautājumu"
+                title="Pievienot jautājumu">
+                <i class="plus icon"></i>
+            </a>
+
             {% include 'question/delete.html' %}
 
             {% if question.answers %}
                 <ul>
                 {% for answer in question.answers %}
-                    <li>{{ answer.answer }}</li>
+                    <li>
+                        {{ answer.answer }}
+                        <a href="{% url 'answer_edit' answer.id %}">
+                            <i class="edit icon"></i>
+                        </a>
+                        <a href="">
+                            <i class="trash icon"></i>
+                        </a>
+                    </li>
                 {% endfor %}
                 </ul>
             {% endif %}
+
         </li>
     {% endfor %}
     </ul>

@@ -154,6 +154,7 @@ def question_form(request, poll_id):
 
     return render(request, 'question/form.html',
                     {'form': question_form,
+                    'poll_id': poll.id,
                     'url_post_to': reverse_lazy('question_create')})
 
 
@@ -161,11 +162,12 @@ def question_create(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('question_list'))
 
+    poll_id = request.POST.get('poll')
     question_form = QuestionForm(request.POST)
     if question_form.is_valid():
         question_form.save()
 
-        return redirect(reverse_lazy('poll_list'))
+        return redirect(reverse_lazy('poll_item', args=[poll_id]))
 
     return render(request, 'question/form.html', {'form': question_form})
 
@@ -177,6 +179,7 @@ def question_edit(request, question_id):
     return render(request, 'question/form.html',
                     {'form': question_form,
                     'record_id': question.id,
+                    'poll_id': question.poll.id,
                     'url_post_to': reverse_lazy('question_update')})
 
 
@@ -184,13 +187,14 @@ def question_update(request):
     if request.method == "POST":
         question_id = request.POST.get('record', '')
 
+        poll_id = request.POST.get('poll')
         info = get_object_or_404(Questions, id=question_id)
         question_form = QuestionForm(request.POST, instance=info)
 
         if question_form.is_valid():
             question_form.save()
 
-            return redirect(reverse_lazy('question_list'))
+            return redirect(reverse_lazy('poll_item', args=[poll_id]))
 
     return render(request, 'question/form.html', {'form': question_form})
 
@@ -224,6 +228,7 @@ def answer_form(request, question_id):
 
     return render(request, 'answer/form.html',
                     {'form': answer_form,
+                    'poll_id': question.poll.id,
                     'url_post_to': reverse_lazy('answer_create')})
 
 
@@ -231,12 +236,13 @@ def answer_create(request):
     if request.method == "GET":
         return redirect(reverse_lazy('answer_form'))
 
+    poll_id = request.POST.get('poll')
     answer_form = AnswerForm(request.POST)
 
     if answer_form.is_valid():
         answer_form.save()
 
-        return redirect(reverse_lazy('answer_list'))
+        return redirect(reverse_lazy('poll_item', args=[poll_id]))
 
     return render(request, 'answer/form.html', {'form': answer_form})
 
@@ -248,12 +254,14 @@ def answer_edit(request, answer_id):
     return render(request, 'answer/form.html',
                     {'form': answer_form,
                     'record_id': answer.id,
+                    'poll_id': answer.question.poll.id,
                     'url_post_to': reverse_lazy('answer_update')})
 
 
 def answer_update(request):
     if request.method == "POST":
         answer_id = request.POST.get('record', '')
+        poll_id = request.POST.get('poll')
 
         info = get_object_or_404(Answers, id=answer_id)
         answer = AnswerForm(request.POST, instance=info)
@@ -261,7 +269,7 @@ def answer_update(request):
         if answer.is_valid():
             answer.save()
 
-            return redirect(reverse_lazy('answer_list'))
+            return redirect(reverse_lazy('poll_item', args=[poll_id]))
 
     return render(request, 'answer/form.html', {'form': answer})
 

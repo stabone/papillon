@@ -1,0 +1,23 @@
+
+<div class="ui comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="content">
+                <a class="author">{{ comment.comment_author.get_full_name }}</a>
+                <div class="metadata">
+                    <div>{{ comment.created_at|date:"Y.m.d H:i:s" }}</div>
+                </div>
+                <div class="text">
+                    {{ comment.comment }}
+                </div>
+            </div>
+
+            <div class="actions">
+                <a class="#">Labot</a>
+                <a class="#">Dzēst</a>
+            </div>
+
+        </div>
+    {% endfor %}
+</div>
+

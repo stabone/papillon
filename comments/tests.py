@@ -1,35 +1,56 @@
 from django.test import TestCase
-from comments.models import MaterialComments, PollComments
+from comments.models import MaterialComments, PollComments, ArticleComments
 from polls.models import Polls
+from articles.models import Articles
+from categories.models import Categories
 from users.models import CustomUser
 
 from helper.utils import random_string
 
 
-"""
-class MaterialCommentsTest(TestCase):
-    def setUp(self):
-        user_obj = CustomUser.objects.create_user(user_name='Ivars',password='naglis',email='epasts@epasts.lv')
-        material = how to test file upload???
-        obj = MaterialComments.objects.create(user=user_obj,material=)
-        obj.save()
-
-    def test_material_creation(self):
-        obj = MaterialComments.objects.get(id=self.pk)
-        self.assertEqual(obj.course, self.random_str)
-"""
+def get_user_object():
+    return CustomUser.objects.create(
+                                user_name='Ivars',
+                                password='Naglis',
+                                email='{}@epasts.lv'.format(random_string(max=10)))
 
 
 class PollCommentsTest(TestCase):
+    user_obj = get_user_object()
+
     def setUp(self):
-        user_obj = CustomUser.objects.create(user_name='Ivars',password='Naglis',email='epasts@epasts.lv')
-        poll_obj = Polls.objects.create(user=user_obj,poll=random_string())
-        obj = PollComments.objects.create(user=user_obj,poll=poll_obj,comment=random_string(max=600))
+        poll_obj = Polls.objects.create(user=self.user_obj,poll=random_string())
+        obj = PollComments.objects.create(comment_author=get_user_object(),
+                                        poll=poll_obj,
+                                        comment=random_string(max=600))
         obj.save()
         self.pk = obj.id
 
     def test_comment_creation(self):
         obj = PollComments.objects.get(id=self.pk)
         self.assertEqual(obj.id, self.pk)
+
+
+class ArticleCommentTests(TestCase):
+
+    comment = 'unit test'
+    user_obj = get_user_object()
+
+    def setUp(self):
+        category = Categories.objects.create(title='TEST')
+        article  = Articles.objects.create(user=self.user_obj,
+                                    category=category,
+                                    title=random_string(max=255),
+                                    description='just test',
+                                    article='cookie')
+
+        comment = ArticleComments.objects.create(comment_author=self.user_obj,
+                                    article=article,
+                                    comment=self.comment)
+        comment.save()
+
+    def test_create_comment(self):
+        comment = ArticleComments.objects.get(comment_author=self.user_obj)
+        self.assertEqual(comment.comment, self.comment)
 
 

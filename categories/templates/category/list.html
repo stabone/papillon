@@ -10,7 +10,9 @@
         {% for category in categories %}
             <li>
                 {{ category.title }}
-                <a href="{% url 'category_edit' category.id %}">Labot</a>
+                <a href="{% url 'category_edit' category.id %}">
+                    <i class="edit icon"></i>
+                </a>
                 {% include 'category/delete.html' %}
             </li>
         {% endfor %}

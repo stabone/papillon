@@ -5,8 +5,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from badges.forms import BadgeForm, BadgeTypeForm
-from badges.models import Badges, BadgeTypes
+from badges.forms import BadgeForm
+from badges.models import Badges
 
 
 def get_badges(request):
@@ -82,13 +82,4 @@ def edit_badge_type(request):
 
     return render(request, '', {'form': form})
 
-
-@login_required
-@csrf_protect
-def delete_badge_type(request, type_id):
-
-    badge = get_object_or_404(BadgeTypes, id=type_id)
-    badge.delete()
-
-    return render(request, '', {})
 

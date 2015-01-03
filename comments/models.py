@@ -2,8 +2,6 @@
 from django.db import models
 from django.conf import settings
 
-from articles.models import Articles
-
 
 class MaterialComments(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -21,7 +19,7 @@ class MaterialComments(models.Model):
 
 
 class PollComments(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    comment_author = models.ForeignKey(settings.AUTH_USER_MODEL)
     poll = models.ForeignKey('polls.Polls')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,8 +34,8 @@ class PollComments(models.Model):
 
 
 class ArticleComments(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    article = models.ForeignKey(Articles)
+    comment_author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    article = models.ForeignKey('articles.Articles')
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

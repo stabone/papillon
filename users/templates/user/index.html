@@ -2,11 +2,13 @@
 
 
 {% block content %}
-    <div>
-        Lietotāju saraksts
-    </div>
+    <h2 class="header">Lietotāju saraksts</h2>
 
-    {% include "user/find.html" %}
+    {#% include "user/find.html" %#}
+
+    <div>
+        <div id="save-info" class="ui blue button">Saglabāt</div>
+    </div>
 
     <table class="ui sortable table segment">
         <thead>
@@ -33,7 +35,8 @@
                         {% endif %}
                     </td>
                     <td>
-                        {% include 'user/delete_user.html' %}
+                        {#% include 'user/delete_user.html' %#}
+                        <input type="checkbox" value="{{ user.id }}" />
                     </td>
                     <td>
                         <input type="checkbox" value="{{ user.id }}" />

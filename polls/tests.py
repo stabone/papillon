@@ -1,5 +1,5 @@
 from django.test import TestCase
-from polls.models import Polls, Questions
+from polls.models import Polls, Questions, Answers
 from users.models import CustomUser
 
 from helper.utils import random_string
@@ -31,5 +31,17 @@ class QuestionTest(TestCase):
     def test_question_creating(self):
         obj = Questions.objects.get(id=self.question_id)
         self.assertEqual(obj.question, self.question)
+
+
+class AnswersTest(TestCase):
+
+    def setUp(self):
+
+        user = CustomUser.objects.create_user(password='ivars', email='epasts@epasts.lv')
+        Polls.objects.bulk_create([
+            Polls(user=user, poll='cookie'),
+            Polls(user=user, poll='muffin'),
+            Polls(user=user, poll='pancake'),
+        ])
 
 

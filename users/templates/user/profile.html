@@ -3,7 +3,7 @@
 {% block content %}
 
     <div>
-        {% include 'user/find.html' %}
+        {#% include 'user/find.html' %#}
     </div>
 
     <ul>
@@ -45,10 +45,15 @@
                 <td>E-pasts:</td>
                 <td>{{ user.email }}</td>
             </tr>
+            <tr>
+                <td>Apraksts:</td>
+                <td>{{ user.bio }}</td>
+            </tr>
+
         </table>
 
-        Badgle list
         {% if badges %}
+            Badges
             <ul>
                 {% for badge in badges %}
                     <li alt="{{ badge.name }}" title="{{ badge.name }}">{{ badge.name }}</li>

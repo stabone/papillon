@@ -1,5 +1,5 @@
 from django import forms
-from badges.models import Badges, BadgeTypes
+from badges.models import Badges
 
 
 class BadgeForm(forms.ModelForm):
@@ -7,26 +7,10 @@ class BadgeForm(forms.ModelForm):
     class Meta:
         model = Badges
 
-        fields = ('badge',)
-
-        lables = {
-            'badge': 'Nosaukums',
-        }
-
-        widgets = {
-            'badge': forms.TextInput(attrs={'autofocus': ''})
-        }
-
-
-class BadgeTypeForm(forms.ModelForm):
-
-    class Meta:
-        model = BadgeTypes
-        fields = ('title', 'description',)
+        fields = ('title',)
 
         lables = {
             'title': 'Nosaukums',
-            'description': 'Apraksts',
         }
 
         widgets = {

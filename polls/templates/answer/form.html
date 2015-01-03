@@ -13,6 +13,10 @@
         <input type="hidden" name="record" value="{{ record_id }}">
     {% endif %}
 
+    {% if poll_id %}
+        <input type="hidden" name="poll" value="{{ poll_id }}">
+    {% endif %}
+
     <div class="field">
         <label>{{ form.question.label }}</label>
         {{ form.question }}
