@@ -8,42 +8,52 @@
         <a href="{% url 'article_add' %}">Pievienot ierakstu</a>
     {% endif %}
 
+    {% if categories %}
+        <ul>
+            <li>Viss</a>
+            {% for category in categories %}
+                <li>
+                    <a href="{{ category.id }}">{{ category.title }}</a>
+                </li>
+            {% endfor %}
+        <ul>
+    {% endif %}
 
-        {% for article in articles %}
-            <div class="ui blue segment">
-                <h3 class="ui dividing large header">
-                    <a href="{% url 'article_item' article.id %}">
-                        {{ article.title|title }}
+    {% for article in articles %}
+        <div class="ui blue segment">
+            <h3 class="ui dividing large header">
+                <a href="{% url 'article_item' article.id %}">
+                    {{ article.title|title }}
+                </a>
+            </h3>
+
+            {% if user.is_admin %}
+                <div>
+                    <a href="">
+                        <i class="edit icon"></i>
                     </a>
-                </h3>
+                    {% include 'article/delete.html' %}
+                </div>
+            {% endif %}
 
-                {% if user.is_admin %}
-                    <div>
-                        <a href="">
-                            <i class="edit icon"></i>
-                        </a>
-                        {% include 'article/delete.html' %}
-                    </div>
-                {% endif %}
+            <p>
+                {{ article.description }}
+                <a href="{% url 'article_item' article.id %}"> Vairāk...</a>
+                <!-- <img alt="Preview image" src="http://dummyimage.com/250x250/ecf0f1/8e44ad&text=Title'"> -->
+            </p>
 
-                <p>
-                    {{ article.description }}
-                    <a href="{% url 'article_item' article.id %}"> Vairāk...</a>
-                    <!-- <img alt="Preview image" src="http://dummyimage.com/250x250/ecf0f1/8e44ad&text=Title'"> -->
-                </p>
-
+            <div class="">
                 <div class="">
-                    <div class="">
-                        {{ article.user.get_full_name }}
-                    </div>
-
-                    <div class="">
-                        {{ article.created_at|date:"Y.m.d" }}
-                    </div>
+                    {{ article.user.get_full_name }}
                 </div>
 
+                <div class="">
+                    {{ article.created_at|date:"Y.m.d" }}
+                </div>
             </div>
-        {% endfor %}
+
+        </div>
+    {% endfor %}
 
 
     {% if articles.paginator.num_pages > 1 %}

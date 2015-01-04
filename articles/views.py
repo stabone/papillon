@@ -5,14 +5,24 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from articles.models import Articles
+from category.models import Categories
 from articles.forms import ArticleForm
 from comments.models import ArticleComments
 
 
 ## TODO
 # for articles > markdown file would be nice
-def index(request, page_numb=None):
-    article_list = Articles.objects.all()
+def get_articles(category_id):
+    if not category_id:
+        return Articles.objects.all()
+
+    category = get_object_or_404(Categories, id=category_id)
+    return Articles.objects.filter(category=category)
+
+
+def index(request, page_numb=None, category=None):
+
+    article_list = get_articles(category)
 
     paginator = Paginator(article_list, 10)
 
