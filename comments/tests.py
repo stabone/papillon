@@ -9,17 +9,24 @@ from helper.utils import random_string
 
 
 def get_user_object():
-    return CustomUser.objects.create(
+    user_object = CustomUser.objects.create(
                                 user_name='Ivars',
                                 password='Naglis',
                                 email='{0}@epasts.lv'.format(random_string(max=10)))
 
+    user_object.save()
+    return user_object
+
 
 class PollCommentsTest(TestCase):
-    user_obj = get_user_object()
 
     def setUp(self):
-        poll_obj = Polls.objects.create(user=self.user_obj,poll=random_string())
+        user_obj = CustomUser.objects.create(
+                                user_name='Ivars',
+                                password='Naglis',
+                                email='{0}@epasts.lv'.format(random_string(max=10)))
+
+        poll_obj = Polls.objects.create(user=user_obj,poll=random_string())
         obj = PollComments.objects.create(comment_author=get_user_object(),
                                         poll=poll_obj,
                                         comment=random_string(max=600))
@@ -34,23 +41,33 @@ class PollCommentsTest(TestCase):
 class ArticleCommentTests(TestCase):
 
     comment = 'unit test'
-    user_obj = get_user_object()
+
 
     def setUp(self):
+        self.article_author = CustomUser.objects.create(
+                                user_name='Ivars',
+                                password='Naglis',
+                                email='{0}@epasts.lv'.format(random_string(max=10)))
+
+        self.comment_author = CustomUser.objects.create(
+                                user_name='NotIvars',
+                                password='NotNaglis',
+                                email='{0}@epasts.lv'.format(random_string(max=10)))
+
         category = Categories.objects.create(title='TEST')
-        article  = Articles.objects.create(user=self.user_obj,
+        article  = Articles.objects.create(user=self.article_author,
                                     category=category,
                                     title=random_string(max=255),
                                     description='just test',
                                     article='cookie')
 
-        comment = ArticleComments.objects.create(comment_author=self.user_obj,
+        comment = ArticleComments.objects.create(comment_author=self.comment_author,
                                     article=article,
                                     comment=self.comment)
         comment.save()
 
     def test_create_comment(self):
-        comment = ArticleComments.objects.get(comment_author=self.user_obj)
+        comment = ArticleComments.objects.get(comment_author=self.comment_author)
         self.assertEqual(comment.comment, self.comment)
 
 
