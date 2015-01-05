@@ -12,7 +12,7 @@ def get_user_object():
     return CustomUser.objects.create(
                                 user_name='Ivars',
                                 password='Naglis',
-                                email='{}@epasts.lv'.format(random_string(max=10)))
+                                email='{0}@epasts.lv'.format(random_string(max=10)))
 
 
 class PollCommentsTest(TestCase):
