@@ -29,6 +29,7 @@ class Articles(models.Model):
     embeded = models.TextField(blank=True)
     article = models.TextField(blank=True)
     modify  = models.BooleanField(default=True)
+    post    = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -44,10 +45,11 @@ class Articles(models.Model):
         )
 
 
-class Reviews(models.Model):
+class ArticleReviews(models.Model):
     article = models.ForeignKey(Articles, db_index=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    accept = models.BooleanField(default=True)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='review_author')
+    review_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='review_user')
+    accept = models.BooleanField(default=False)
     notes = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,8 +1,9 @@
 from django.test import TestCase
 
 from users.models import CustomUser
-from articles.models import Articles
+from articles.models import Articles, ArticleReviews
 from categories.models import Categories
+from unittest import skip
 
 
 class ArticleTest(TestCase):
@@ -19,6 +20,13 @@ class ArticleTest(TestCase):
                                             password='password',
                                             email='epasts@epasts.lv')
         self.user.save()
+
+        super_user = CustomUser.objects.create_superuser(email='email@pasts.lv',
+                                            password='super_password',
+                                            user_name='super_user_name',
+                                            last_name='super_last_name')
+        super_user.save()
+
         category = Categories.objects.create(title='abc')
 
         article = Articles.objects.create(
@@ -30,8 +38,26 @@ class ArticleTest(TestCase):
 
         article.save()
 
+        article_review = ArticleReviews.objects.create(author=self.user,
+                                      review_user=super_user,
+                                      article=article)
+
     def test_create_article(self):
         article = Articles.objects.get(id=1)
 
         self.assertEqual('Test Article', article.title)
+
+    def test_hidden_new_article(self):
+        article = Articles.objects.get(id=1)
+
+        self.assertFalse(article.post, 'Hide new articles')
+
+    def test_create_article_review(self):
+        article_reviews = ArticleReviews.objects.all()
+
+        self.assertEqual(article_reviews.count(), 1, 'Has review record')
+
+    @skip('for later')
+    def test_if_positive_review(self):
+        pass
 

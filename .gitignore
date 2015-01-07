@@ -10,3 +10,8 @@
 *.sqlite
 *.sqlite3
 
+# IDE specific
+.idea*
+.idea/*
+.idea/*.xml
+

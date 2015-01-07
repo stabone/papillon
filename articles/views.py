@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from articles.models import Articles
-from category.models import Categories
+from categories.models import Categories
 from articles.forms import ArticleForm
 from comments.models import ArticleComments
 
