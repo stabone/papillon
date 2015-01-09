@@ -1,7 +1,7 @@
 #-*- coding: utf-8 -*-
 from django import forms
 # from django_markdown.widgets import MarkdownWidget
-from articles.models import Articles, Reviews
+from articles.models import Articles, ArticleReviews
 
 
 class ArticleForm(forms.ModelForm):
@@ -40,7 +40,8 @@ class ArticleForm(forms.ModelForm):
 class ReviewForm(forms.ModelForm):
 
     class Meta:
-        model = Reviews
+        model = ArticleReviews
+
         fields = ('accept', 'notes',)
 
         widgets = {

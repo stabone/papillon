@@ -1,3 +1,4 @@
+#-*- coding: utf-8 -*-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from django.views.decorators.csrf import csrf_protect
@@ -87,8 +88,12 @@ def item(request, article_id):
 
     article = get_object_or_404(Articles, id=article_id)
     comments = ArticleComments.objects.select_related('user').filter(article=article_id)
+    comment_count = 0 if not comments else comments.count()
 
-    return render(request, 'article/item.html', {'article': article, 'comments': comments})
+    return render(request, 'article/item.html',
+                                {'article': article,
+                                'comments': comments,
+                                'comment_info': '{0} Komentāri'.format(comment_count)})
 
 
 @login_required
