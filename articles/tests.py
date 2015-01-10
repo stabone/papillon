@@ -29,18 +29,21 @@ class ArticleTest(TestCase):
 
         category = Categories.objects.create(title='abc')
 
-        article = Articles.objects.create(
-                                    user=self.user,
-                                    category=category,
-                                    title=self.title,
-                                    embeded=self.embeded,
-                                    description=self.description)
+        Articles.objects.bulk_create([
+            Articles(user=self.user, category=category,
+                    title=self.title, embeded=self.embeded,
+                    description=self.description),
+            Articles(user=self.user, category=category,
+                    title=self.title+'second', embeded=self.embeded,
+                    description=self.description),
+        ])
 
-        article.save()
-
-        article_review = ArticleReviews.objects.create(author=self.user,
-                                      review_user=super_user,
-                                      article=article)
+        ArticleReviews.objects.bulk_create([
+            ArticleReviews(author=self.user, review_user=super_user,
+                        article=Articles.objects.get(id=1)),
+            ArticleReviews(author=self.user, review_user=super_user,
+                        accept=True, article=Articles.objects.get(id=2)),
+        ])
 
     def test_create_article(self):
         article = Articles.objects.get(id=1)
@@ -55,9 +58,16 @@ class ArticleTest(TestCase):
     def test_create_article_review(self):
         article_reviews = ArticleReviews.objects.all()
 
-        self.assertEqual(article_reviews.count(), 1, 'Has review record')
+        self.assertEqual(article_reviews.count(), 2, 'Review count for now 2')
 
-    @skip('for later')
+    # @skipIf(True)
+    def test_if_negative_review(self):
+        article_review = ArticleReviews.objects.get(id=1)
+
+        self.assertFalse(article_review.accept, msg='This review should be negative')
+
     def test_if_positive_review(self):
-        pass
+        article_review = ArticleReviews.objects.get(id=2)
+
+        self.assertTrue(article_review.accept, msg='This review should be positive')
 
