@@ -73,9 +73,10 @@ def update(request, article_id):
     if request.method == 'GET':
         return redirect(reverse_lazy('article_item', args=[article_id]))
 
-    category_id = reqeuest.POST.get('id', '')
+    category_id = request.POST.get('id', '')
     info = get_object_or_404(Articles, id=category_id)
-    article = CategoryForm(request.POST, instance=info)
+    # article = CategoryForm(request.POST, instance=info)
+    article = ArticleForm(request.POST, instance=info)
 
     if article.is_valid():
         article.save()
@@ -92,8 +93,8 @@ def item(request, article_id):
     comments = ArticleComments.objects.select_related('user').filter(article=article_id)
     comment_count = 0 if not comments else comments.count()
 
-    return render(request, 'article/item.html',
-                                {'article': article,
+    return render(request, 'article/item.html', {
+                                'article': article,
                                 'comments': comments,
                                 'comment_info': '{0} Komentāri'.format(comment_count)})
 
@@ -102,7 +103,7 @@ def item(request, article_id):
 @csrf_protect
 def delete(request):
     if request.method == "POST":
-        article_id = request.POST.get('article_id')
+        article_id = request.POST.get('article_id', '')
 
         article = get_object_or_404(Articles, id=article_id)
         article.delete()
@@ -112,28 +113,26 @@ def delete(request):
 
 @login_required
 def list_review(request):
-    pass
+    if request.method == "GET":
+        return redirect(reverse_lazy('article_base'))
 
 
 def add_review(request):
-    if reqeuest.method == "GET":
-        return redirect(reverse_lazy('uz review lapu'))
-
-    # check data
-    # find article
-    # send notification to author
-    pass
+    if request.method == "GET":
+        return redirect(reverse_lazy('article_base'))
 
 
 def edit_review(request):
-    pass
+    if request.method == "GET":
+        return redirect(reverse_lazy('article_base'))
 
 
 def update_review(request):
-    pass
+    if request.method == "GET":
+        return redirect(reverse_lazy('article_base'))
 
 
 def delete_review(request):
-    pass
-
+    if request.method == "GET":
+        return redirect(reverse_lazy('article_base'))
 

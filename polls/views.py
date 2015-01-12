@@ -60,6 +60,8 @@ def poll_form(request):
                     'url_post_to': reverse_lazy('poll_create')})
 
 
+@login_required
+@csrf_protect
 def poll_create(request):
     if request.method == "GET":
         return redirect(reverse_lazy('poll_form'))
@@ -108,7 +110,7 @@ def get_questions_and_answers(poll_object):
     for question in questions:
         record_list.append({
             'id': question.id,
-            'question': question.question
+            'question': question.question,
             'answers': Answers.objects.filter(question=question)
         })
 
