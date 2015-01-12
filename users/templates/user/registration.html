@@ -57,78 +57,78 @@
         </div>
     {% endif %}
 
-    <form action="{% url 'user_registration' %}" method="POST">
+    <form action="{% url 'user_registration' %}"
+        method="POST"
+        class="ui form segment">
+
         {% csrf_token %}
 
-        <div class="ui form segment">
+        <div class="field">
+            <label for="{{ form.email.id_for_label }}">
+                {{ form.email.label }}
+            </label>
 
-            <div class="field">
-                <label for="{{ form.email.id_for_label }}">
-                    {{ form.email.label }}
-                </label>
-
-                <div class="ui left labeled icon input">
-                    {{ form.email }}
-                    <i class="mail icon"></i>
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui left icon input">
+                {{ form.email }}
+                <i class="mail icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.user_name.id_for_label }}">
-                    {{ form.user_name.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.user_name.id_for_label }}">
+                {{ form.user_name.label }}
+            </label>
 
-                <div class="ui left labeled icon input">
-                    {{ form.user_name }}
-                    <i class="user icon"></i>
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui left icon input">
+                {{ form.user_name }}
+                <i class="user icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.last_name.id_for_label }}">
-                    {{ form.last_name.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.last_name.id_for_label }}">
+                {{ form.last_name.label }}
+            </label>
 
-                <div class="ui left labeled icon input">
-                    {{ form.last_name }}
-                    <i class="user icon"></i>
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui left icon input">
+                {{ form.last_name }}
+                <i class="user icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.password1.id_for_label }}">
-                    {{ form.password1.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.password1.id_for_label }}">
+                {{ form.password1.label }}
+            </label>
 
-                <div class="ui left labeled icon input">
-                    {{ form.password1 }}
-                    <i class="lock icon"></i>
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui left icon input">
+                {{ form.password1 }}
+                <i class="lock icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
+        </div>
 
-            <div class="field">
-                <label for="{{ form.password2.id_for_label }}">
-                    {{ form.password2.label }}
-                </label>
+        <div class="field">
+            <label for="{{ form.password2.id_for_label }}">
+                {{ form.password2.label }}
+            </label>
 
-                <div class="ui left labeled icon input">
-                    {{ form.password2 }}
-                    <i class="lock icon"></i>
-                    <div class="ui corner label">
-                        <i class="icon asterisk"></i>
-                    </div>
+            <div class="ui left icon input">
+                {{ form.password2 }}
+                <i class="lock icon"></i>
+                <div class="ui corner label">
+                    <i class="icon asterisk"></i>
                 </div>
             </div>
         </div>
