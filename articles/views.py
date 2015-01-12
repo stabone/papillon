@@ -70,15 +70,17 @@ def edit(request, article_id):
 @csrf_protect
 def update(request, article_id):
 
-    if request.method == "POST":
-        category_id = reqeuest.POST.get('id', '')
-        info = get_object_or_404(Articles, id=category_id)
-        article = CategoryForm(request.POST, instance=info)
+    if request.method == 'GET':
+        return redirect(reverse_lazy('article_item', args=[article_id]))
 
-        if article.is_valid():
-            article.save()
+    category_id = reqeuest.POST.get('id', '')
+    info = get_object_or_404(Articles, id=category_id)
+    article = CategoryForm(request.POST, instance=info)
 
-            return redirect(reverse_lazy('article_item', args=[article_id]))
+    if article.is_valid():
+        article.save()
+
+        return redirect(reverse_lazy('article_item', args=[article_id]))
 
     return render(request, 'article/edit.html', {'form': article, 'article_id': article_id})
 
@@ -108,6 +110,11 @@ def delete(request):
     return redirect(reverse_lazy('article_base'))
 
 
+@login_required
+def list_review(request):
+    pass
+
+
 def add_review(request):
     if reqeuest.method == "GET":
         return redirect(reverse_lazy('uz review lapu'))
@@ -118,10 +125,15 @@ def add_review(request):
     pass
 
 
+def edit_review(request):
+    pass
+
+
 def update_review(request):
     pass
 
 
-def show_review(request):
+def delete_review(request):
     pass
+
 
