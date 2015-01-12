@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form>
+    {% for question in questions %}
+        {% answer in answers %}
+            <input type="radio" name="" value="" />
+        {% endfor %}
+    {% endfor %}
+
+    <input type="submit" class="positive ui button"/>
+</form>
+
+{% endblock content %}

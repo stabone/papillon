@@ -6,6 +6,7 @@ urlpatterns = patterns('',
     url(r'^create/$',    'polls.views.poll_create', name='poll_create'),
     url(r'^edit/(\d+)/$','polls.views.poll_edit',   name='poll_edit'),
     url(r'^item/(\d+)/$','polls.views.poll_item',   name='poll_item'),
+    url(r'^item/(\d+)/$','polls.views.poll_create', name='poll_create'),
     url(r'^update/$',    'polls.views.poll_update', name='poll_update'),
     url(r'^delete/$',    'polls.views.poll_delete', name='poll_delete'),
 

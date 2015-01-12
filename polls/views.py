@@ -106,12 +106,11 @@ def get_questions_and_answers(poll_object):
 
     record_list = []
     for question in questions:
-        d = {}
-        d['id'] = question.id
-        d['question'] = question.question
-        d['answers'] = Answers.objects.filter(question=question)
-
-        record_list.append(d)
+        record_list.append({
+            'id': question.id,
+            'question': question.question
+            'answers': Answers.objects.filter(question=question)
+        })
 
     return record_list
 
@@ -121,6 +120,15 @@ def poll_item(request, poll_id):
     questions = get_questions_and_answers(poll)
 
     return render(request, 'poll/item.html',
+                            {'poll': poll,
+                            'questions': questions})
+
+
+def poll_correct(request, poll_id):
+    poll = get_object_or_404(Polls, id=poll_id)
+    questions = get_questions_and_answers(poll)
+
+    return render(request, 'poll/create.html',
                             {'poll': poll,
                             'questions': questions})
 
