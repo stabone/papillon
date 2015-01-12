@@ -2,17 +2,9 @@
 
 {% block content %}
 
-    {% if form.username.errors %}
+    {% if form.error_messages %}
         <ul class="ui error message">
-            {% for error in form.username.errors %}
-                <li>{{ error|escape }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-
-    {% if form.password.errors %}
-        <ul class="ui error message">
-            {% for error in form.password.errors %}
+            {% for error in form.error_messages %}
                 <li>{{ error|escape }}</li>
             {% endfor %}
         </ul>
