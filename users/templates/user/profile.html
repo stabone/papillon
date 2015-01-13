@@ -10,21 +10,17 @@
         <li>
             <a href="{% url 'messaging_inbox' %}">Ziņas</a>
         </li>
+        {% if user.is_admin %}
         <li>
-            <a href="{% url 'user_base' %}">Lietotāji</a>
+            <a href="{% url 'user_base' %}">Lietotāji adminstrēšana</a>
         </li>
+        {% endif %}
         <li>
             <a href="{% url 'user_form' %}">Labot profilu</a>
         </li>
-        <li>
+        <!-- <li>
             <a href="{% url 'create_admin' %}">Admin. tiesības</a>
-        </li>
-
-        {% if user.is_superuser %}
-            <li>
-                <a href="{% url 'group_list' %}">Grupas</a>
-            </li>
-        {% endif %}
+        </li> -->
     </ul>
 
     <div>

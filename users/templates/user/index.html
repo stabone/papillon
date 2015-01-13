@@ -7,29 +7,18 @@
     {% include "user/find.html" %}
 
     <div>
-        <!--<div id="save-info" class="ui blue button">Saglabāt</div>-->
         <div id="delete-info" class="ui red button">Dzēst</div>
-        <div id="block-info" class="ui red button">Bloķēt</div>
+        <div id="block-info"  class="ui red button">Bloķēt</div>
     </div>
 
-    <form method="post" action="{% url 'user_block' %}">
-        {% csrf_token %}
-        <input type="hidden" name="data" value="3" />
-        <input type="hidden" name="data" value="4" />
-        <input type="hidden" name="data" value="5" />
-        <input type="hidden" name="data" value="2" />
-        <input type="hidden" name="data" value="8" />
-
-        <input type="submit" />
-    </form>
     <table class="ui sortable table segment">
         <thead>
             <tr>
                 <th>Vārds</th>
                 <th>Uzvārds</th>
                 <th>Status</th>
-                <th>Dzēst</th>
-                <th>Bloķēt</th>
+                <th>Dzēst?</th>
+                <th>Bloķēts?</th>
             </tr>
         </thead>
         <tbody>
@@ -41,11 +30,13 @@
                         {{ user.get_user_type }}
                     </td>
                     <td>
-                        {#% include 'user/delete_user.html' %#}
                         <input class="delete-user" type="checkbox" data-id="{{ user.id }}"/>
                     </td>
                     <td>
-                        <input class="block-user" type="checkbox" data-id="{{ user.id }}"/>
+                        <input class="block-user" 
+                                type="checkbox" 
+                                data-id="{{ user.id }}"
+                                {{ user.is_active|yesno:'checked, ' }} />
                     </td>
                 </tr>
             {% endfor %}
@@ -60,5 +51,9 @@
             </tfoot>
         </tbody>
     </table>
+
+    <form id="user-delete-hidden" method="post" action="{% url 'user_delete' %}">
+        {% csrf_token %}
+    </form>
 {% endblock content %}
 

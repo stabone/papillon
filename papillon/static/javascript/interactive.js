@@ -256,6 +256,10 @@ $(document).on('click', '.ui.error.message', function() {
     $(this).closest('.message').fadeOut();
 });
 
+function hideElementByID(elemID) {
+    $('#'+elemID).hide();
+}
+
 var deleteList = {},
     blockList = {};
 /** action part*/
@@ -266,29 +270,54 @@ $('#delete-info').click(function() {
         return ;
     }
 
-    console.log(deleteList);
+    var finalList = Array();
 
-    sendAction(deleteList, '/user/delete/');
+    for(var elem in deleteList) {
+        var obj = {};
+        /** delete only if is set */
+        if (deleteList[elem]) {
+            obj.id = elem;
+
+            finalList.push(obj);
+
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'data',
+                value: elem
+            }).appendTo('#user-delete-hidden');
+
+        }
+    }
+
+    if (finalList.length > 0) {
+        $('#user-delete-hidden').submit();
+    }
+
     deleteList = {}
+    // sendAction(finalList, '/user/delete/');
 });
 
 $('#block-info').click(function() {
     if (jQuery.isEmptyObject(blockList) ) {
-        console.log('objekts ir tukšs');
+        console.log('Empty object');
         return ;
     }
 
-    var user_list = Array();
+    var finalList = Array();
     for(var key in blockList) {
         var obj = {};
         obj['id']     = key;
         obj['status'] = (blockList[key] === true) ? 1 : 0;
-        user_list.push(obj);
+        finalList.push(obj);
     }
 
-    sendAction(blockList, '/user/block/');
     blockList = {};
+
+    if (sendAction(finalList, '/user/block/')) {
+        hideRecords(finalList);
+    }
 })
+
 
 function sendAction(userObject, postUrl) {
     console.log(userObject);
@@ -304,10 +333,12 @@ function sendAction(userObject, postUrl) {
             'X-CSRFToken': csrftoken
         },
         success: function(data) {
-            console.log('all is good');
+            // console.log('all is good');
+            return true;
         },
         error: function(xhr, ajaxOpt, throwError) {
             console.log(xhr.responseText)
+            return false;
         }
     });
 }
@@ -317,7 +348,7 @@ $('.delete-user').change(function() {
     var id = $(this).data('id');
     deleteList[id] = this.checked;
 
-//    console.log(deleteList);
+    console.log(deleteList);
 });
 
 $('.block-user').change(function() {

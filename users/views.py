@@ -214,19 +214,15 @@ def find_user(request):
 @csrf_protect
 def user_delete(request):
 
-    response_data = {}
-
     if request.method == 'GET':
-        response_data['error': 'Nederīgs pieprasījums']
-        return HttpResponse(json.dumps(response_data), content_type='application/json')
+        return redirect(reverse_lazy('user_base'))
 
-    user_list = json.loads(request.POST.get('data'))
+    user_list = request.POST.getlist('data', [])
     print(user_list)
 
-    for user_obj in user_list:
-        user_id = user_obj['id']
+    for user_id in user_list:
         custom_user = get_object_or_404(CustomUser, id=user_id)
-        # custom_user.delete()
+        custom_user.delete()
 
     return redirect(reverse_lazy('user_base'))
 
@@ -236,16 +232,16 @@ def user_block(request):
     response_data ={}
 
     if request.method == 'GET':
-        response_data['error': 'Nederīgs pieprasījums']
+        response_data['error'] = 'Nederīgs pieprasījums'
         return HttpResponse(json.dumps(response_data), content_type='application/json')
 
-    user_list = json.loads(request.POST.get('data'))
+    user_list = json.loads(data)
 
     for user_obj in user_list:
         user_id = user_obj['id']
         user_status = user_obj['status']
         custom_user = get_object_or_404(CustomUser, id=user_id)
-        custom_user.is_active = False if user_status == 1 else True
+        custom_user.is_active = True if user_status == 1 else False
         custom_user.save()
 
     response_data['ok'] = 'Informācija atjaunota'
