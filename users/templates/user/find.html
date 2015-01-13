@@ -1,17 +1,15 @@
 
-<form method="POST" action="{% url 'user_find' %}">
+<form method="POST" action="{% url 'user_find' %}" class="ui form segment">
     {% csrf_token %}
 
-    <div class="ui form segment">
-        <div class="field">
-            <div class="ui left labeled icon input">
-                <input type="search" placeholder="Meklēt" name="user" />
-                <i class="search icon"></i>
-            </div>
+    <div class="field">
+        <div class="ui left icon input">
+            <input type="search" placeholder="Meklēt" name="user" />
+            <i class="search icon"></i>
         </div>
-
-        <input class="positive ui button" type="submit" value="Meklēt" />
     </div>
+
+    <input class="positive ui button" type="submit" value="Meklēt" />
 
 </form>
 

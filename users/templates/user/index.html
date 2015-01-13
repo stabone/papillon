@@ -4,12 +4,24 @@
 {% block content %}
     <h2 class="header">Lietotāju saraksts</h2>
 
-    {#% include "user/find.html" %#}
+    {% include "user/find.html" %}
 
     <div>
-        <div id="save-info" class="ui blue button">Saglabāt</div>
+        <!--<div id="save-info" class="ui blue button">Saglabāt</div>-->
+        <div id="delete-info" class="ui red button">Dzēst</div>
+        <div id="block-info" class="ui red button">Bloķēt</div>
     </div>
 
+    <form method="post" action="{% url 'user_block' %}">
+        {% csrf_token %}
+        <input type="hidden" name="data" value="3" />
+        <input type="hidden" name="data" value="4" />
+        <input type="hidden" name="data" value="5" />
+        <input type="hidden" name="data" value="2" />
+        <input type="hidden" name="data" value="8" />
+
+        <input type="submit" />
+    </form>
     <table class="ui sortable table segment">
         <thead>
             <tr>
@@ -26,26 +38,20 @@
                     <td><a href="{% url 'user_profile' %}">{{ user.user_name }}</a></td>
                     <td>{{ user.last_name }}</td>
                     <td>
-                        {% if user.is_superuser and user.is_admin %}
-                            Superlietotājs
-                        {% elif user.is_admin %}
-                            Admins
-                        {% else %}
-                            Lietotājs
-                        {% endif %}
+                        {{ user.get_user_type }}
                     </td>
                     <td>
                         {#% include 'user/delete_user.html' %#}
-                        <input type="checkbox" value="{{ user.id }}" />
+                        <input class="delete-user" type="checkbox" data-id="{{ user.id }}"/>
                     </td>
                     <td>
-                        <input type="checkbox" value="{{ user.id }}" />
+                        <input class="block-user" type="checkbox" data-id="{{ user.id }}"/>
                     </td>
                 </tr>
             {% endfor %}
             <tfoot>
                 <tr>
-                    <th>kautkas</th>
+                    <th>Papillon</th>
                     <th></th>
                     <th></th>
                     <th></th>

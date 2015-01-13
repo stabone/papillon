@@ -82,6 +82,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def get_email(self):
         return self.email
 
+    def get_user_type(self):
+        types = {1: 'Lietotājs', 2: 'Autors', 3: 'Adminstrators'}
+        return types[int(self.user_type)]
+
     def __unicode__(self):              # __unicode__ on Python 2
         return self.email
 

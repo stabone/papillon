@@ -256,8 +256,76 @@ $(document).on('click', '.ui.error.message', function() {
     $(this).closest('.message').fadeOut();
 });
 
+var deleteList = {},
+    blockList = {};
+/** action part*/
 
+$('#delete-info').click(function() {
+    if (jQuery.isEmptyObject(deleteList) ) {
+        console.log('objekts ir tukšs');
+        return ;
+    }
 
+    console.log(deleteList);
+
+    sendAction(deleteList, '/user/delete/');
+    deleteList = {}
+});
+
+$('#block-info').click(function() {
+    if (jQuery.isEmptyObject(blockList) ) {
+        console.log('objekts ir tukšs');
+        return ;
+    }
+
+    var user_list = Array();
+    for(var key in blockList) {
+        var obj = {};
+        obj['id']     = key;
+        obj['status'] = (blockList[key] === true) ? 1 : 0;
+        user_list.push(obj);
+    }
+
+    sendAction(blockList, '/user/block/');
+    blockList = {};
+})
+
+function sendAction(userObject, postUrl) {
+    console.log(userObject);
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: postUrl,
+        data: {
+            'data': JSON.stringify(userObject)
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function(data) {
+            console.log('all is good');
+        },
+        error: function(xhr, ajaxOpt, throwError) {
+            console.log(xhr.responseText)
+        }
+    });
+}
+
+/** listiners */
+$('.delete-user').change(function() {
+    var id = $(this).data('id');
+    deleteList[id] = this.checked;
+
+//    console.log(deleteList);
+});
+
+$('.block-user').change(function() {
+    var id = $(this).data('id');
+    blockList[id] = this.checked;
+
+//    console.log(blockList);
+});
 
 /**
  * AngularJS logic
@@ -265,6 +333,7 @@ $(document).on('click', '.ui.error.message', function() {
  **/
 var app = angular.module('papillon-app', []);
 
+/*
 app.controler('ArticleComment', function($scope, $document, $http) {
     // logic here
     $scope.comment; /// comment for article
@@ -276,3 +345,4 @@ app.controler('ArticleComment', function($scope, $document, $http) {
 
 });
 
+*/

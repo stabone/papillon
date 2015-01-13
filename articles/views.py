@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from articles.models import Articles
+from articles.models import Articles, ArticleReviews
 from categories.models import Categories
 from articles.forms import ArticleForm
 from comments.models import ArticleComments
@@ -135,4 +135,12 @@ def update_review(request):
 def delete_review(request):
     if request.method == "GET":
         return redirect(reverse_lazy('article_base'))
+
+    article_id = request.POST.get('review_id')
+
+    article = get_object_or_404(ArticleReviews, id=article_id)
+    article.delete()
+
+    return redirect(reverse_lazy('article_base'))
+
 

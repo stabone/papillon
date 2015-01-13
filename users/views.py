@@ -1,6 +1,9 @@
+#-*- coding: utf-8 -*-
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.urlresolvers import reverse_lazy
@@ -148,7 +151,7 @@ def registration(request):
 @login_required
 def user_form(request):
     user = get_object_or_404(CustomUser, id=request.user.id)
-    user_form =  UserInfoForm(instance=user)
+    user_form = UserInfoForm(instance=user)
 
     return render(request, 'user/edit.html', {'form': user_form})
 
@@ -161,8 +164,9 @@ def user_edit(request):
         return redirect(reverse_lazy('user_profile'))
 
     if request.method == 'POST':
+        print(request.POST)
         user = get_object_or_404(CustomUser, id=request.user.id)
-        user_form =  UserInfoForm(request.POST, instance=user)
+        user_form = UserInfoForm(request.POST, instance=user)
 
         user_form.save()
 
@@ -183,13 +187,9 @@ def login_user(request):
     if user is not None:
         if user.is_active:
             login(request, user)
-            # redirect() redirect to a success page
         else:
-            # return a 'disabled login' error message
-            # redirect()
             pass
     else:
-        # return an 'invalid login' error message
         pass
 
 
@@ -214,12 +214,44 @@ def find_user(request):
 @csrf_protect
 def user_delete(request):
 
-    if request.method == 'POST':
-        user_id = request.POST.get('userID', '')
-        user = CustomUser.objects.get(id=user_id)
-        user.delete()
+    response_data = {}
+
+    if request.method == 'GET':
+        response_data['error': 'Nederīgs pieprasījums']
+        return HttpResponse(json.dumps(response_data), content_type='application/json')
+
+    user_list = json.loads(request.POST.get('data'))
+    print(user_list)
+
+    for user_obj in user_list:
+        user_id = user_obj['id']
+        custom_user = get_object_or_404(CustomUser, id=user_id)
+        # custom_user.delete()
 
     return redirect(reverse_lazy('user_base'))
+
+
+@login_required
+def user_block(request):
+    response_data ={}
+
+    if request.method == 'GET':
+        response_data['error': 'Nederīgs pieprasījums']
+        return HttpResponse(json.dumps(response_data), content_type='application/json')
+
+    user_list = json.loads(request.POST.get('data'))
+
+    for user_obj in user_list:
+        user_id = user_obj['id']
+        user_status = user_obj['status']
+        custom_user = get_object_or_404(CustomUser, id=user_id)
+        custom_user.is_active = False if user_status == 1 else True
+        custom_user.save()
+
+    response_data['ok'] = 'Informācija atjaunota'
+
+    return HttpResponse(json.dumps(response_data), content_type='application/json')
+
 
 def instructor_list(request):
     authors = CustomUser.objects.filter(user_type=2)
@@ -230,9 +262,18 @@ def instructor_list(request):
 def create_admin(request):
     user = get_object_or_404(CustomUser, id=request.user.id)
     user.is_admin = True
+    user.user_type = 3
 
     user.save()
 
     return redirect(reverse_lazy('user_profile'))
 
+
+def create_author(request):
+    user = get_object_or_404(CustomUser, id=request.user.id)
+    user.user_type = 2
+
+    user.save()
+
+    return redirect(reverse_lazy('user_profile'))
 
