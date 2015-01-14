@@ -12,10 +12,12 @@
                 </div>
             </div>
 
-            <div class="actions">
-                <a class="#">Labot</a>
-                <a class="#">Dzēst</a>
-            </div>
+            {% ifequal user comment.comment_author %}
+                <!-- <div class="actions">
+                    <a class="#">Labot</a>
+                    <a class="#">Dzēst</a>
+                </div>-->
+            {% endifequal %}
 
         </div>
     {% endfor %}
