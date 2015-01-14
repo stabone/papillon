@@ -3,7 +3,7 @@ from django.test import TestCase
 from users.models import CustomUser
 from articles.models import Articles, ArticleReviews
 from categories.models import Categories
-from unittest import skipIf
+from django.utils.unittest import skipIf
 
 
 class ArticleTest(TestCase):
