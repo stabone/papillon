@@ -78,6 +78,7 @@ def poll_create(request):
     return render(request, 'poll/form.html', {'form': poll_form})
 
 
+@login_required
 def poll_edit(request, poll_id):
     poll = get_object_or_404(Polls, id=poll_id)
     poll_form = PollForm(instance=poll)
@@ -88,6 +89,7 @@ def poll_edit(request, poll_id):
                     'url_post_to': reverse_lazy('poll_update')})
 
 
+@login_required
 def poll_update(request):
     if request.method == "POST":
         poll_id = request.POST.get('record', '')
@@ -135,6 +137,7 @@ def poll_correct(request, poll_id):
                             'questions': questions})
 
 
+@login_required
 def poll_delete(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('poll_list'))
@@ -168,6 +171,7 @@ def question_form(request, poll_id):
                     'url_post_to': reverse_lazy('question_create')})
 
 
+@login_required
 def question_create(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('question_list'))
@@ -182,6 +186,7 @@ def question_create(request):
     return render(request, 'question/form.html', {'form': question_form})
 
 
+@login_required
 def question_edit(request, question_id):
     question = get_object_or_404(Questions, id=question_id)
     question_form = QuestionForm(instance=question)
@@ -193,6 +198,7 @@ def question_edit(request, question_id):
                     'url_post_to': reverse_lazy('question_update')})
 
 
+@login_required
 def question_update(request):
     if request.method == "POST":
         question_id = request.POST.get('record', '')
@@ -209,6 +215,7 @@ def question_update(request):
     return render(request, 'question/form.html', {'form': question_form})
 
 
+@login_required
 def question_delete(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('question_list'))
@@ -242,6 +249,7 @@ def answer_form(request, question_id):
                     'url_post_to': reverse_lazy('answer_create')})
 
 
+@login_required
 def answer_create(request):
     if request.method == "GET":
         return redirect(reverse_lazy('answer_form'))
@@ -257,6 +265,7 @@ def answer_create(request):
     return render(request, 'answer/form.html', {'form': answer_form})
 
 
+@login_required
 def answer_edit(request, answer_id):
     answer = get_object_or_404(Answers, id=answer_id)
     answer_form = AnswerForm(instance=answer)
@@ -268,6 +277,7 @@ def answer_edit(request, answer_id):
                     'url_post_to': reverse_lazy('answer_update')})
 
 
+@login_required
 def answer_update(request):
     if request.method == "POST":
         answer_id = request.POST.get('record', '')
@@ -284,6 +294,7 @@ def answer_update(request):
     return render(request, 'answer/form.html', {'form': answer})
 
 
+@login_required
 def answer_delete(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('answer_list'))
@@ -294,5 +305,4 @@ def answer_delete(request):
     data.delete()
 
     return redirect(reverse_lazy('answer_list'))
-
 

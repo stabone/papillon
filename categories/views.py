@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 
@@ -22,6 +24,7 @@ def form(request):
                                     'url_post_to': reverse_lazy('category_create')})
 
 
+@login_required
 def create(request):
     if request.method == "GET":
         return redirect(reverse_lazy('category_form'))
@@ -36,6 +39,7 @@ def create(request):
     return render(request, 'category/form.html', {'form': category_form})
 
 
+@login_required
 def edit(request, rec_id):
     category = get_object_or_404(Categories, id=rec_id)
     form = CategoryForm(instance=category)
@@ -46,6 +50,7 @@ def edit(request, rec_id):
                                     'url_post_to': reverse_lazy('category_update')})
 
 
+@login_required
 def update(request):
     if request.method == "POST":
         category_id = request.POST.get('record', '')
@@ -65,6 +70,7 @@ def item(request, rec_id):
     pass
 
 
+@login_required
 def delete(request):
     if request.method == 'GET':
         return redirect(reverse_lazy('category_list'))

@@ -86,7 +86,6 @@ def update(request, article_id):
     return render(request, 'article/edit.html', {'form': article, 'article_id': article_id})
 
 
-@login_required
 def item(request, article_id):
 
     article = get_object_or_404(Articles, id=article_id)
@@ -117,16 +116,19 @@ def list_review(request):
         return redirect(reverse_lazy('article_base'))
 
 
+@login_required
 def add_review(request):
     if request.method == "GET":
         return redirect(reverse_lazy('article_base'))
 
 
+@login_required
 def edit_review(request):
     if request.method == "GET":
         return redirect(reverse_lazy('article_base'))
 
 
+@login_required
 def update_review(request):
     if request.method == "GET":
         return redirect(reverse_lazy('article_base'))
@@ -142,5 +144,4 @@ def delete_review(request):
     article.delete()
 
     return redirect(reverse_lazy('article_base'))
-
 
