@@ -2,61 +2,48 @@
 
 {% block content %}
 
-    <div>
+    <div class="ui grid">
         {#% include 'user/find.html' %#}
-    </div>
-
-    <ul>
-        <li>
-            <a href="{% url 'messaging_inbox' %}">Ziņas</a>
-        </li>
-        {% if user.is_admin %}
-        <li>
-            <a href="{% url 'user_base' %}">Lietotāji adminstrēšana</a>
-        </li>
-        {% endif %}
-        <li>
-            <a href="{% url 'user_form' %}">Labot profilu</a>
-        </li>
-        <!-- <li>
-            <a href="{% url 'create_admin' %}">Admin. tiesības</a>
-        </li> -->
-    </ul>
-
-    <div>
-        <div class="user avatar">
-            <img src="{{ user.get_avatar }}" />
+        <div class="six wide column">
+            <div class="ui vertical menu">
+                {% if user.is_admin %}
+                <a class="item" href="{% url 'user_base' %}">
+                    Lietotāju adminstrēšana
+                </a>
+                {% endif %}
+                <a class="item" href="{% url 'messaging_inbox' %}">
+                    Ziņās
+                </a>
+                <a class="item" href="{% url 'user_form' %}">
+                    Labot profilu
+                </a>
+            </div>
         </div>
 
-        <table>
-            <tr>
-                <td>Vārds:</td>
-                <td>{{ user.user_name }}</td>
-            </tr>
-            <tr>
-                <td>Uzvārds:</td>
-                <td>{{ user.last_name }}</td>
-            </tr>
-            <tr>
-                <td>E-pasts:</td>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <td>Apraksts:</td>
-                <td>{{ user.bio }}</td>
-            </tr>
+        <div class="ten wide column">
+            <div class="user avatar">
+                <img src="{{ user.get_avatar }}" />
+            </div>
 
-        </table>
-
-        {% if badges %}
-            Badges
-            <ul>
-                {% for badge in badges %}
-                    <li alt="{{ badge.name }}" title="{{ badge.name }}">{{ badge.name }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
+            <table>
+                <tr>
+                    <td>Vārds:</td>
+                    <td>{{ user.user_name }}</td>
+                </tr>
+                <tr>
+                    <td>Uzvārds:</td>
+                    <td>{{ user.last_name }}</td>
+                </tr>
+                <tr>
+                    <td>E-pasts:</td>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <td>Apraksts:</td>
+                    <td>{{ user.bio }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
 {% endblock content %}
 

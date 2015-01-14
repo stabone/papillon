@@ -2,75 +2,49 @@
 
 
 {% block content %}
-    <ul>
-        <li><a href="{% url 'messaging_add' %}">Rakstīt ziņu</a></li>
-        <li><a href="{% url 'messaging_trash' %}">Miskaste</a></li>
-        <li><a href="{% url 'contact_list' %}">Kontakti</a></li>
-    </ul>
 
-    <span class="meta">
-        <a href="#">Kopā: {{ msg_info.total_count }}</a>
-        <a href="#">Nelasītas: {{ msg_info.msg_unred }}</a>
-        <a href="#">Lasītas: {{ msg_info.msg_red }}</a>
-        <a href="#">Miskastē: {{ msg_info.msg_in_trash }}</a>
-    </span>
+    <div class="ui vertical menu">
+        <a class="teal item" href="{% url 'messaging_add' %}">
+            Rakstīt ziņu
+        </a>
+        <a class="teal item" href="{% url 'messaging_trash' %}">
+            Miskaste
+        </a>
+    </div>
+
+    <div class="ui text menu">
+        <a class="item" href="#">
+            Kopā: {{ msg_info.total_count }}
+        </a>
+        <a class="item" href="#">
+            Nelasītas: {{ msg_info.msg_unred }}
+        </a>
+        <a class="item" href="#">
+            Lasītas: {{ msg_info.msg_red }}
+        </a>
+        <a class="item" href="#">
+            Miskastē: {{ msg_info.msg_in_trash }}
+        </a>
+    </div>
 
     <form action="{% url 'msg_list_delete' %}" method="POST">
 
-    {% csrf_token %}
+        {% csrf_token %}
 
-    <button id="msg-delete">Dzēst</button>
-    <button id="show-all-msg">Rādīt visu</button>
-    <button id="show-red-msg">Rādīt lasītās</button>
-    <button id="show-unred-msg">Rādīt nelasītās</button>
+        {% if messages %}
+            <div class="ui fluid four item menu">
+                <a class="item" href="#" id="msg-delete">Dzēst</a>
+                <a class="item" href="#" id="show-all-msg">Rādīt visu</a>
+                <a class="item" href="#" id="show-red-msg">Rādīt lasītās</a>
+                <a class="item" href="#" id="show-unred-msg">Rādīt nelasītās</a>
+            </div>
 
-    <table class="message-list">
-
-        <tr>
-            <th>Status</th>
-            <th>Datums</th>
-            <th>No</th>
-            <th>Temats</th>
-        </tr>
-
-        {% for message in messages %}
-            <tr class="{{ message.red|yesno:'message-red,message-notred' }}">
-                <td class="message-status">
-
-                    <input type="checkbox" name="indices[]" value="{{ message.id }}" />
-
-                    {% if message.red %}
-                        <span title="Lasīta ziņa">X</span>
-                    {% else %}
-                        <span title="Neizlasīta Ziņa">Y</span>
-                    {% endif %}
-
-                </td>
-
-                <td class="message-date">
-                    {{ message.sent_at|date:"Y.m.d H:i:s" }}
-                </td>
-
-                <td class="message-from">
-                    {{ message.user_from.get_full_name }}
-                </td>
-
-                <td>
-                    <a href="{% url 'messaging_read' message.id %}">
-                        {{ message.title|title }}
-                    </a>
-                </td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        {% endfor %}
-
-    </table>
+            {% include 'message/message_table.html' %}
+        {% else %}
+            <div class="ui warning">
+                Pagaidām vēl neviena ziņa nav saņemta
+            </div>
+        {% endif %}
 
     </form>
 

@@ -1,0 +1,34 @@
+<table class="message-list">
+    <tr><th>Status</th><th>Datums</th><th>No</th><th>Temats</th></tr>
+
+    {% for message in messages %}
+        <tr class="{{ message.red|yesno:'message-red,message-notred' }}">
+            <td class="message-status">
+
+                <input type="checkbox" name="indices[]" value="{{ message.id }}" />
+
+                {% if message.red %}
+                    <span title="Lasīta ziņa">X</span>
+                {% else %}
+                    <span title="Neizlasīta Ziņa">Y</span>
+                {% endif %}
+
+            </td>
+
+            <td class="message-date">
+                {{ message.sent_at|date:"Y.m.d H:i:s" }}
+            </td>
+
+            <td class="message-from">
+                {{ message.user_from.get_full_name }}
+            </td>
+
+            <td>
+                <a href="{% url 'messaging_read' message.id %}">
+                    {{ message.title|title }}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+
+</table>
