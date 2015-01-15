@@ -4,12 +4,12 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$',       include('helper.urls')),
+    url(r'^$',         include('helper.urls')),
     # url(r'^admin/',  include(admin.site.urls)),
-    url(r'^poll/',   include('polls.urls')),
-    url(r'^course/', include('courses.urls')),
-    url(r'^user/',   include('users.urls')),
-    url(r'^comment/',include('comments.urls')),
+    url(r'^poll/',     include('polls.urls')),
+    url(r'^course/',   include('courses.urls')),
+    url(r'^user/',     include('users.urls')),
+    url(r'^comment/',  include('comments.urls')),
     url(r'^message/',  include('messaging.urls')),
     url(r'^markdown/', include('django_markdown.urls')),
     url(r'^article/',  include('articles.urls')),

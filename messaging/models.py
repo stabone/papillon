@@ -5,7 +5,8 @@ from django.conf import settings
 
 class Messages(models.Model):
     user_from = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='sender')
-    user_to = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='reciever')
+    # https://docs.djangoproject.com/en/1.7/ref/models/fields/#django.db.models.ManyToManyField
+    user_to = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='reciever')
     title = models.CharField(max_length=255)
     message = models.TextField()
     red = models.BooleanField(default=False)
