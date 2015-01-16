@@ -10,6 +10,17 @@
     </div>
 {% endif %}
 
+{% if form.category.errors %}
+    <div class="ui error message">
+        {{ form.category.label }}
+        <ul class="list">
+            {% for error in form.category.errors %}
+                <li>{{ error|escape }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
 {% if form.description.errors %}
     <div class="ui error message">
         {{ form.description.label }}

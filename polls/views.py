@@ -314,9 +314,6 @@ def answer_correct_show(request, poll_id):
             if correct_answer:
                 answer_list.append(answer.id)
 
-    for answer in answer_list:
-        print(answer)
-
     return render(request, 'poll/correct.html',
                             {'poll': poll,
                             'answer_list': answer_list,

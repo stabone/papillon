@@ -397,6 +397,13 @@ $('#save-answers').click(function() {
     });
 });
 
+
+tinymce.init({
+    selector: 'textarea#wsiwg-editor',
+    height: 500,
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+});
+
 /**
  * AngularJS logic
  *

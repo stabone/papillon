@@ -33,7 +33,7 @@ class ArticleForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'autofocus': '', 'required': ''}),
             'embeded': forms.TextInput(),
             'description': forms.Textarea(),
-            'article': forms.Textarea(),
+            'article': forms.Textarea(attrs={'id': 'wsiwg-editor'}),
         }
 
 
