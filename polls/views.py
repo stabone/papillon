@@ -1,5 +1,9 @@
+#-*- coding: utf-8 -*-
+import json
+
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.exceptions import ObjectDoesNotExist
@@ -8,7 +12,7 @@ from django.db.models import Q
 from django.http import Http404
 
 
-from polls.models import Polls, Questions, Answers
+from polls.models import Polls, Questions, Answers, CorrectAnswers
 from polls.forms  import PollForm, QuestionForm, AnswerForm
 
 
@@ -147,6 +151,11 @@ def poll_delete(request):
 
     data.delete()
 
+    return redirect(reverse_lazy('poll_list'))
+
+
+@login_required
+def poll_take(request):
     return redirect(reverse_lazy('poll_list'))
 
 
@@ -292,6 +301,49 @@ def answer_update(request):
             return redirect(reverse_lazy('poll_item', args=[poll_id]))
 
     return render(request, 'answer/form.html', {'form': answer})
+
+def answer_correct_show(request, poll_id):
+    poll = get_object_or_404(Polls, id=poll_id)
+    questions = get_questions_and_answers(poll)
+
+    answer_list = []
+    for question in questions:
+        for answer in question['answers']:
+            correct_answer = CorrectAnswers.objects.filter(
+                                                Q(question=question['id']) & Q(answer=answer.id))
+            if correct_answer:
+                answer_list.append(answer.id)
+
+    for answer in answer_list:
+        print(answer)
+
+    return render(request, 'poll/correct.html',
+                            {'poll': poll,
+                            'answer_list': answer_list,
+                            'questions': questions})
+
+
+@login_required
+def answer_add_correct(request):
+    data = json.loads(request.POST.get('data', '[]'))
+
+    if not data:
+        return HttpResponse(json.dumps({'error': 'problēmas'}), content_type='application/json')
+
+    obj_bulk = []
+    for rec in data:
+        question = get_object_or_404(Questions, id=rec['question'])
+        answer = get_object_or_404(Answers, id=rec['answer'])
+
+        if rec['actioType'] == 1:
+            obj_bulk.append(CorrectAnswers(question=question, answer=answer))
+        else:
+            rec = CorrectAnswers.objects.filter(Q(question=question)& Q(answer=answer))
+            rec.delete()
+
+    CorrectAnswers.objects.bulk_create(obj_bulk)
+
+    return HttpResponse(json.dumps({'ok': 'cookie'}), content_type='application/json')
 
 
 @login_required

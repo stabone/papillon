@@ -2,59 +2,71 @@
 
 {% block content %}
 
-<div>
-    <p>
+<h1 class="ui header">
+    <div class="content">
         {{ poll.poll }}
+        <div class="sub header">
+            {{ poll.description }}
+        </div>
+    </div>
+</h1>
 
-        <a href="{% url 'question_form' poll.id %}"
-            alt="Pievienot jautājumu"
-            title="Pievienot jautājumu">
+<div class="ui divided horizontal list">
+    <div class="item">
+        <a href="{% url 'question_form' poll.id %}">
             <i class="plus icon"></i>
+            Pievienot jautājumu
         </a>
-    </p>
+    </div>
+    <div class="item">
+        <a href="{% url 'answer_correct_show' poll.id %}">
+            Norādīt pareizās atbildes
+        </a>
+    </div>
+</div>
 
-    <p>
-        {{ poll.description }}
-    </p>
+<div class="ui divider"></div>
 
-    <div class="ui divider"></div>
 
-    <ul>
-    {% for question in questions %}
-        <li>
-            {{ question.question }}
-            <a href="{% url 'question_edit' question.id %}">
-                <i class="edit icon"></i>
-            </a>
+<div class="ui list">
+{% for question in questions %}
+    <div class="item">
+        <div class="content">
+            <div class="header">
+                <h3 class="ui header">{{ question.question }}</h3>
+                <a href="{% url 'answer_form' question.id %}">
+                    <i class="icon add"></i>
+                </a>
+                <a href="{% url 'question_edit' question.id %}">
+                    <i class="icon edit"></i>
+                </a>
+                <a href="#">
+                    <i class="icon trash"></i>
+                </a>
+            </div>
 
-            <a href="{% url 'answer_form' question.id %}"
-                alt="Pievienot jautājumu"
-                title="Pievienot jautājumu">
-                <i class="plus icon"></i>
-            </a>
-
-            {% include 'question/delete.html' %}
-
-            {% if question.answers %}
-                <ul>
+            <div class="list">
                 {% for answer in question.answers %}
-                    <li>
-                        {{ answer.answer }}
-                        <a href="{% url 'answer_edit' answer.id %}">
-                            <i class="edit icon"></i>
-                        </a>
-                        <a href="">
-                            <i class="trash icon"></i>
-                        </a>
-                    </li>
+                <div class="item">
+                    <i class="top aligned right triangle icon"></i>
+                    <div class="content">
+                        <div class="header">
+                            {{ answer.answer }}
+                            <a href="{% url 'answer_edit' answer.id %}">
+                                <i class="icon edit"></i>
+                            </a>
+                            <a href="">
+                                <i class="icon trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-                </ul>
-            {% endif %}
+            </div>
+        </div>
+    </div>
 
-        </li>
-    {% endfor %}
-    </ul>
-
+  {% endfor %}
 </div>
 
 {% endblock content %}

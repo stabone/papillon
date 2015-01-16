@@ -9,8 +9,11 @@ class MessagingForm(ModelForm):
     class Meta:
         model = Messages
 
+        """
         fields = ('user_to', 'title', 'message',
                     'red', 'trash',)# 'sent_at',)
+        """
+        exclude = ['user_from']
 
         labels = {
             'user_to': 'Saņēmējs',

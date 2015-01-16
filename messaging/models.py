@@ -24,6 +24,11 @@ class Messages(models.Model):
         )
 
 
+class UserMessages(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    message = models.ManyToManyField(Messages)
+
+
 class Contacts(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_me')
     contact_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_contact')

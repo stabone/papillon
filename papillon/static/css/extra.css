@@ -8,3 +8,7 @@ nav {
     max-width: 800px;
     margin: 20px auto 30px;
 }
+
+form.inline-form {
+	display: inline;
+}

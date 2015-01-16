@@ -316,7 +316,7 @@ $('#block-info').click(function() {
     if (sendAction(finalList, '/user/block/')) {
         hideRecords(finalList);
     }
-})
+});
 
 
 function sendAction(userObject, postUrl) {
@@ -347,15 +347,54 @@ function sendAction(userObject, postUrl) {
 $('.delete-user').change(function() {
     var id = $(this).data('id');
     deleteList[id] = this.checked;
-
-    console.log(deleteList);
 });
 
 $('.block-user').change(function() {
     var id = $(this).data('id');
     blockList[id] = this.checked;
+});
 
-//    console.log(blockList);
+
+var correctAnswers = {};
+$('.correct-answer').change(function() {
+    var questionID = $(this).data('question-id');
+    var answerID = $(this).data('answer-id');
+
+    correctAnswers[questionID +'-'+ answerID] = {
+                            'question': questionID,
+                            'answer': answerID,
+                            'status': this.checked
+                        };
+
+    console.log(correctAnswers);
+});
+
+$('#save-answers').click(function() {
+    var answers = Array();
+
+    for (var key in correctAnswers) {
+        answers.push({
+                question: correctAnswers[key].question,
+                answer: correctAnswers[key].answer,
+                actioType: (correctAnswers[key].status) ? 1 : 0,
+        });
+
+    }
+
+    correctAnswers = {};
+    $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/poll/a/q/correct/',
+        data: { 'data': JSON.stringify(answers) },
+        headers: { 'X-CSRFToken': csrftoken },
+        success: function(data) {
+            console.log(data);
+        },
+        error: function(xhr, ajaxOpt, throwError) {
+            console.log(xhr.responseText)
+        }
+    });
 });
 
 /**

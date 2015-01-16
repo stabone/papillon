@@ -6,9 +6,9 @@ urlpatterns = patterns('',
     url(r'^create/$',    'polls.views.poll_create', name='poll_create'),
     url(r'^edit/(\d+)/$','polls.views.poll_edit',   name='poll_edit'),
     url(r'^item/(\d+)/$','polls.views.poll_item',   name='poll_item'),
-    url(r'^item/(\d+)/$','polls.views.poll_create', name='poll_create'),
     url(r'^update/$',    'polls.views.poll_update', name='poll_update'),
     url(r'^delete/$',    'polls.views.poll_delete', name='poll_delete'),
+    url(r'^take/$',      'polls.views.poll_take',   name='poll_take'),
 
 
     url(r'^q/list/$',      'polls.views.question_list',   name='question_list'),
@@ -25,5 +25,7 @@ urlpatterns = patterns('',
     url(r'^a/edit/(\d+)/$','polls.views.answer_edit',   name='answer_edit'),
     url(r'^a/update/$',    'polls.views.answer_update', name='answer_update'),
     url(r'^a/delete/$',    'polls.views.answer_delete', name='answer_delete'),
+    url(r'^a/q/show/(\d+)/$',    'polls.views.answer_correct_show', name='answer_correct_show'),
+    url(r'^a/q/correct/$', 'polls.views.answer_add_correct', name='answer_correct'),
 
 )
