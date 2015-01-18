@@ -1,5 +1,5 @@
 
-<form method="POST" action="{% url 'article_delete' %}">
+<form method="POST" action="{% url 'article_delete' %}" class="inline-form">
     {% csrf_token %}
 
     <input type="hidden" value="{{ article.id }}" name="article_id" />

@@ -18,16 +18,16 @@
     </div>
 
     <div class="">
-        <div class="">
-            <span class="">
+        <div>
+            <div>
                 <a href="#">
                     {{ article.user.get_full_name }}
                 </a>
-            </span>
+            </div>
 
-            <span class="" title="">
+            <div>
                 {{ article.created_at|date:"Y.m.d" }}
-            </span>
+            </div>
 
             <span class=""
                     alt="Komentāru skaits"
@@ -39,7 +39,9 @@
 
         </div>
 
-        <h3>{{ article.title }}</h3>
+        <h3 class="ui header">
+            {{ article.title }}
+        </h3>
 
         {% if article.article %}
             <div class="article">

@@ -11,7 +11,7 @@
         <div id="block-info"  class="ui red button">Bloķēt</div>
     </div>
 
-    <table class="ui sortable table segment">
+    <table class="ui celled striped table">
         <thead>
             <tr>
                 <th>Vārds</th>
@@ -33,22 +33,13 @@
                         <input class="delete-user" type="checkbox" data-id="{{ user.id }}"/>
                     </td>
                     <td>
-                        <input class="block-user" 
-                                type="checkbox" 
+                        <input class="block-user"
+                                type="checkbox"
                                 data-id="{{ user.id }}"
                                 {{ user.is_active|yesno:'checked, ' }} />
                     </td>
                 </tr>
             {% endfor %}
-            <tfoot>
-                <tr>
-                    <th>Papillon</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </tfoot>
         </tbody>
     </table>
 

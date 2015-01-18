@@ -6,17 +6,23 @@
         <a href="{% url 'category_form' %}">Pievienot</a>
     </div>
 
-    <ul>
+    <div class="ui divided list">
         {% for category in categories %}
-            <li>
-                {{ category.title }}
-                <a href="{% url 'category_edit' category.id %}">
-                    <i class="edit icon"></i>
-                </a>
-                {% include 'category/delete.html' %}
-            </li>
+            <div class="item">
+                <div class="right floated compact">
+                    <a class="ui button red" href="{% url 'category_edit' category.id %}">Labot</a>
+                </div>
+
+                <div class="right floated compact">
+                    {% include 'category/delete.html' %}
+                </div>
+
+                <div class="content">
+                    <div class="header">{{ category.title }}</div>
+                </div>
+            </div>
         {% endfor %}
-    </ul>
+    </div>
 
 {% endblock content %}
 

@@ -2,13 +2,17 @@
 
 {% block content %}
 
-    {% if form.error_messages %}
-        <ul class="ui error message">
-            {% for error in form.error_messages %}
-                <li>{{ error|escape }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    {#% if form.error_messages.inactive %#}
+        <!---<ul class="ui error message">
+            <li>{{ form.error_messages.inactive }}</li>
+        </ul>-->
+    {#% endif %#}
+
+    {#% if form.error_messages.invalid_login %#}
+        <!--<ul class="ui error message">
+            <li>{{ form.error_messages.invalid_login }}</li>
+        </ul>-->
+    {#% endif %#}
 
     <form method="post"
             action="{% url 'django.contrib.auth.views.login' %}"
@@ -43,3 +47,4 @@
     </form>
 
 {% endblock content %}
+
